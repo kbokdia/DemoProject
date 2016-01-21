@@ -42,6 +42,6 @@ class Register
 
     function sampleAmbuj()
     {
-        echo "hello";
+        echo "hello123";
     }
 }
