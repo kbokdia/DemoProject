@@ -6,9 +6,9 @@
  * Time: 1:53 PM
  */
 
-namespace Project\Register;
+namespace Project\register;
 
-use Project\Base\BaseClass;
+use Project\base\BaseClass;
 
 define("ROOT", "../");
 require ROOT."autoload.php";

@@ -6,15 +6,17 @@
  * Time: 3:24 PM
  */
 
-namespace Project\Base;
+namespace Project\base;
 
+
+use Project\db\Connection;
 
 class BaseClass
 {
     var $mysqli;
 
     function __construct(){
-        //$this->mysqli = getConnection();
+        $this->mysqli = Connection::get();
     }
 
     public static function createResponse($status,$message){
@@ -34,6 +36,6 @@ class BaseClass
     }
 
     function __destruct(){
-        //$this->mysqli->close();
+        $this->mysqli->close();
     }
 }
