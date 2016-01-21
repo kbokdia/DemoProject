@@ -39,4 +39,9 @@ class Register
 
         return $this->users;
     }
+
+    function sampleAmbuj()
+    {
+        echo "hello";
+    }
 }
