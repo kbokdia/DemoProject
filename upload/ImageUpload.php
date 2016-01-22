@@ -6,7 +6,7 @@
  * Time: 8:35 AM
  */
 
-namespace Project\Upload;
+namespace Project\upload;
 
 
 class ImageUpload
