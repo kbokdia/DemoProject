@@ -97,6 +97,27 @@ class Gallery extends BaseClass
         return $galleryCode;
     }
 
+    //Delete gallery
+    function deleteGallery($galleryId){
+        $sql = "SELECT GalleryName FROM Gallery WHERE Id = $galleryId";
+        if($result = $this->mysqli->query($sql)){
+            $path = "albums/".$result->fetch_assoc()['GalleryName'];
+            BaseClass::deleteDir($path);
+            $sql = "DELETE FROM Gallery WHERE Id = $galleryId";
+            if($this->mysqli->query($sql)){
+                $response = BaseClass::createResponse(1,"Album deleted");
+            }
+            else{
+                $response = BaseClass::createResponse(0,$this->mysqli->error);
+            }
+        }
+        else{
+            $response = BaseClass::createResponse(0,"Invalid request");
+        }
+
+        return $response;
+    }
+
     //save gallery image
     function saveGalleryImage($galleryId){
         //todo-ambuj save image file then the details in GalleryImage Table
