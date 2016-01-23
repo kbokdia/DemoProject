@@ -15,7 +15,7 @@ class Gallery extends BaseClass
 {
     var $galleryName;
     var $imageCount;
-    var $coverImagePath;
+    var $coverImage;
 
     function __construct(){
         parent::__construct();
@@ -44,64 +44,43 @@ class Gallery extends BaseClass
 
 
         //Ambuj
-        GLOBAL $gallID;
-        GLOBAL $imgName;
-        $GLOBALS['success']=true;
-        $gallName=$_POST['galleryName'];
-        $img=$_FILES['fileToUpload'];
-
+        $response = array();
 
         //Check if gallery exists.
-        $sql="select GalleryName from Gallery where GalleryName=$gallName";
+        $sql="select GalleryName from Gallery where GalleryName=$this->galleryName";
         $result = $this->mysqli->query($sql);
-        if(!$result)
+        if($result)
         {
-            //If not,then create directory and move image.
-            mkdir('Project/albums/$gallName');
-            //Get an id for the new gallery.
-            $gallID=$this->generateGalleryId();
-            $uploaddir= 'Project/albums/$gallName/';
-            $uploadfile = $uploaddir . basename($img['name']);
-            if (move_uploaded_file($img['tmp_name'], $uploadfile))
-            {
-                $GLOBALS['success']=true;
+            $path = "albums/$this->galleryName";
+            if($result->num_rows == 0){
+                //If not,then create directory and move image.
+                if(!file_exists($path)){
+                    mkdir($path);
+                }
+                //Get an id for the new gallery.
+                $gallID=$this->generateGalleryId();
+                $imageUpload = new ImageUpload($this->coverImage);
+                $imageUpload->dstPath = $path;
+                $imageUpload->dstName = $gallID;
+
+                //if image uploaded then save the record to the db.
+                if($imageUpload->save()){
+                    //ImageUpload class by default saves all the image to jpg
+                    $imagePath = $path."/".$gallID.".jpg";
+                    $sql="INSERT INTO Gallery(Id, GalleryName, ImageCount, CoverImagePath) VALUES ($gallID,'$this->galleryName',0,'$imagePath')";
+                    if($result = $this->mysqli->query($sql)){
+                        $response = BaseClass::createResponse(1,"Gallery created..");
+                    }
+                }
+                else{
+                    return $imageUpload->response;
+                }
             }
             else{
-                $GLOBALS['success']=false;
+                $response = BaseClass::createResponse(0,"Gallery already exists..");
             }
+            return $response;
         }
-
-
-        else
-        {
-            //If folder exists,just move the image.
-            $uploaddir = 'Project/albums/$gallName/';
-            $imgName=$img['name'];
-            $uploadfile = $uploaddir . basename($img['name']);
-            if (move_uploaded_file($img['tmp_name'], $uploadfile))
-            {
-                $GLOBALS['success']=true;
-            }
-            else{
-                $GLOBALS['success']=false;
-            }
-        }
-
-
-
-        //Store gallery details.
-        $sql2="insert into Gallery(CoverImagePath,GalleryName,Id,ImageCount) values('Project/albums/$gallName/$imgName','$gallName',".$gallID.",(ImageCount+1)";
-        if($GLOBALS['success']==true) {
-            $result2 = $this->mysqli->query($sql2);
-            if (!$result2)
-                return false;
-            else
-                return true;
-        }
-        else
-            return false;
-
-
         //End
 
     }
