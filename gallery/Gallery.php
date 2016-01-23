@@ -16,6 +16,7 @@ class Gallery extends BaseClass
     var $galleryName;
     var $imageCount;
     var $coverImage;
+    var $imageArr;
 
     function __construct(){
         parent::__construct();
@@ -121,6 +122,16 @@ class Gallery extends BaseClass
     //save gallery image
     function saveGalleryImage($galleryId){
         //todo-ambuj save image file then the details in GalleryImage Table
+        $galleryPath = "albums/".$this->galleryName;
+
+        //have to save multiple images
+        for($this->imageArr as $img){
+            //$img is same as $this->coverImage in saveGallery function
+            //while saving the image save it with their id name
+            //  Eg:
+            //  $imageUpload->dstPath = $galleryPath;
+            //  $imageUpload->dstName = $this->generateImageId();
+        }
     }
 
     //generate image ID
