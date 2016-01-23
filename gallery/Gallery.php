@@ -122,6 +122,13 @@ class Gallery extends BaseClass
     //save gallery image
     function saveGalleryImage($galleryId){
         //todo-ambuj save image file then the details in GalleryImage Table
+        $sql="Select galleryName from Gallery where galleryID=$galleryId";
+        if($result2=$this->mysqli->query($sql))
+        {
+            $path2="albums/".$result2->fetch_assoc()['GalleryName'];
+
+        }
+
         $galleryPath = "albums/".$this->galleryName;
 
         //have to save multiple images
