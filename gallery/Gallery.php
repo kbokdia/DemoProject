@@ -122,23 +122,49 @@ class Gallery extends BaseClass
     //save gallery image
     function saveGalleryImage($galleryId){
         //todo-ambuj save image file then the details in GalleryImage Table
+        $resp = array();
         $sql="Select galleryName from Gallery where galleryID=$galleryId";
         if($result2=$this->mysqli->query($sql))
         {
-            $path2="albums/".$result2->fetch_assoc()['GalleryName'];
 
+            $path2 = "albums/" . $result2->fetch_assoc()['GalleryName'];
+
+            //have to save multiple images
+            for ($this->imageArr as $img)
+            {
+                //$img is same as $this->coverImage in saveGallery function
+                //while saving the image save it with their id name
+                //  Eg:
+                //  $imageUpload->dstPath = $galleryPath;
+                //  $imageUpload->dstName = $this->generateImageId();
+                $imageUpload = new ImageUpload($img);
+                $imageUpload->dstPath = $path2;
+                $imageUpload->dstName = $galleryId;
+
+                if($imageUpload->save())
+                {
+                    $imageSavePath=$path2."/".$galleryId."/".$img."jpg";
+                    $imgId=$this->generateImageId();
+                    $sql="insert into GalleryImage(Id,GalleryId,ImagePath,Caption,ImageWidth,ImageHeight) values($imgId,$galleryId,'$imageSavePath','Hi','200','200')";
+                    if($result = $this->mysqli->query($sql))
+                    {
+                        $resp = BaseClass::createResponse(1,"Image saved..");
+                    }
+                    else
+                    {
+                       $resp = BaseClass::createResponse(0,"Image not saved..");
+                    }
+
+                }
+            }
+            return $resp;
         }
+    }
 
-        $galleryPath = "albums/".$this->galleryName;
+    //delete gallery image
+    function deleteGalleryImage()
+    {
 
-        //have to save multiple images
-        for($this->imageArr as $img){
-            //$img is same as $this->coverImage in saveGallery function
-            //while saving the image save it with their id name
-            //  Eg:
-            //  $imageUpload->dstPath = $galleryPath;
-            //  $imageUpload->dstName = $this->generateImageId();
-        }
     }
 
     //generate image ID
