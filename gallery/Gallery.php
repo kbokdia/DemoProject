@@ -137,14 +137,15 @@ class Gallery extends BaseClass
                 //  Eg:
                 //  $imageUpload->dstPath = $galleryPath;
                 //  $imageUpload->dstName = $this->generateImageId();
+                $imgId=$this->generateImageId();
                 $imageUpload = new ImageUpload($img);
                 $imageUpload->dstPath = $path2;
-                $imageUpload->dstName = $galleryId;
+                $imageUpload->dstName = $imgId;
 
                 if($imageUpload->save())
                 {
                     $imageSavePath=$path2."/".$galleryId."/".$img."jpg";
-                    $imgId=$this->generateImageId();
+
                     $sql="insert into GalleryImage(Id,GalleryId,ImagePath,Caption,ImageWidth,ImageHeight) values($imgId,$galleryId,'$imageSavePath','Hi','200','200')";
                     if($result = $this->mysqli->query($sql))
                     {
@@ -162,9 +163,29 @@ class Gallery extends BaseClass
     }
 
     //delete gallery image
-    function deleteGalleryImage()
+    function deleteGalleryImage($imgId)
     {
+        $resp=array();
+        $sql="Select ImagePath from GalleryImage where Id=$imgId";
+        if($result = $this->mysqli->query($sql))
+        {
+            $path=$result->fetch_assoc()['ImagePath'];
+            unlink($path);
+            $sql = "DELETE FROM GalleryImage WHERE Id = $imgId";
+            if($this->mysqli->query($sql)){
+                $response = BaseClass::createResponse(1,"Image deleted");
+            }
+            else{
+                $response = BaseClass::createResponse(0,$this->mysqli->error);
+            }
+        }
+        else{
+            $response = BaseClass::createResponse(0,"Invalid request");
+        }
 
+        return $response;
+
+    }
     }
 
     //generate image ID
