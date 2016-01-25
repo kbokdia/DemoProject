@@ -16,10 +16,27 @@ class Gallery extends BaseClass
     var $galleryName;
     var $imageCount;
     var $coverImage;
-    var $imageArr;
+    var $images;
 
     function __construct(){
         parent::__construct();
+    }
+
+    function test(){
+        $gallID=$this->generateGalleryId();
+        $path = "albums/$this->galleryName";
+        $imagePath = $path."/".$gallID.".jpg";
+
+        $sql="INSERT INTO Gallery(Id, GalleryName, ImageCount, CoverImagePath) VALUES ($gallID,'$this->galleryName',0,'$imagePath')";
+
+        if($this->mysqli->query($sql)){
+            $response = BaseClass::createResponse(1,"Record Inserted");
+        }
+        else{
+            $response = BaseClass::createResponse(0,$this->mysqli->error);
+        }
+
+        return $response;
     }
 
     //save gallery info
@@ -29,20 +46,6 @@ class Gallery extends BaseClass
             To upload file use ImageUpload class
             create insert query and save to db and on success return true else false
         */
-
-        //sample upload class code
-        /*$imageUpload = new ImageUpload($_FILES['fileToUpload']);
-        $imageUpload->dstPath = $path;
-        $imageUpload->dstName = $name;
-        if($imageUpload->save()){
-            return $imageUpload->response;
-        }
-        else{
-            return $imageUpload->response;
-        }*/
-
-        //Insert query
-
 
         //Ambuj
         $response = array();
@@ -57,6 +60,8 @@ class Gallery extends BaseClass
                 //If not,then create directory and move image.
                 if(!file_exists($path)){
                     mkdir($path);
+                    mkdir($path."/SD");
+                    mkdir($path."/Thumbs");
                 }
                 //Get an id for the new gallery.
                 $gallID=$this->generateGalleryId();
@@ -127,11 +132,10 @@ class Gallery extends BaseClass
         if($result2=$this->mysqli->query($sql))
         {
 
-            $path2 = "albums/" . $result2->fetch_assoc()['GalleryName'];
+            $path2 = "albums/" . $result2->fetch_assoc()['GalleryName']."/SD";
 
             //have to save multiple images
-            for ($this->imageArr as $img)
-            {
+            foreach ($this->images as $img){
                 //$img is same as $this->coverImage in saveGallery function
                 //while saving the image save it with their id name
                 //  Eg:
@@ -144,9 +148,23 @@ class Gallery extends BaseClass
 
                 if($imageUpload->save())
                 {
-                    $imageSavePath=$path2."/".$galleryId."/".$img."jpg";
+                    $imageSavePath=$path2."/".$imgId."jpg";
 
-                    $sql="insert into GalleryImage(Id,GalleryId,ImagePath,Caption,ImageWidth,ImageHeight) values($imgId,$galleryId,'$imageSavePath','Hi','200','200')";
+                    // Get new sizes
+                    list($width, $height) = getimagesize($imageSavePath);
+                    list($newWidth, $newHeight) = $this->getScaledDimArray($imageSavePath);
+
+                    // Load
+                    $thumb = imagecreatetruecolor($newWidth, $newHeight);
+                    $source = imagecreatefromjpeg($imageSavePath);
+
+                    // Resize
+                    imagecopyresized($thumb, $source, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+                    // Output
+                    imagejpeg($thumb);
+
+                    $sql="insert into GalleryImage(Id,GalleryId,ImagePath,Caption,ImageWidth,ImageHeight) values($imgId,$galleryId,'$imageSavePath', null,'".$width."','".$height.".')";
                     if($result = $this->mysqli->query($sql))
                     {
                         $resp = BaseClass::createResponse(1,"Image saved..");
@@ -165,12 +183,13 @@ class Gallery extends BaseClass
     //delete gallery image
     function deleteGalleryImage($imgId)
     {
-        $resp=array();
         $sql="Select ImagePath from GalleryImage where Id=$imgId";
         if($result = $this->mysqli->query($sql))
         {
             $path=$result->fetch_assoc()['ImagePath'];
-            unlink($path);
+            if(file_exists($path)){
+                unlink($path);
+            }
             $sql = "DELETE FROM GalleryImage WHERE Id = $imgId";
             if($this->mysqli->query($sql)){
                 $response = BaseClass::createResponse(1,"Image deleted");
@@ -186,7 +205,6 @@ class Gallery extends BaseClass
         return $response;
 
     }
-    }
 
     //generate image ID
     function generateImageId(){
@@ -198,6 +216,21 @@ class Gallery extends BaseClass
         }
 
         return $imageCode;
+    }
+
+    //Scale image proportionately
+    function getScaledDimArray($img,$max_w = 245, $max_h = 170){
+        if(is_null($max_h)){
+            $max_h = $max_w;
+        }
+        if (file_exists($img)){
+            list($img_w,$img_h) = getimagesize($img);
+            $f = min($max_w/$img_w, $max_h/$img_h, 1);
+            $w = round($f * $img_w);
+            $h = round($f * $img_h);
+            return array($w,$h);
+        }
+        return NULL;
     }
 
 }
