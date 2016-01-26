@@ -264,6 +264,22 @@ class Gallery extends BaseClass
          * Success :   array('status'=>1,'message'=>'Success','result'=>array(data))
          * Fail    :   array('status'=>0,'message'=>'error message')
          */
+        $sql="SELECT * FROM GalleryImage where GalleryId=$galleryId";
+        if($result = $this->mysqli->query($sql))
+        {
+            $i=0;
+            $response = BaseClass::createResponse(1,"Success");
+            while($row = $result->fetch_assoc())
+            {
+                $response['result'][$i++] = $row;
+            }
+        }
+        else
+        {
+            $response = BaseClass::createResponse(0,$this->mysqli->error);
+        }
+        return $response;
+
     }
 
     //Run multiple sql queries

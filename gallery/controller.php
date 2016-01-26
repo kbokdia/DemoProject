@@ -63,6 +63,13 @@ do{
                 $response = BaseClass::createResponse(0,"Invalid Request");
             }
             break;
+        case 'GG':
+            if(empty($_POST['getGallery']))
+            {
+                $validate = false;
+                $response = BaseClass::createResponse(0,"Invalid Request");
+            }
+            break;
     }
 
 }while(0);
@@ -122,6 +129,7 @@ if($validate){
             $gallery->galleryName = "Test";
             $response = $gallery->test();
             break;
+
     }
 }
 
