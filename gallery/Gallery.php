@@ -16,7 +16,7 @@ class Gallery extends BaseClass
     var $galleryName;
     var $imageCount;
     var $coverImage;
-    var $images;
+    var $images = array();
 
     function __construct(){
         parent::__construct();
@@ -51,11 +51,13 @@ class Gallery extends BaseClass
         $response = array();
 
         //Check if gallery exists.
-        $sql="select GalleryName from Gallery where GalleryName=$this->galleryName";
+        $sql="select GalleryName from Gallery where GalleryName = '$this->galleryName'";
         $result = $this->mysqli->query($sql);
-        if($result)
-        {
-            $path = "albums/$this->galleryName";
+        if($result){
+            //Get an id for the new gallery.
+            $gallID=$this->generateGalleryId();
+
+            $path = "albums/".$gallID."/";
             if($result->num_rows == 0){
                 //If not,then create directory and move image.
                 if(!file_exists($path)){
@@ -63,16 +65,14 @@ class Gallery extends BaseClass
                     mkdir($path."/SD");
                     mkdir($path."/Thumbs");
                 }
-                //Get an id for the new gallery.
-                $gallID=$this->generateGalleryId();
                 $imageUpload = new ImageUpload($this->coverImage);
                 $imageUpload->dstPath = $path;
-                $imageUpload->dstName = $gallID;
+                $imageUpload->dstName = 'cover';
 
                 //if image uploaded then save the record to the db.
                 if($imageUpload->save()){
                     //ImageUpload class by default saves all the image to jpg
-                    $imagePath = $path."/".$gallID.".jpg";
+                    $imagePath = $path."cover.jpg";
                     $sql="INSERT INTO Gallery(Id, GalleryName, ImageCount, CoverImagePath) VALUES ($gallID,'$this->galleryName',0,'$imagePath')";
                     if($result = $this->mysqli->query($sql)){
                         $response = BaseClass::createResponse(1,"Gallery created..");
@@ -85,10 +85,12 @@ class Gallery extends BaseClass
             else{
                 $response = BaseClass::createResponse(0,"Gallery already exists..");
             }
-            return $response;
+        }
+        else{
+            $response = BaseClass::createResponse(0,$this->mysqli->error);
         }
         //End
-
+        return $response;
     }
 
     //generate gallery ID
@@ -109,8 +111,8 @@ class Gallery extends BaseClass
         if($result = $this->mysqli->query($sql)){
             $path = "albums/".$result->fetch_assoc()['GalleryName'];
             BaseClass::deleteDir($path);
-            $sql = "DELETE FROM Gallery WHERE Id = $galleryId";
-            if($this->mysqli->query($sql)){
+            $sql = "DELETE FROM Gallery WHERE Id = $galleryId; DELETE FROM GalleryImage WHERE GalleryId = $galleryId;";
+            if($this->runMultipleQuery($sql)['status'] == 1){
                 $response = BaseClass::createResponse(1,"Album deleted");
             }
             else{
@@ -128,56 +130,52 @@ class Gallery extends BaseClass
     function saveGalleryImage($galleryId){
         //todo-ambuj save image file then the details in GalleryImage Table
         $resp = array();
-        $sql="Select galleryName from Gallery where galleryID=$galleryId";
-        if($result2=$this->mysqli->query($sql))
-        {
+        $path2 = "albums/" .$galleryId."/SD/";
 
-            $path2 = "albums/" . $result2->fetch_assoc()['GalleryName']."/SD";
+        //have to save multiple images
+        foreach ($this->images as $img){
+            //$img is same as $this->coverImage in saveGallery function
+            //while saving the image save it with their id name
+            //  Eg:
+            //  $imageUpload->dstPath = $galleryPath;
+            //  $imageUpload->dstName = $this->generateImageId();
+            $imgId = $this->generateImageId();
+            $imageUpload = new ImageUpload($img);
+            $imageUpload->dstPath = $path2;
+            $imageUpload->dstName = $imgId;
 
-            //have to save multiple images
-            foreach ($this->images as $img){
-                //$img is same as $this->coverImage in saveGallery function
-                //while saving the image save it with their id name
-                //  Eg:
-                //  $imageUpload->dstPath = $galleryPath;
-                //  $imageUpload->dstName = $this->generateImageId();
-                $imgId=$this->generateImageId();
-                $imageUpload = new ImageUpload($img);
-                $imageUpload->dstPath = $path2;
-                $imageUpload->dstName = $imgId;
+            if($imageUpload->save())
+            {
+                $imageSavePath=$path2.$imgId.".jpg";
 
-                if($imageUpload->save())
+                // Get new sizes
+                list($width, $height) = getimagesize($imageSavePath);
+                list($newWidth, $newHeight) = $this->getScaledDimArray($imageSavePath);
+
+                // Load
+                $thumb = imagecreatetruecolor($newWidth, $newHeight);
+                $source = imagecreatefromjpeg($imageSavePath);
+
+                // Resize
+                imagecopyresized($thumb, $source, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+                // Output
+                $thumbsFilePath = "albums/".$galleryId."/Thumbs/".$imgId.".jpg";
+                imagejpeg($thumb,$thumbsFilePath);
+
+                $sql="insert into GalleryImage(Id,GalleryId,ImagePath,ThumbsPath,Caption,ImageWidth,ImageHeight) values($imgId,$galleryId,'$imageSavePath', '$thumbsFilePath', null,'".$width."','".$height."')";
+                if($result = $this->mysqli->query($sql))
                 {
-                    $imageSavePath=$path2."/".$imgId."jpg";
-
-                    // Get new sizes
-                    list($width, $height) = getimagesize($imageSavePath);
-                    list($newWidth, $newHeight) = $this->getScaledDimArray($imageSavePath);
-
-                    // Load
-                    $thumb = imagecreatetruecolor($newWidth, $newHeight);
-                    $source = imagecreatefromjpeg($imageSavePath);
-
-                    // Resize
-                    imagecopyresized($thumb, $source, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
-
-                    // Output
-                    imagejpeg($thumb);
-
-                    $sql="insert into GalleryImage(Id,GalleryId,ImagePath,Caption,ImageWidth,ImageHeight) values($imgId,$galleryId,'$imageSavePath', null,'".$width."','".$height.".')";
-                    if($result = $this->mysqli->query($sql))
-                    {
-                        $resp = BaseClass::createResponse(1,"Image saved..");
-                    }
-                    else
-                    {
-                       $resp = BaseClass::createResponse(0,"Image not saved..");
-                    }
-
+                    $resp = BaseClass::createResponse(1,"Image saved..");
                 }
+                else
+                {
+                    $resp = BaseClass::createResponse(0,"Image not saved..");
+                }
+
             }
-            return $resp;
         }
+        return $resp;
     }
 
     //delete gallery image
@@ -209,7 +207,7 @@ class Gallery extends BaseClass
     //generate image ID
     function generateImageId(){
         $imageCode = 1001;
-        $sql = "SELECT MAX(Id) AS 'imageCode' FROM Gallery";
+        $sql = "SELECT MAX(Id) AS 'imageCode' FROM GalleryImage";
         if($result = $this->mysqli->query($sql)){
             $imageCode = intval($result->fetch_assoc()['imageCode']);
             $imageCode = (($imageCode == 0) ? 1001 : $imageCode + 1);
@@ -263,6 +261,23 @@ class Gallery extends BaseClass
          * Success :   array('status'=>1,'message'=>'Success','result'=>array(data))
          * Fail    :   array('status'=>0,'message'=>'error message')
          */
+    }
+
+    //Run multiple sql queries
+    function runMultipleQuery($sql){
+        if ($this->mysqli->multi_query($sql) === TRUE) {
+            $response = $this->createResponse(1,"Successful");
+            while($this->mysqli->more_results()){
+                $this->mysqli->next_result();
+                if($result = $this->mysqli->store_result()){
+                    $result->free();
+                }
+            }
+        }
+        else{
+            $response = $this->createResponse(0,"Error occurred while uploading to the database: ".$this->mysqli->error);
+        }
+        return $response;
     }
 
 }
