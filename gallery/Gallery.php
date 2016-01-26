@@ -14,6 +14,7 @@ use Project\upload\ImageUpload;
 class Gallery extends BaseClass
 {
     var $galleryName;
+    var $galleryDescription;
     var $imageCount;
     var $coverImage;
     var $images = array();
@@ -73,7 +74,7 @@ class Gallery extends BaseClass
                 if($imageUpload->save()){
                     //ImageUpload class by default saves all the image to jpg
                     $imagePath = $path."cover.jpg";
-                    $sql="INSERT INTO Gallery(Id, GalleryName, ImageCount, CoverImagePath) VALUES ($gallID,'$this->galleryName',0,'$imagePath')";
+                    $sql="INSERT INTO Gallery(Id, GalleryName, GalleryDescription, ImageCount, CoverImagePath) VALUES ($gallID,'$this->galleryName', '$this->galleryDescription',0,'$imagePath')";
                     if($result = $this->mysqli->query($sql)){
                         $response = BaseClass::createResponse(1,"Gallery created..");
                     }
@@ -107,20 +108,16 @@ class Gallery extends BaseClass
 
     //Delete gallery
     function deleteGallery($galleryId){
-        $sql = "SELECT GalleryName FROM Gallery WHERE Id = $galleryId";
-        if($result = $this->mysqli->query($sql)){
-            $path = "albums/".$result->fetch_assoc()['GalleryName'];
+        $path = "albums/".$galleryId;
+        if(is_dir($path)){
             BaseClass::deleteDir($path);
-            $sql = "DELETE FROM Gallery WHERE Id = $galleryId; DELETE FROM GalleryImage WHERE GalleryId = $galleryId;";
-            if($this->runMultipleQuery($sql)['status'] == 1){
-                $response = BaseClass::createResponse(1,"Album deleted");
-            }
-            else{
-                $response = BaseClass::createResponse(0,$this->mysqli->error);
-            }
+        }
+        $sql = "DELETE FROM Gallery WHERE Id = $galleryId; DELETE FROM GalleryImage WHERE GalleryId = $galleryId;";
+        if($this->runMultipleQuery($sql)['status'] == 1){
+            $response = BaseClass::createResponse(1,"Album deleted");
         }
         else{
-            $response = BaseClass::createResponse(0,"Invalid request");
+            $response = BaseClass::createResponse(0,$this->mysqli->error);
         }
 
         return $response;
@@ -179,14 +176,20 @@ class Gallery extends BaseClass
     }
 
     //delete gallery image
-    function deleteGalleryImage($imgId)
+    function deleteGalleryImage($galleryId,$imgId)
     {
-        $sql="Select ImagePath from GalleryImage where Id=$imgId";
+        $sql="Select ImagePath,ThumbsPath from GalleryImage where Id=$imgId AND GalleryId = $galleryId";
         if($result = $this->mysqli->query($sql))
         {
-            $path=$result->fetch_assoc()['ImagePath'];
+            $row = $result->fetch_assoc();
+            $path = $row['ImagePath'];
+            $thumbsPath = $row['ThumbsPath'];
+
             if(file_exists($path)){
                 unlink($path);
+            }
+            if(file_exists($thumbsPath)){
+                unlink($thumbsPath);
             }
             $sql = "DELETE FROM GalleryImage WHERE Id = $imgId";
             if($this->mysqli->query($sql)){

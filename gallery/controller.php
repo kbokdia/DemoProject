@@ -32,11 +32,12 @@ do{
      * DG => Delete Gallery
      * AI => Add Image
      * DI => Delete Image
+     * GG => Get Galleries
      * EXAMPLE : T => test*/
 
     switch($type){
         case 'AG':
-            if(empty($_POST['GalleryName']) || !isset($_FILES['fileToUpload'])){
+            if(empty($_POST['GalleryName']) || empty($_POST['GalleryDescription']) || !isset($_FILES['fileToUpload'])){
                 $validate = false;
                 $response = BaseClass::createResponse(0,"Invalid Request");
             }
@@ -55,6 +56,13 @@ do{
                 $response = BaseClass::createResponse(0,"Invalid Request");
             }
             break;
+
+        case 'DI':
+            if(empty($_POST['GalleryId']) || empty($_POST['ImageId']) ){
+                $validate = false;
+                $response = BaseClass::createResponse(0,"Invalid Request");
+            }
+            break;
     }
 
 }while(0);
@@ -65,8 +73,12 @@ if($validate){
 
     switch($type){
         case 'AG':
+            //set mysql safe data
+            $_POST = $gallery->escapeData($_POST);
+
             //set variables
-            $gallery->galleryName = preg_replace("/[^a-zA-Z0-9]/","",$_POST['GalleryName']);;
+            $gallery->galleryName = preg_replace("/[^a-zA-Z0-9]/","",$_POST['GalleryName']);
+            $gallery->galleryDescription = $_POST['GalleryDescription'];
             $gallery->coverImage = $_FILES['fileToUpload'];
 
             //Perform action
@@ -94,6 +106,16 @@ if($validate){
 
             //Perform action
             $response = $gallery->saveGalleryImage($galleryId);
+            break;
+
+        case 'DI':
+            $galleryId = $_POST['GalleryId'];
+            $imageId = $_POST['ImageId'];
+            $response = $gallery->deleteGalleryImage($galleryId,$imageId);
+            break;
+
+        case 'GG':
+            $response = $gallery->getGalleries();
             break;
 
         case 'T':
