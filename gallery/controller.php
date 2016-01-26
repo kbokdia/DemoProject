@@ -33,6 +33,7 @@ do{
      * AI => Add Image
      * DI => Delete Image
      * GG => Get Galleries
+     * GI => Get Gallery Info
      * EXAMPLE : T => test*/
 
     switch($type){
@@ -63,13 +64,14 @@ do{
                 $response = BaseClass::createResponse(0,"Invalid Request");
             }
             break;
-        case 'GG':
-            if(empty($_POST['getGallery']))
+
+        case 'GI':
+            if(empty($_POST['GalleryId']))
             {
                 $validate = false;
                 $response = BaseClass::createResponse(0,"Invalid Request");
             }
-            break;
+        break;
     }
 
 }while(0);
@@ -116,13 +118,18 @@ if($validate){
             break;
 
         case 'DI':
-            $galleryId = $_POST['GalleryId'];
+            $galleryId = intval($_POST['GalleryId']);
             $imageId = $_POST['ImageId'];
             $response = $gallery->deleteGalleryImage($galleryId,$imageId);
             break;
 
         case 'GG':
             $response = $gallery->getGalleries();
+            break;
+
+        case 'GI':
+            $galleryId = intval($_POST['GalleryId']);
+            $response = $gallery->getGalleryInfo($galleryId);
             break;
 
         case 'T':
