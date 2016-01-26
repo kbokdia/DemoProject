@@ -1,0 +1,26 @@
+.text-center{
+    text-align: center;
+}
+.text-right{
+    text-align: right;
+}
+.navbar-heading{
+    margin-top: 4px;
+}
+.position-fixed{
+    position: fixed;
+}
+.container-top-padding{
+    padding-top: 80px;
+}
+.row-top-margin{
+    margin-top: 20px;
+}
+.card-img-top{
+    width:100%;
+    height:auto;
+    max-height: 190px;
+}
+.btn-full-width{
+    width: 100%;
+}
