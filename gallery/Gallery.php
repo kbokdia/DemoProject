@@ -233,4 +233,36 @@ class Gallery extends BaseClass
         return NULL;
     }
 
+    //Get galleries
+    function getGalleries(){
+        /*
+         * Response array
+         * Success :   array('status'=>1,'message'=>'Success','result'=>array(data))
+         * Fail    :   array('status'=>0,'message'=>'error message')
+         */
+
+        $sql = "SELECT * FROM Gallery";
+        if($result = $this->mysqli->query($sql)){
+            $i = 0;
+            $response = BaseClass::createResponse(1,"Success");
+            while($row = $result->fetch_assoc()){
+                $response['result'][$i++] = $row;
+            }
+        }
+        else{
+            $response = BaseClass::createResponse(0,$this->mysqli->error);
+        }
+        return $response;
+    }
+
+    //Get gallery info : This function is to get particular information about the gallery
+    function getGalleryInfo($galleryId){
+        //Get data from GalleryImage table using $galleryId variable
+        /*
+         * Response array
+         * Success :   array('status'=>1,'message'=>'Success','result'=>array(data))
+         * Fail    :   array('status'=>0,'message'=>'error message')
+         */
+    }
+
 }
