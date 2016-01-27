@@ -12,13 +12,25 @@ var pageGallery = {
 
     //Todo-Ambuj
     //Implement add gallery using $.post
-    addGallery: function(name, description){
+    addGallery: function(name, description) {
+        $.post(pageGallery.baseURL, {
+            type: 'AG',
+            galleryName: name,
+            galleryDescription: description
 
+        },function(data) {
+            console.log(data);
+        });
     },
 
     //Implement delete gallery using $.post
     deleteGallery: function(galleryId){
-
+        $.post(pageGallery.baseURL, {
+            type: 'DG',
+            galleryId: galleryId
+        }, function(data){
+            console.log(data);
+        });
     }
 
 };
@@ -26,4 +38,6 @@ var pageGallery = {
 $(document).ready(function () {
     //Make api requests
     pageGallery.getGalleries();
+    pageGallery.addGallery('test','test gallery');
+    pageGallery.deleteGallery(1);
 });
