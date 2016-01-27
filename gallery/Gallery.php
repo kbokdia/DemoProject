@@ -246,6 +246,7 @@ class Gallery extends BaseClass
         if($result = $this->mysqli->query($sql)){
             $i = 0;
             $response = BaseClass::createResponse(1,"Success");
+            $response['result'] = array();
             while($row = $result->fetch_assoc()){
                 $response['result'][$i++] = $row;
             }
@@ -269,6 +270,7 @@ class Gallery extends BaseClass
         {
             $i=0;
             $response = BaseClass::createResponse(1,"Success");
+            $response['result'] = array();
             while($row = $result->fetch_assoc())
             {
                 $response['result'][$i++] = $row;
