@@ -14,8 +14,12 @@ var pageGallery = {
     //Implement add gallery using $.post
     addGallery: function(name, description){
 
-    }
+    },
 
+    //Implement delete gallery using $.post
+    deleteGallery: function(galleryId){
+
+    }
 
 };
 
