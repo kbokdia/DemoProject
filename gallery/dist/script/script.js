@@ -8,7 +8,15 @@ var pageGallery = {
         }, function (data) {
             console.log(data);
         });
+    },
+
+    //Todo-Ambuj
+    //Implement add gallery using $.post
+    addGallery: function(name, description){
+
     }
+
+
 };
 
 $(document).ready(function () {
