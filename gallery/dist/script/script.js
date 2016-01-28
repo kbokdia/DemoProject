@@ -15,7 +15,7 @@ var pageGallery = {
     deleteGallery: function(galleryId){
         var confirm = confirm("Are your sure ?");
         if(confirm){
-            pageGallery.baseURL += "?type=AG";
+            pageGallery.baseURL += "?type=DG";
             $.post(pageGallery.baseURL, {
                 GalleryId: galleryId
             }, function(data){
