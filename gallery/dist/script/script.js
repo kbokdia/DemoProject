@@ -77,7 +77,7 @@ $(document).ready(function () {
         },
         success : function(){
             //Code to perform after the success of form submit
-            $('#addAlbumModal').modal('hide');
+            $('#addGalleryModal').modal('hide');
             $("#loading").addClass("hidden");
         },
         error : function(){
