@@ -72,6 +72,7 @@ $(document).ready(function () {
     $("#addAlbumModal").ajaxForm({
        beforeSubmit: function(){
             //Code to check validation & stop submit if validation fails
+           pageValidation.validateForm("#addAlbumModal");
        },
         uploadProgress : function(){
             //Code to show progress bar

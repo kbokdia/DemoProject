@@ -11,7 +11,8 @@
 
     <!-- Bootstrap & font-awesome min CSS -->
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">-->
-    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css"
+          crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
     <!-- Local CSS -->
@@ -42,7 +43,9 @@
 <div class="container container-top-padding">
     <div class="row text-right">
         <div class="col-xs-12">
-            <button type="button" class="btn btn-success-outline" onclick="pageGallery.openAddGalleryModal()"><i class="fa fa-plus"></i>&nbsp;Add Album</button>
+            <button type="button" class="btn btn-success-outline" onclick="pageGallery.openAddGalleryModal()"><i
+                    class="fa fa-plus"></i>&nbsp;Add Album
+            </button>
         </div>
         <div class="clearfix"></div>
     </div>
@@ -50,20 +53,28 @@
         <div class="col-md-4 col-sm-12">
             <div class="card">
                 <img class="card-img-top" src="albums/sample/cover.jpg" data-src="..." alt="Card image cap">
+
                 <div class="card-block">
                     <h4 class="card-title">Event Name</h4>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
 
-                    <button onclick="pageGallery.deleteGallery(1001)" type="button" class="btn btn-danger btn-full-width">Delete</button>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+
+                    <button onclick="pageGallery.deleteGallery(1001)" type="button"
+                            class="btn btn-danger btn-full-width">Delete
+                    </button>
                 </div>
             </div>
         </div>
         <div class="col-md-4 col-sm-12">
             <div class="card">
                 <img class="card-img-top" src="albums/sample1/cover.jpg" data-src="..." alt="Card image cap">
+
                 <div class="card-block">
                     <h4 class="card-title">Event Name</h4>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
 
                     <button type="button" class="btn btn-danger btn-full-width">Delete</button>
                 </div>
@@ -72,9 +83,12 @@
         <div class="col-md-4 col-sm-12">
             <div class="card">
                 <img class="card-img-top" src="albums/sample2/cover.jpg" data-src="..." alt="Card image cap">
+
                 <div class="card-block">
                     <h4 class="card-title">Event Name</h4>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
 
                     <button type="button" class="btn btn-danger btn-full-width">Delete</button>
                 </div>
@@ -84,43 +98,50 @@
 </div>
 
 <!-- Add Gallery Modal -->
-<div class="modal fade" id="addGalleryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="addGalleryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title text-center" id="AGHeader">Add Album</h4>
-            </div>
-            <div class="modal-body">
-                <form id="addAlbumModal" action="controller.php?type=AG" method="post" enctype="multipart/form-data">
+        <form id="addAlbumModal" action="controller.php?type=AG" method="post" enctype="multipart/form-data" novalidate>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title text-center" id="AGHeader">Add Album</h4>
+                </div>
+                <div class="modal-body">
                     <fieldset class="form-group">
                         <label for="albumName">Album Name *</label>
-                        <input type="text" class="form-control" name="GalleryName" id="albumName" placeholder="Enter name of album">
+                        <input type="text" class="form-control" name="GalleryName" id="albumName"
+                               placeholder="Enter name of album" required>
+
                         <div class="error"></div>
                     </fieldset>
                     <fieldset class="form-group">
                         <label for="albumDescription">Album Description *</label>
-                        <input type="text" class="form-control" name="GalleryDescription" id="albumDescription" placeholder="Enter name of album">
+                        <input type="text" class="form-control" name="GalleryDescription" id="albumDescription"
+                               placeholder="Enter name of album" required>
+
                         <div class="error"></div>
                         <small class="text-muted">Please provide a brief description about the event.</small>
                     </fieldset>
                     <fieldset class="form-group text-center">
-                        <button type="button" id="coverImageBtn" class="btn btn-primary" onclick="pageGallery.openFileInput(coverImageFile)">Choose Cover Image *</button>
+                        <button type="button" id="coverImageBtn" class="btn btn-primary"
+                                onclick="pageGallery.openFileInput(coverImageFile)">Choose Cover Image *
+                        </button>
                         <div class="error"></div>
-                        <input type="file" id="coverImageFile" name="fileToUpload" value="" class="hidden">
+                        <input type="file" id="coverImageFile" name="fileToUpload" value="" class="hidden" required>
                     </fieldset>
                     <fieldset class="form-group text-center" id="image-view">
                         <img src="albums/cover-image.jpg" alt="Cover Image" class="img-rounded coverImage"/>
                     </fieldset>
-                </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-success">Submit</button>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 
@@ -138,6 +159,7 @@
 <script rel="script" src="../dist/script/load-image.min.js"></script>
 <script rel="script" src="../dist/script/jquery-form.min.js"></script>
 <script rel="script" src="dist/script/script.js"></script>
+<script rel="script" src="../dist/script/validation.js"></script>
 
 </body>
 </html>

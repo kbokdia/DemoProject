@@ -227,3 +227,7 @@
 .show{
     display: block;
 }
+
+.error{
+    color: #B22222;
+}
