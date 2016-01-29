@@ -72,7 +72,7 @@ $(document).ready(function () {
     $("#addAlbumModal").ajaxForm({
         beforeSubmit: function(){
             //Code to check validation & stop submit if validation fails
-            pageValidation.validateForm("#addAlbumModal");
+            pageValidation.validateForm("#addGalleryModal");
             $("#loading").removeClass("hidden");
         },
         success : function(){
