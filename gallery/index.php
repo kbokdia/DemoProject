@@ -112,14 +112,14 @@
                 <div class="modal-body">
                     <fieldset class="form-group">
                         <label for="albumName">Album Name *</label>
-                        <input type="text" class="form-control" name="GalleryName" id="albumName"
+                        <input type="text" class="form-control alphabet"  name="GalleryName" id="albumName"
                                placeholder="Enter name of album" required>
 
                         <div class="error"></div>
                     </fieldset>
                     <fieldset class="form-group">
                         <label for="albumDescription">Album Description *</label>
-                        <input type="text" class="form-control" name="GalleryDescription" id="albumDescription"
+                        <input type="text" class="form-control alphabet" name="GalleryDescription" id="albumDescription"
                                placeholder="Enter name of album" required>
 
                         <div class="error"></div>

@@ -73,10 +73,12 @@ $(document).ready(function () {
         beforeSubmit: function(){
             //Code to check validation & stop submit if validation fails
             pageValidation.validateForm("#addAlbumModal");
+            $("#loading").removeClass("hidden");
         },
         success : function(){
             //Code to perform after the success of form submit
             $('#addAlbumModal').modal('hide');
+            $("#loading").addClass("hidden");
         },
         error : function(){
             //Code in case of an error
