@@ -1,0 +1,229 @@
+.loader-container {
+    background-color: #f7f7f9;
+    display: table;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1050;
+    position: fixed;
+    color: #000;
+}
+
+.loader {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+.loader span {
+    margin-left: 10px;
+    font-size: 22px;
+}
+.loader span.L {
+    -o-animation: loadingAnimation 1.6s ease-in-out infinite;
+    -o-animation-delay: 0.25s;
+    -moz-animation: loadingAnimation 1.6s ease-in-out infinite;
+    -moz-animation-delay: 0.25s;
+    -webkit-animation: loadingAnimation 1.6s ease-in-out infinite;
+    -webkit-animation-delay: 0.25s;
+    animation: loadingAnimation 1.6s ease-in-out infinite;
+    animation-delay: 0.25s;
+}
+.loader span.O {
+    -o-animation: loadingAnimation 1.6s ease-in-out infinite;
+    -o-animation-delay: 0.5s;
+    -moz-animation: loadingAnimation 1.6s ease-in-out infinite;
+    -moz-animation-delay: 0.5s;
+    -webkit-animation: loadingAnimation 1.6s ease-in-out infinite;
+    -webkit-animation-delay: 0.5s;
+    animation: loadingAnimation 1.6s ease-in-out infinite;
+    animation-delay: 0.5s;
+}
+.loader span.A {
+    -o-animation: loadingAnimation 1.6s ease-in-out infinite;
+    -o-animation-delay: 0.75s;
+    -moz-animation: loadingAnimation 1.6s ease-in-out infinite;
+    -moz-animation-delay: 0.75s;
+    -webkit-animation: loadingAnimation 1.6s ease-in-out infinite;
+    -webkit-animation-delay: 0.75s;
+    animation: loadingAnimation 1.6s ease-in-out infinite;
+    animation-delay: 0.75s;
+}
+.loader span.D {
+    -o-animation: loadingAnimation 1.6s ease-in-out infinite;
+    -o-animation-delay: 1s;
+    -moz-animation: loadingAnimation 1.6s ease-in-out infinite;
+    -moz-animation-delay: 1s;
+    -webkit-animation: loadingAnimation 1.6s ease-in-out infinite;
+    -webkit-animation-delay: 1s;
+    animation: loadingAnimation 1.6s ease-in-out infinite;
+    animation-delay: 1s;
+}
+.loader span.I {
+    -o-animation: loadingAnimation 1.6s ease-in-out infinite;
+    -o-animation-delay: 1.25s;
+    -moz-animation: loadingAnimation 1.6s ease-in-out infinite;
+    -moz-animation-delay: 1.25s;
+    -webkit-animation: loadingAnimation 1.6s ease-in-out infinite;
+    -webkit-animation-delay: 1.25s;
+    animation: loadingAnimation 1.6s ease-in-out infinite;
+    animation-delay: 1.25s;
+}
+.loader span.N {
+    -o-animation: loadingAnimation 1.6s ease-in-out infinite;
+    -o-animation-delay: 1.5s;
+    -moz-animation: loadingAnimation 1.6s ease-in-out infinite;
+    -moz-animation-delay: 1.5s;
+    -webkit-animation: loadingAnimation 1.6s ease-in-out infinite;
+    -webkit-animation-delay: 1.5s;
+    animation: loadingAnimation 1.6s ease-in-out infinite;
+    animation-delay: 1.5s;
+}
+.loader span.G {
+    -o-animation: loadingAnimation 1.6s ease-in-out infinite;
+    -o-animation-delay: 1.75s;
+    -moz-animation: loadingAnimation 1.6s ease-in-out infinite;
+    -moz-animation-delay: 1.75s;
+    -webkit-animation: loadingAnimation 1.6s ease-in-out infinite;
+    -webkit-animation-delay: 1.75s;
+    animation: loadingAnimation 1.6s ease-in-out infinite;
+    animation-delay: 1.75s;
+}
+.loader span:first-child {
+    margin-left: 0;
+}
+
+@-webkit-keyframes loadingAnimation {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale(0);
+        -moz-transform: scale(0);
+        transform: scale(0);
+    }
+    12.5% {
+        opacity: .12;
+        -webkit-transform: scale(0.5);
+        -moz-transform: scale(0.5);
+        transform: scale(0.5);
+    }
+    25% {
+        opacity: .2;
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        transform: scale(1);
+    }
+    80% {
+        opacity: .80;
+        -webkit-transform: scale(0.5);
+        -moz-transform: scale(0.5);
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: scale(0);
+        -moz-transform: scale(0);
+        transform: scale(0);
+    }
+}
+@-moz-keyframes loadingAnimation {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale(0);
+        -moz-transform: scale(0);
+        transform: scale(0);
+    }
+    12.5% {
+        opacity: .12;
+        -webkit-transform: scale(0.5);
+        -moz-transform: scale(0.5);
+        transform: scale(0.5);
+    }
+    25% {
+        opacity: .2;
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        transform: scale(1);
+    }
+    80% {
+        opacity: .80;
+        -webkit-transform: scale(0.5);
+        -moz-transform: scale(0.5);
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: scale(0);
+        -moz-transform: scale(0);
+        transform: scale(0);
+    }
+}
+@-ms-keyframes loadingAnimation {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale(0);
+        -moz-transform: scale(0);
+        transform: scale(0);
+    }
+    12.5% {
+        opacity: .12;
+        -webkit-transform: scale(0.5);
+        -moz-transform: scale(0.5);
+        transform: scale(0.5);
+    }
+    25% {
+        opacity: .2;
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        transform: scale(1);
+    }
+    80% {
+        opacity: .80;
+        -webkit-transform: scale(0.5);
+        -moz-transform: scale(0.5);
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: scale(0);
+        -moz-transform: scale(0);
+        transform: scale(0);
+    }
+}
+@keyframes loadingAnimation {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale(0);
+        -moz-transform: scale(0);
+        transform: scale(0);
+    }
+    12.5% {
+        opacity: .12;
+        -webkit-transform: scale(0.5);
+        -moz-transform: scale(0.5);
+        transform: scale(0.5);
+    }
+    25% {
+        opacity: .2;
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        transform: scale(1);
+    }
+    80% {
+        opacity: .80;
+        -webkit-transform: scale(0.5);
+        -moz-transform: scale(0.5);
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: scale(0);
+        -moz-transform: scale(0);
+        transform: scale(0);
+    }
+}
+
+.hidden{
+    display: none;
+}
+
+.show{
+    display: block;
+}

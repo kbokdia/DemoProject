@@ -16,8 +16,25 @@
 
     <!-- Local CSS -->
     <link rel="stylesheet" href="dist/css/style.css">
+    <link rel="stylesheet" href="../dist/css/style.css">
 </head>
 <body>
+
+<div class="loader-container" id="loading">
+    <div class="loader">
+        <span class="L">L</span>
+        <span class="O">O</span>
+        <span class="A">A</span>
+        <span class="D">D</span>
+        <span class="I">I</span>
+        <span class="N">N</span>
+        <span class="G">G</span>
+        <span class="L">.</span>
+        <span class="O">.</span>
+        <span class="A">.</span>
+    </div>
+</div>
+
 <nav class="navbar navbar-fixed-top navbar-light bg-faded">
     <a class="navbar-brand position-fixed" href="#"><i class="fa fa-chevron-left fa-lg"></i>&nbsp;Back</a>
     <h4 class="text-center navbar-heading">Gallery</h4>
@@ -77,22 +94,25 @@
                 <h4 class="modal-title text-center" id="AGHeader">Add Album</h4>
             </div>
             <div class="modal-body">
-                <form id="addAlbumModal" action="#" method="post" enctype="multipart/form-data">
+                <form id="addAlbumModal" action="controller.php?type=AG" method="post" enctype="multipart/form-data">
                     <fieldset class="form-group">
-                        <label for="albumName">Album Name</label>
-                        <input type="text" class="form-control" id="albumName" placeholder="Enter name of album">
+                        <label for="albumName">Album Name *</label>
+                        <input type="text" class="form-control" name="GalleryName" id="albumName" placeholder="Enter name of album">
+                        <div class="error"></div>
                     </fieldset>
                     <fieldset class="form-group">
-                        <label for="albumDescription">Album Description</label>
-                        <input type="text" class="form-control" id="albumDescription" placeholder="Enter name of album">
+                        <label for="albumDescription">Album Description *</label>
+                        <input type="text" class="form-control" name="GalleryDescription" id="albumDescription" placeholder="Enter name of album">
+                        <div class="error"></div>
                         <small class="text-muted">Please provide a brief description about the event.</small>
                     </fieldset>
                     <fieldset class="form-group text-center">
-                        <button type="button" id="coverImageBtn" class="btn btn-primary" onclick="pageGallery.openFileInput(coverImageFile)">Choose Cover Image</button>
-                        <input type="file" id="coverImageFile" value="" class="hidden">
+                        <button type="button" id="coverImageBtn" class="btn btn-primary" onclick="pageGallery.openFileInput(coverImageFile)">Choose Cover Image *</button>
+                        <div class="error"></div>
+                        <input type="file" id="coverImageFile" name="fileToUpload" value="" class="hidden">
                     </fieldset>
                     <fieldset class="form-group text-center" id="image-view">
-                        <img src="albums/cover-image.jpg" alt="Cover Image" class="img-rounded coverImage">
+                        <img src="albums/cover-image.jpg" alt="Cover Image" class="img-rounded coverImage"/>
                     </fieldset>
                 </form>
             </div>
@@ -112,10 +132,12 @@
 <!-- Bootstrap min JS -->
 <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>-->
 <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js" crossorigin="anonymous"></script>
+<script src=""
 
 <!-- Local Script -->
+<script rel="script" src="../dist/script/load-image.min.js"></script>
+<script rel="script" src="../dist/script/jquery-form.min.js"></script>
 <script rel="script" src="dist/script/script.js"></script>
-<script rel="script" src="dist/script/load-image.min.js"></script>
 
 </body>
 </html>

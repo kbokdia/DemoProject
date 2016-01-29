@@ -10,7 +10,6 @@ var pageGallery = {
         });
     },
 
-    //Todo-Ambuj
     //Implement delete gallery using $.post
     deleteGallery: function(galleryId){
         var confirm = confirm("Are your sure ?");
@@ -58,10 +57,35 @@ $(document).ready(function () {
                         maxWidth: 300,
                         maxHeight: 300,
                         canvas: true,
-                        orientation: orientation,
+                        orientation: orientation
                     } // Options
                 );
             }
         );
+        if($("#coverImageFile").val() == "")
+        {
+            $("#image-view").html("<img src='albums/cover-image.jpg' alt='Cover Image' class='img-rounded coverImage'/>");
+        }
     });
+
+    //TODO Ambuj
+    $("#addAlbumModal").ajaxForm({
+       beforeSubmit: function(){
+            //Code to check validation & stop submit if validation fails
+       },
+        uploadProgress : function(){
+            //Code to show progress bar
+        },
+        success : function(){
+            //Code to perform after the success of form submit
+        },
+        error : function(){
+            //Code in case of an error
+        }
+    });
+
+});
+
+$(window).load(function() {
+    $("#loading").addClass("hidden");
 });
