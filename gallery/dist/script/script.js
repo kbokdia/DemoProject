@@ -70,12 +70,14 @@ $(document).ready(function () {
 
     //TODO Ambuj
     $("#addAlbumModal").ajaxForm({
-       beforeSubmit: function(){
+       beforeSubmit: function(formData){
             //Code to check validation & stop submit if validation fails
-           pageValidation.validateForm("#addAlbumModal");
+
        },
         uploadProgress : function(){
             //Code to show progress bar
+            $(".cover").fadeIn(100);
+            $("#pageLoading").addClass("loader");
         },
         success : function(){
             //Code to perform after the success of form submit
