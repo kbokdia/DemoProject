@@ -22,11 +22,46 @@ var pageGallery = {
                 console.log(data);
             });
         }
-    }
+    },
 
+    openAddGalleryModal : function(){
+        $('#addGalleryModal').modal('show');
+    },
+
+    openFileInput : function(id){
+        console.log(id);
+        $(id).click();
+    }
 };
 
 $(document).ready(function () {
     //Make api requests
     pageGallery.getGalleries();
+
+    //Load Local Cover Image on Change
+    $("#coverImageFile").change(function(e){
+        loadImage.parseMetaData(
+            e.target.files[0],
+            function(data){
+                console.log(data);
+                var orientation = false;
+                if(data.exif){
+                    orientation = data.exif.get('Orientation');
+                }
+                loadImage(
+                    e.target.files[0],
+                    function (img) {
+                        console.log(img);
+                        $("#image-view").html(img);
+                    },
+                    {
+                        maxWidth: 300,
+                        maxHeight: 300,
+                        canvas: true,
+                        orientation: orientation,
+                    } // Options
+                );
+            }
+        );
+    });
 });

@@ -24,3 +24,10 @@
 .btn-full-width{
     width: 100%;
 }
+.hidden{
+    display: none;
+}
+.coverImage{
+    width: 40%;
+    height: auto;
+}

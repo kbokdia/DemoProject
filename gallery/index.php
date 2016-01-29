@@ -25,7 +25,7 @@
 <div class="container container-top-padding">
     <div class="row text-right">
         <div class="col-xs-12">
-            <button type="button" class="btn btn-success-outline"><i class="fa fa-plus"></i>&nbsp;Add Album</button>
+            <button type="button" class="btn btn-success-outline" onclick="pageGallery.openAddGalleryModal()"><i class="fa fa-plus"></i>&nbsp;Add Album</button>
         </div>
         <div class="clearfix"></div>
     </div>
@@ -66,6 +66,44 @@
     </div>
 </div>
 
+<!-- Add Gallery Modal -->
+<div class="modal fade" id="addGalleryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title text-center" id="AGHeader">Add Album</h4>
+            </div>
+            <div class="modal-body">
+                <form id="addAlbumModal" action="#" method="post" enctype="multipart/form-data">
+                    <fieldset class="form-group">
+                        <label for="albumName">Album Name</label>
+                        <input type="text" class="form-control" id="albumName" placeholder="Enter name of album">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label for="albumDescription">Album Description</label>
+                        <input type="text" class="form-control" id="albumDescription" placeholder="Enter name of album">
+                        <small class="text-muted">Please provide a brief description about the event.</small>
+                    </fieldset>
+                    <fieldset class="form-group text-center">
+                        <button type="button" id="coverImageBtn" class="btn btn-primary" onclick="pageGallery.openFileInput(coverImageFile)">Choose Cover Image</button>
+                        <input type="file" id="coverImageFile" value="" class="hidden">
+                    </fieldset>
+                    <fieldset class="form-group text-center" id="image-view">
+                        <img src="albums/cover-image.jpg" alt="Cover Image" class="img-rounded coverImage">
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Script Files -->
 
 <!-- JQuery min JS -->
@@ -77,6 +115,7 @@
 
 <!-- Local Script -->
 <script rel="script" src="dist/script/script.js"></script>
+<script rel="script" src="dist/script/load-image.min.js"></script>
 
 </body>
 </html>
