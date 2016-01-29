@@ -76,6 +76,7 @@ $(document).ready(function () {
         },
         success : function(){
             //Code to perform after the success of form submit
+            $('#addAlbumModal').modal('hide');
         },
         error : function(){
             //Code in case of an error
