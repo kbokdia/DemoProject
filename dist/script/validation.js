@@ -79,6 +79,50 @@ var pageValidation = {
                     console.log(isValid);
 
                 }
+
+                //Validation for gallery name(Ambuj)
+                else if($(this).is(".GalleryName"))
+                {
+                    if(elemValue="")
+                    {
+                        pageValidation.addError(this,"Required");
+                        isValid=false;
+                    }
+                    else{
+                        var regEx = /^[a-zA-Z0-9]*$/g;
+                        if(regEx.test(elemValue)){
+                            pageValidation.addError(this,"Only Alphabets and Numbers");
+                            isValid = false;
+                        }
+                    }
+                }
+
+                //Validation for gallery description(Ambuj)
+                else if($(this).is(".GalleryDescription")){
+                    if(elemValue="")
+                    {
+                        pageValidation.addError(this,"Required");
+                        isValid=false;
+                    }
+                    else{
+                        var regEx = /^[a-zA-Z]*$/g;
+                        if(regEx.test(elemValue)){
+                            pageValidation.addError(this,"Only Alphabets");
+                            isValid = false;
+                        }
+                    }
+                }
+
+                //Validation for cover image(Ambuj)
+                else if($(this).is(".fileToUpload"))
+                {
+                    if(elemValue="")
+                    {
+                        pageValidation.addError(this,"Required");
+                        isValid=false;
+                    }
+                }
+
             }
         });
         return isValid;
