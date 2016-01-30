@@ -3,7 +3,7 @@
     display: table;
     width: 100vw;
     height: 100vh;
-    z-index: 1050;
+    z-index: 1060;
     position: fixed;
     color: #000;
 }
@@ -230,4 +230,19 @@
 
 .error{
     color: #B22222;
+}
+
+.alertDiv{
+    left: -3px;
+    top: 40px;
+    width: 100%;
+    text-align: center;
+    z-index: 9999;
+    position: fixed;
+}
+
+.alert{
+    max-width: 50% !important;
+    margin: auto;
+
 }

@@ -86,7 +86,7 @@ if($validate){
             $_POST = $gallery->escapeData($_POST);
 
             //set variables
-            $gallery->galleryName = preg_replace("/[^a-zA-Z0-9]/","",$_POST['GalleryName']);
+            $gallery->galleryName = $_POST['GalleryName'];
             $gallery->galleryDescription = $_POST['GalleryDescription'];
             $gallery->coverImage = $_FILES['fileToUpload'];
 

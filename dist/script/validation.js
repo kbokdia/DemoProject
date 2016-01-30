@@ -63,9 +63,25 @@ var pageValidation = {
                         isValid = false;
                     }
                     else{
-                        var regEx = /^[a-zA-Z]*$/g;
-                        if(regEx.test(elemValue)){
+                        regEx = /^[a-zA-Z. ]*$/g;
+                        if(!regEx.test(elemValue)){
                             pageValidation.addError(this,"Only Alphabets");
+                            isValid = false;
+                        }
+                    }
+                }
+
+                //Not Special Char Validation
+                else if($(this).is(".noSpecialChar")){
+
+                    if(elemValue == ""){
+                        pageValidation.addError(this,"Required");
+                        isValid = false;
+                    }
+                    else{
+                        regEx = /^[a-zA-Z0-9'. ]*$/g;
+                        if(!regEx.test(elemValue)){
+                            pageValidation.addError(this,"No Special Characters Allowed");
                             isValid = false;
                         }
                     }

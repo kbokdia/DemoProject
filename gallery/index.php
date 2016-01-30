@@ -41,6 +41,9 @@
     <h4 class="text-center navbar-heading">Gallery</h4>
 </nav>
 <div class="container container-top-padding">
+    <div class="alertDiv" id="alertOuterDiv">
+
+    </div>
     <div class="row text-right">
         <div class="col-xs-12">
             <button type="button" class="btn btn-success-outline" onclick="pageGallery.openAddGalleryModal()"><i
@@ -49,51 +52,8 @@
         </div>
         <div class="clearfix"></div>
     </div>
-    <div class="row row-top-margin">
-        <div class="col-md-4 col-sm-12">
-            <div class="card">
-                <img class="card-img-top" src="albums/sample/cover.jpg" data-src="..." alt="Card image cap">
+    <div class="row row-top-margin" id="albumsDiv">
 
-                <div class="card-block">
-                    <h4 class="card-title">Event Name</h4>
-
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-
-                    <button onclick="pageGallery.deleteGallery(1001)" type="button"
-                            class="btn btn-danger btn-full-width">Delete
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-12">
-            <div class="card">
-                <img class="card-img-top" src="albums/sample1/cover.jpg" data-src="..." alt="Card image cap">
-
-                <div class="card-block">
-                    <h4 class="card-title">Event Name</h4>
-
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-
-                    <button type="button" class="btn btn-danger btn-full-width">Delete</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-12">
-            <div class="card">
-                <img class="card-img-top" src="albums/sample2/cover.jpg" data-src="..." alt="Card image cap">
-
-                <div class="card-block">
-                    <h4 class="card-title">Event Name</h4>
-
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-
-                    <button type="button" class="btn btn-danger btn-full-width">Delete</button>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -112,14 +72,14 @@
                 <div class="modal-body">
                     <fieldset class="form-group">
                         <label for="albumName">Album Name *</label>
-                        <input type="text" class="form-control alphabet"  name="GalleryName" id="albumName"
+                        <input type="text" class="form-control noSpecialChar" name="GalleryName" id="albumName"
                                placeholder="Enter name of album" required>
 
                         <div class="error"></div>
                     </fieldset>
                     <fieldset class="form-group">
                         <label for="albumDescription">Album Description *</label>
-                        <input type="text" class="form-control alphabet" name="GalleryDescription" id="albumDescription"
+                        <input type="text" class="form-control noSpecialChar" name="GalleryDescription" id="albumDescription"
                                placeholder="Enter name of album" required>
 
                         <div class="error"></div>
