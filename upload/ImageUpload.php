@@ -87,7 +87,19 @@ class ImageUpload
             }
         }
 
-        return $image;
+        // Get new sizes
+        $width = imagesx($image);
+        $height = imagesy($image);
+        //list($width, $height) = getimagesize($this->file['tmp_name']);
+        list($newWidth, $newHeight) = $this->getScaledDimArray($image,800);
+
+        // Load
+        $resizeImage = imagecreatetruecolor($newWidth, $newHeight);
+
+        // Resize
+        imagecopyresized($resizeImage, $image, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+        return $resizeImage;
     }
 
 
@@ -107,6 +119,23 @@ class ImageUpload
         }
 
         return $this->success;
+    }
+
+    //Scale image proportionately
+    function getScaledDimArray($img,$max_w = null, $max_h = null){
+        if(is_null($max_h)){
+            $max_h = $max_w;
+        }
+        if (!is_null($img)){
+            $img_w = imagesx($img);
+            $img_h = imagesy($img);
+            //list($img_w,$img_h) = getimagesize($img);
+            $f = min($max_w/$img_w, $max_h/$img_h, 1);
+            $w = round($f * $img_w);
+            $h = round($f * $img_h);
+            return array($w,$h);
+        }
+        return NULL;
     }
 
     function createResponse($status,$message){
