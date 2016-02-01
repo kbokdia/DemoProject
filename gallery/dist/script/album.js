@@ -9,7 +9,8 @@ pageAlbum = {
     getImages: function(){
         //POST Request Type : GI
         //GalleryId => pageAlbum.galleryCode
-        var url = pageGallery.baseURL + "?type=GI";
+        var url = pageGallery.baseURL + "?type=GI",
+            galleryId = pageAlbum.galleryCode;
     },
 
     //Implement delete image functionality
