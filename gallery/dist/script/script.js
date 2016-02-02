@@ -1,20 +1,15 @@
 var pageGallery = {
     baseURL : "controller.php",
-
     loginStatus : false,
-
     showSuccessNotification : function(boldMsg,msg){
         $("#alertOuterDiv").html("<div class='alert alert-success alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong> " + boldMsg + " </strong>" + msg + "</div>")
     },
-
     showWarningNotification : function(boldMsg,msg){
         $("#alertOuterDiv").html("<div class='alert alert-warning alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong> " + boldMsg + " </strong>" + msg + "</div>")
     },
-
     showfailureNotification : function(boldMsg,msg){
         $("#alertOuterDiv").html("<div class='alert alert-danger alert-dismissible' id='alertMsgDiv' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong> " + boldMsg + " </strong>" + msg + "</div>")
     },
-
     //It will make ajax request to the api and fetch the gallery data
     getGalleries : function (){
         $.getJSON(pageGallery.baseURL,{
@@ -41,7 +36,6 @@ var pageGallery = {
             }
         });
     },
-
     //Implement delete gallery using $.post
     deleteGallery: function(galleryId){
         var conf = confirm("Are your sure ?");
@@ -57,7 +51,6 @@ var pageGallery = {
             });
         }
     },
-
     openAddGalleryModal : function(){
         $('#addAlbumModalForm').find('input').each(function(){
             $(this).val("");
@@ -67,11 +60,9 @@ var pageGallery = {
 
         $('#addGalleryModal').modal('show');
     },
-
     openFileInput : function(id){
         $(id).click();
     },
-
     getLoginStatus : function(){
         var r = $.Deferred();
         $.getJSON(pageGallery.baseURL,{
@@ -90,7 +81,6 @@ $(document).ready(function () {
     pageGallery.getLoginStatus().done(function(){
         pageGallery.getGalleries();
     });
-
     //Load Local Cover Image on Change
     $("#coverImageFile").change(function(e){
         loadImage.parseMetaData(
@@ -121,8 +111,6 @@ $(document).ready(function () {
             $("#image-view").html("<img src='albums/cover-image.jpg' alt='Cover Image' class='img-rounded coverImage'/>");
         }
     });
-
-    //TODO Ambuj
     $("#addAlbumModalForm").ajaxForm({
         beforeSubmit: function(){
             //Code to check validation & stop submit if validation fails
@@ -149,6 +137,9 @@ $(document).ready(function () {
         }
     });
 
+    $("#albumName").on('input propertyhange focusout', function () {
+        pageValidation.validateField(this);
+    });
 });
 
 $(window).load(function() {

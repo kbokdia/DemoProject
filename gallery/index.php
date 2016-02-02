@@ -37,7 +37,6 @@
 </div>
 
 <nav class="navbar navbar-fixed-top navbar-light bg-faded">
-    <a class="navbar-brand position-fixed" href="#"><i class="fa fa-chevron-left fa-lg"></i>&nbsp;Back</a>
     <h4 class="text-center navbar-heading">Gallery</h4>
 </nav>
 <div class="container container-top-padding">

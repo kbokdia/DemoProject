@@ -56,6 +56,7 @@ var pageAlbum = {
                 $(".delete-btn").removeClass("hidden");
                 $(".add-album-btn").removeClass("hidden");
             }
+            $("#loading").addClass("hidden");
         });
     },
 
@@ -198,8 +199,5 @@ $(document).ready(function (){
 });
 
 $(window).load(function() {
-
     console.log(pageAlbum.loginStatus);
-
-    $("#loading").addClass("hidden");
 });
