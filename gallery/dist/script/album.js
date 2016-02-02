@@ -3,14 +3,15 @@
  */
 pageAlbum = {
     baseURL : "controller.php",
-    galleryCode: window.location.search.split("=").pop(),
+    galleryId: window.location.search.split("=").pop(),
 
     //Get gallery images
     getImages: function(){
         //POST Request Type : GI
         //GalleryId => pageAlbum.galleryCode
         $.getJSON(pageAlbum.baseURL, {
-            type: 'GI'
+            type: 'GI',
+            GalleryId: pageAlbum.galleryId
         }, function (data) {
             console.log(data);
             console.log(data.result.length);
@@ -19,7 +20,7 @@ pageAlbum = {
 
     //Implement delete image functionality
     deleteImage : function(galleryId, imageId){
-        //Request TYPE : DI
+        //POST Request TYPE : DI
         //Refer deleteGallery function in script.js
         $.getJSON(pageAlbum.baseURL, {
             type: 'DI'

@@ -66,7 +66,7 @@ do{
             break;
 
         case 'GI':
-            if(empty($_POST['GalleryId']))
+            if(empty($_GET['GalleryId']))
             {
                 $validate = false;
                 $response = BaseClass::createResponse(0,"Invalid Request");
@@ -128,13 +128,8 @@ if($validate){
             break;
 
         case 'GI':
-            $galleryId = intval($_POST['GalleryId']);
+            $galleryId = intval($_GET['GalleryId']);
             $response = $gallery->getGalleryInfo($galleryId);
-            break;
-
-        case 'T':
-            $gallery->galleryName = "Test";
-            $response = $gallery->test();
             break;
 
     }
