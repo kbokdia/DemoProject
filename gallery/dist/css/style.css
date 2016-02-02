@@ -28,3 +28,11 @@
     width: 40%;
     height: auto;
 }
+a {
+    text-decoration: none !important;
+    color: inherit;
+}
+
+.btn-padding-top{
+    padding-top: 30px;
+}

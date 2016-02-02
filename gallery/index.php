@@ -46,7 +46,7 @@
     </div>
     <div class="row text-right">
         <div class="col-xs-12">
-            <button type="button" class="btn btn-success-outline" onclick="pageGallery.openAddGalleryModal()"><i
+            <button type="button" class="btn btn-success-outline add-album-btn hidden" onclick="pageGallery.openAddGalleryModal()"><i
                     class="fa fa-plus"></i>&nbsp;Add Album
             </button>
         </div>
@@ -58,10 +58,9 @@
 </div>
 
 <!-- Add Gallery Modal -->
-<div class="modal fade" id="addGalleryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="addGalleryModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form id="addAlbumModal" action="controller.php?type=AG" method="post" enctype="multipart/form-data" novalidate>
+        <form id="addAlbumModalForm" action="controller.php?type=AG" method="post" enctype="multipart/form-data" novalidate>
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

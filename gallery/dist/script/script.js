@@ -1,6 +1,8 @@
 var pageGallery = {
     baseURL : "controller.php",
 
+    loginStatus : false,
+
     showSuccessNotification : function(boldMsg,msg){
         $("#alertOuterDiv").html("<div class='alert alert-success alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong> " + boldMsg + " </strong>" + msg + "</div>")
     },
@@ -28,10 +30,14 @@ var pageGallery = {
             {
                 for(var i = 0 ; i < data.result.length; i++)
                 {
-                    str += ("<div class='col-md-4 col-sm-12'><div class='card'><img class='card-img-top' src='" + data.result[i].CoverImagePath + "' alt='Gallery Cover Image'><div class='card-block'><h4 class='card-title'>" + data.result[i].GalleryName + "</h4><p class='card-text'>" + data.result[i].GalleryDescription + "</p><button onclick='pageGallery.deleteGallery(" + data.result[i].Id + ")' type='button' class='btn btn-danger btn-full-width'>Delete </button></div></div></div>")
+                    str += ("<div class='col-md-4 col-sm-12'><div class='card'><a href='view.php?galleryId=" + data.result[i].Id + "'><img class='card-img-top' src='" + data.result[i].CoverImagePath + "' alt='Gallery Cover Image'><div class='card-block'><h4 class='card-title'>" + data.result[i].GalleryName + "</h4><p class='card-text'>" + data.result[i].GalleryDescription + "</p></div></a><div class='card-block'><button onclick='pageGallery.deleteGallery(" + data.result[i].Id + ")' type='button' class='btn btn-danger btn-full-width delete-btn hidden'>Delete </button></div></div></div>");
                 }
-                $("#albumsDiv").html("");
-                $("#albumsDiv").html(str);
+                $("#albumsDiv").html("").html(str);
+            }
+            if(pageGallery.loginStatus == true)
+            {
+                $(".delete-btn").removeClass("hidden");
+                $(".add-album-btn").removeClass("hidden");
             }
         });
     },
@@ -53,18 +59,37 @@ var pageGallery = {
     },
 
     openAddGalleryModal : function(){
+        $('#addAlbumModalForm').find('input').each(function(){
+            $(this).val("");
+            $(this).removeClass("form-control-danger").closest(".form-group").removeClass("has-danger").find(".error").html("");
+        });
+        $("#image-view").html("<img src='albums/cover-image.jpg' alt='Cover Image' class='img-rounded coverImage'/>");
+
         $('#addGalleryModal').modal('show');
     },
 
     openFileInput : function(id){
-        console.log(id);
         $(id).click();
+    },
+
+    getLoginStatus : function(){
+        var r = $.Deferred();
+        $.getJSON(pageGallery.baseURL,{
+            type:'LI'
+        }, function (data) {
+            console.log(data);
+            pageGallery.loginStatus = data;
+            r.resolve(data);
+        });
+        return r;
     }
 };
 
 $(document).ready(function () {
     //Make api requests
-    pageGallery.getGalleries();
+    pageGallery.getLoginStatus().done(function(){
+        pageGallery.getGalleries();
+    });
 
     //Load Local Cover Image on Change
     $("#coverImageFile").change(function(e){
@@ -93,17 +118,17 @@ $(document).ready(function () {
         );
         if($("#coverImageFile").val() == "")
         {
-            $("#image-view").html("<img src='../../albums/cover-image.jpg' alt='Cover Image' class='img-rounded coverImage'/>");
+            $("#image-view").html("<img src='albums/cover-image.jpg' alt='Cover Image' class='img-rounded coverImage'/>");
         }
     });
 
     //TODO Ambuj
-    $("#addAlbumModal").ajaxForm({
+    $("#addAlbumModalForm").ajaxForm({
         beforeSubmit: function(){
             //Code to check validation & stop submit if validation fails
 
-            if(!pageValidation.validateForm("#addAlbumModal"))
-                return pageValidation.validateForm("#addAlbumModal");
+            if(!pageValidation.validateForm("#addAlbumModalForm"))
+                return pageValidation.validateForm("#addAlbumModalForm");
 
             $("#loading").removeClass("hidden");
         },
@@ -120,11 +145,13 @@ $(document).ready(function () {
         },
         error : function(){
             //Code in case of an error
+            pageGallery.showfailureNotification("Error! ","An error has occured, please try again!");
         }
     });
 
 });
 
 $(window).load(function() {
+
     $("#loading").addClass("hidden");
 });
