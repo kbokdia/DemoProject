@@ -34,6 +34,7 @@ do{
      * DI => Delete Image
      * GG => Get Galleries
      * GI => Get Gallery Info
+     * LI => Logged in state
      * EXAMPLE : T => test*/
 
     switch($type){
@@ -131,6 +132,9 @@ if($validate){
             $galleryId = intval($_GET['GalleryId']);
             $response = $gallery->getGalleryInfo($galleryId);
             break;
+
+        case 'LI':
+            $response = BaseClass::isLoggedIn();
 
     }
 }

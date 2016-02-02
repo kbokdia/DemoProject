@@ -53,6 +53,10 @@ class BaseClass
         rmdir($dirPath);
     }
 
+    public static function isLoggedIn(){
+        return true;
+    }
+
     function __destruct(){
         $this->mysqli->close();
     }
