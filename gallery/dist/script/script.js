@@ -17,22 +17,25 @@ var pageGallery = {
         }, function (data) {
             console.log(data);
             console.log(data.result.length);
-            var str = "";
-            if(data.result.length == 0){
-                $("#albumsDiv").html("<h3 class='text-center'>No Albums Available</h3>");
-            }
-            else
+            if(data.status == 1)
             {
-                for(var i = 0 ; i < data.result.length; i++)
-                {
-                    str += ("<div class='col-md-4 col-sm-12'><div class='card'><a href='view.php?galleryId=" + data.result[i].Id + "'><img class='card-img-top' src='" + data.result[i].CoverImagePath + "' alt='Gallery Cover Image'><div class='card-block'><h4 class='card-title'>" + data.result[i].GalleryName + "</h4><p class='card-text'>" + data.result[i].GalleryDescription + "</p></div></a><div class='card-block'><button onclick='pageGallery.deleteGallery(" + data.result[i].Id + ")' type='button' class='btn btn-danger btn-full-width delete-btn hidden'>Delete </button></div></div></div>");
+                var str = "";
+                if(data.result.length == 0){
+                    $("#albumsDiv").html("<h3 class='text-center'>No Albums Available</h3>");
                 }
-                $("#albumsDiv").html("").html(str);
-            }
-            if(pageGallery.loginStatus == true)
-            {
-                $(".delete-btn").removeClass("hidden");
-                $(".add-album-btn").removeClass("hidden");
+                else
+                {
+                    for(var i = 0 ; i < data.result.length; i++)
+                    {
+                        str += ("<div class='col-md-4 col-sm-12'><div class='card'><a href='view.php?galleryId=" + data.result[i].Id + "'><img class='card-img-top' src='" + data.result[i].CoverImagePath + "' alt='Gallery Cover Image'><div class='card-block'><h4 class='card-title'>" + data.result[i].GalleryName + "</h4><p class='card-text'>" + data.result[i].GalleryDescription + "</p></div></a><div class='card-block'><button onclick='pageGallery.deleteGallery(" + data.result[i].Id + ")' type='button' class='btn btn-danger btn-full-width delete-btn hidden'>Delete </button></div></div></div>");
+                    }
+                    $("#albumsDiv").html("").html(str);
+                }
+                if(pageGallery.loginStatus == true)
+                {
+                    $(".delete-btn").removeClass("hidden");
+                    $(".add-album-btn").removeClass("hidden");
+                }
             }
         });
     },
