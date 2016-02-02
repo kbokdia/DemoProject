@@ -23,23 +23,6 @@ class Gallery extends BaseClass
         parent::__construct();
     }
 
-    function test(){
-        $gallID=$this->generateGalleryId();
-        $path = "albums/$this->galleryName";
-        $imagePath = $path."/".$gallID.".jpg";
-
-        $sql="INSERT INTO Gallery(Id, GalleryName, ImageCount, CoverImagePath) VALUES ($gallID,'$this->galleryName',0,'$imagePath')";
-
-        if($this->mysqli->query($sql)){
-            $response = BaseClass::createResponse(1,"Record Inserted");
-        }
-        else{
-            $response = BaseClass::createResponse(0,$this->mysqli->error);
-        }
-
-        return $response;
-    }
-
     //save gallery info
     function saveGalleryInfo(){
         /*todo-ambuj
@@ -172,6 +155,10 @@ class Gallery extends BaseClass
 
             }
         }
+
+        $sql = "UPDATE Gallery SET ImageCount = (SELECT COUNT(*) as 'ImageCount' FROM GalleryImage WHERE GalleryImage.GalleryId = $galleryId) WHERE Gallery.Id = $galleryId";
+
+        $this->mysqli->query($sql) OR die($this->mysqli->error);
         return $resp;
     }
 
@@ -220,7 +207,7 @@ class Gallery extends BaseClass
     }
 
     //Scale image proportionately
-    function getScaledDimArray($img,$max_w = 245, $max_h = 170){
+    function getScaledDimArray($img,$max_w = 170, $max_h = 170){
         if(is_null($max_h)){
             $max_h = $max_w;
         }
