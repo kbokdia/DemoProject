@@ -137,7 +137,10 @@ $(document).ready(function () {
         }
     });
 
-    $("#albumName").on('input propertyhange focusout', function () {
+    $("#albumName").on('input propertychange focusout', function () {
+        pageValidation.validateField(this);
+    });
+    $("#albumDescription").on('input propertychange focusout', function () {
         pageValidation.validateField(this);
     });
 });
