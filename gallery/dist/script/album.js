@@ -22,13 +22,18 @@ pageAlbum = {
     deleteImage : function(galleryId, imageId){
         //POST Request TYPE : DI
         //Refer deleteGallery function in script.js
-        $.getJSON(pageAlbum.baseURL, {
-            type: 'DI'
-        }, function (data) {
-            console.log(data);
-            console.log(data.result.length);
-        });
-    }
+        var conf = confirm("Are your sure ?");
+        if(conf){
+            $.post(pageAlbum.baseURL + "?type=DI", {
+                GalleryId: galleryId
+            }, function(data){
+                console.log(data);
+                console.log(data.status);
+                if(data.status == 1){
+                    pageAlbum.getImages();
+                }
+            });
+        }
 };
 
 $(document).ready(function (){
