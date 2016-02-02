@@ -19,21 +19,22 @@ pageAlbum = {
     },
 
     //Implement delete image functionality
-    deleteImage : function(galleryId, imageId){
+    deleteImage : function(galleryId, imageId) {
         //POST Request TYPE : DI
         //Refer deleteGallery function in script.js
         var conf = confirm("Are your sure ?");
-        if(conf){
+        if (conf) {
             $.post(pageAlbum.baseURL + "?type=DI", {
                 GalleryId: galleryId
-            }, function(data){
+            }, function (data) {
                 console.log(data);
                 console.log(data.status);
-                if(data.status == 1){
+                if (data.status == 1) {
                     pageAlbum.getImages();
                 }
             });
         }
+    }
 };
 
 $(document).ready(function (){
