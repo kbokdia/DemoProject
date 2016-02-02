@@ -9,7 +9,7 @@ pageAlbum = {
     getImages: function(){
         //POST Request Type : GI
         //GalleryId => pageAlbum.galleryCode
-        $.getJSON(pageGallery.baseURL, {
+        $.getJSON(pageAlbum.baseURL, {
             type: 'GI'
         }, function (data) {
             console.log(data);
@@ -21,7 +21,7 @@ pageAlbum = {
     deleteImage : function(galleryId, imageId){
         //Request TYPE : DI
         //Refer deleteGallery function in script.js
-        $.getJSON(pageGallery.baseURL, {
+        $.getJSON(pageAlbum.baseURL, {
             type: 'DI'
         }, function (data) {
             console.log(data);
@@ -32,7 +32,7 @@ pageAlbum = {
 
 $(document).ready(function (){
     //Make api requests
-    pageGallery.getImages();
+    pageAlbum.getImages();
 
     //Load Local Image on Change
     $("#albumImageFile").change(function(e){
