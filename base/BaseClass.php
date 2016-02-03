@@ -54,7 +54,18 @@ class BaseClass
     }
 
     public static function isLoggedIn(){
-        return true;
+        if(isset($_SESSION["s_id"])){
+            if(!($_SESSION["s_username"] == "admin" || $_SESSION["s_username"] == "incorelabs")){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        else{
+            return true;
+        }
+        
     }
 
     function __destruct(){
