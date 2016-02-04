@@ -1,3 +1,12 @@
+.text-center{
+    text-align: center;
+}
+.text-right{
+    text-align: right;
+}
+.text-left{
+    text-align: left;
+}
 .loader-container {
     background-color: #f7f7f9;
     display: table;
@@ -249,4 +258,13 @@
 
 .fa-red{
     color: #9E1E1E;
+}
+.fa-green{
+    color: #5cb85c;
+}
+.fa-blue{
+    color: #3E5C9A;
+}
+textarea{
+    resize: none;
 }
