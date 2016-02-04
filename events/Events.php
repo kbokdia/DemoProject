@@ -21,7 +21,7 @@ class Events extends BaseClass
     var $dateTime;
     var $dressCode;
     var $imagePath;
-    var $timestamp;
+
 
     function __construct()
     {
@@ -76,7 +76,7 @@ class Events extends BaseClass
     function addEvent(){
         //Create insert query and save it
         $eventId = $this->generateEventId();
-        $sql="Insert into Events(RegId,EventId,Name,Description,Location,DateTime,DressCode,ImagePath,Timestamp) values($this->regId,$eventId,$this->name,$this->$this->description,$this->location,$this->dateTime,$this->dressCode,$this->imagePath,$this->timeStamp)";
+        $sql="Insert into Events(RegId,EventId,Name,Description,Location,DateTime,DressCode,ImagePath) values($this->regId,$eventId,$this->name,$this->$this->description,$this->location,$this->dateTime,$this->dressCode,$this->imagePath)";
         if($result = $this->mysqli->query($sql))
         {
             $response = BaseClass::createResponse(1,"Event added..");
