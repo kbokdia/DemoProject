@@ -70,6 +70,16 @@ class Events extends BaseClass
 
     function updateEvent($eventId){
         //Update query the Events table based on eventId (Update all the columns except ImagePath)
+        $sql = "Update Events set Name=$this->name,Description=$this->description,DressCode=$this->dressCode DateTime=$this->dateTime,Location=$this->location where EventId=$eventId";
+        if($result = $this->mysqli->query($sql))
+        {
+            $response = BaseClass::createResponse(1,"Event updated..");
+        }
+        else
+        {
+            $response = BaseClass::createResponse(0,"Event not updated..");
+        }
+        return $response;
 
     }
 

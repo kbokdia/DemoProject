@@ -38,6 +38,10 @@ do{
         case 'AE':
             //validation
             //Todo-Ambuj Perform validation like check for name
+            if(empty($_POST['EventName']) || empty($_POST['EventDesc']) || empty($_POST['EventDate']) || empty($_POST['EventTime']) || empty($_POST['EventLocation']) || empty($_POST['EventDressCode'])) {
+                $validate = false;
+                $response = BaseClass::createResponse(0, "Invalid Request");
+            }
             break;
 
         case 'DE':
@@ -70,17 +74,23 @@ if($validate){
             $_POST = $events->escapeData($_POST);
 
             //set variables
-
+            $events->name=$_POST["EventName"];
+            $events->description=$_POST["EventDesc"];
+            $events->location=$_POST["EventLocation"];
+            $events->dateTime=$_POST["EventDate"].$_POST["EventTime"];
+            $events->dressCode=$_POST["EventDressCode"];
 
             //Perform action
+            $response = $events->addEvent();
 
             break;
 
         case 'DE':
             //set variables
-
+            $eventId=$_POST["EventId"];
 
             //Perform action
+            $response=$events->deleteEvent($eventId);
             break;
 
         case 'UE':
@@ -88,13 +98,20 @@ if($validate){
             $_POST = $events->escapeData($_POST);
 
             //set variables
-
+            $eventId=$_POST["EventId"];
+            $events->name=$_POST["EventName"];
+            $events->description=$_POST["EventDesc"];
+            $events->location=$_POST["EventLocation"];
+            $events->dateTime=$_POST["EventDate"].$_POST["EventTime"];
+            $events->dressCode=$_POST["EventDressCode"];
 
             //Perform action
+            $response=$events->updateEvent($eventId);
             break;
 
         case 'GE':
             //Perform action
+            $response=$events->getEvents();
             break;
     }
 }
