@@ -70,7 +70,7 @@ class Events extends BaseClass
 
     function updateEvent($eventId){
         //Update query the Events table based on eventId (Update all the columns except ImagePath)
-        $sql = "Update Events set Name=$this->name,Description=$this->description,DressCode=$this->dressCode DateTime=$this->dateTime,Location=$this->location where EventId=$eventId";
+        $sql = "Update Events set Name='$this->name', Description='$this->description', DressCode='$this->dressCode', DateTime='$this->dateTime', Location='$this->location' where EventId=$eventId";
         if($result = $this->mysqli->query($sql))
         {
             $response = BaseClass::createResponse(1,"Event updated..");
@@ -86,7 +86,7 @@ class Events extends BaseClass
     function addEvent(){
         //Create insert query and save it
         $eventId = $this->generateEventId();
-        $sql="Insert into Events(RegId,EventId,Name,Description,Location,DateTime,DressCode,ImagePath) values($this->regId,$eventId,$this->name,$this->$this->description,$this->location,$this->dateTime,$this->dressCode,$this->imagePath)";
+        $sql="Insert into Events(RegId, EventId, Name, Description, Location, DateTime, DressCode,ImagePath) VALUES ('$this->regId',$eventId,'$this->name','$this->description','$this->location','$this->dateTime','$this->dressCode','$this->imagePath')";
         if($result = $this->mysqli->query($sql))
         {
             $response = BaseClass::createResponse(1,"Event added..");
