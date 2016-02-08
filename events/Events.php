@@ -31,7 +31,7 @@ class Events extends BaseClass
     function getEvent()
     {
         //Do Select query (Only the Name and EventId Columns) and throw the response
-        $sql = "Select Name,EventId from Events where EventId=$this->eventId";
+        $sql = "Select Name,EventId from Events";
         $result = $this->mysqli->query($sql);
         if ($result) {
             $i = 0;

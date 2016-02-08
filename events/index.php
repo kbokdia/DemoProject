@@ -97,7 +97,7 @@
 <!-- Add Event Modal -->
 <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form id="eventModalForm" action="controller.php" method="post" novalidate>
+        <form id="eventModalForm" action="controller.php?type=AE" method="post" novalidate>
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

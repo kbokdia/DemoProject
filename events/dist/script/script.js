@@ -23,7 +23,7 @@ var pageEvents = {
     //Ajax requests to the api for fetching event data
     //Get event
     getEvent : function(){
-        $.getJSON(pageGallery.baseURL,{
+        $.getJSON(pageEvents.baseURL,{
             type:'GE'
         },
             function (data) {
@@ -37,10 +37,12 @@ var pageEvents = {
                     }
                     else
                     {
+                        str += ("<div class='col-xs-12'><table class='table table-hover' id='eventTable'><thead><tr><th>#</th><th>Title</th><th>Date</th><th>Time</th><th>Actions</th></tr></thead><tbody>");
                         for(var i = 0 ; i < data.result.length; i++)
                         {
-                            str += ("<div class='col-md-4 col-sm-12'><div class='card'><a href='view.php?eventId=" + data.result[i].Id + "'><img class='card-img-top' src='" + data.result[i].CoverImagePath + "' alt='Gallery Cover Image'><div class='card-block'><h4 class='card-title'>" + data.result[i].GalleryName + "</h4><p class='card-text'>" + data.result[i].GalleryDescription + "</p></div></a><div class='card-block'><button onclick='pageGallery.deleteGallery(" + data.result[i].Id + ")' type='button' class='btn btn-danger btn-full-width delete-btn hidden'>Delete </button></div></div></div>");
+                            str += ("<tr><th scope='row'>" + (i+1) + "</th><td>" + data.result[i].Name + "</td><td>12/12/2016</td><td>6.00 pm</td><td><span class='span-margin-20'><a href='#' onclick='pageEvents.openRSVPModal()'><i class='fa fa-lg fa fa-list-ol fa-blue'></i></a></span><span class='span-margin-20'><a href='#' onclick=''><i class='fa fa-lg fa-pencil fa-green'></i></a></span><span class='span-margin-20'><a href='#' onclick=''><i class='fa fa-lg fa-trash-o fa-red'></i></a></span></td></tr>");
                         }
+                        str += ("</tbody></table></div>");
                         $("#eventsDiv").html("").html(str);
                     }
                     if(pageEvents.loginStatus == true)
@@ -112,7 +114,7 @@ $(document).ready(function () {
             console.log(response);
             if(response.status == 0)
             {
-                pageEvents.showfailureNotification("Error! ","Event with the same name already exists!");
+                pageEvents.showfailureNotification("Error! ",response.message);
             }
             $('#eventModal').modal('hide');
             pageEvents.getEvent();
