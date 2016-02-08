@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Gallery</title>
+    <title>Events</title>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Gallery for Club Apps">
-    <meta name="keywords" content="Club Apps, Gallery, Club Gallery, Photos, Images, Clubs, Chennai Clubs">
+    <meta name="description" content="Events for Club Apps">
+    <meta name="keywords" content="Club Apps, Events, Club Events, Photos, Images, Clubs, Chennai Clubs">
     <meta name="author" content="The Appsolutes">
 
     <!-- Bootstrap & font-awesome min CSS -->
@@ -46,7 +46,7 @@
     </div>
     <div class="row text-right">
         <div class="col-xs-12">
-            <button type="button" class="btn btn-success-outline add-album-btn" onclick="pageEvents.openEventModal()"><i
+            <button type="button" class="btn btn-success-outline add-event-btn" onclick="pageEvents.openEventModal()"><i
                     class="fa fa-plus"></i>&nbsp;Add Event
             </button>
         </div>

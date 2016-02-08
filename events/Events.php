@@ -28,7 +28,7 @@ class Events extends BaseClass
         parent::__construct();
     }
 
-    function getEvents()
+    function getEvent()
     {
         //Do Select query (Only the Name and EventId Columns) and throw the response
         $sql = "Select Name,EventId from Events where EventId=$this->eventId";
@@ -70,7 +70,7 @@ class Events extends BaseClass
 
     function updateEvent($eventId){
         //Update query the Events table based on eventId (Update all the columns except ImagePath)
-        $sql = "Update Events set Name='$this->name', Description='$this->description', DressCode='$this->dressCode', DateTime='$this->dateTime', Location='$this->location' where EventId=$eventId";
+        $sql = "Update Events set Name='$this->name', Description='$this->description', Location='$this->location' , DateTime='$this->dateTime',DressCode='$this->dressCode' where EventId=$eventId";
         if($result = $this->mysqli->query($sql))
         {
             $response = BaseClass::createResponse(1,"Event updated..");

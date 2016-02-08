@@ -32,6 +32,7 @@ do{
      * DE => Delete event
      * GE => Get Events
      * UE => Update Events
+     * LI => Logged in status
      */
 
     switch($type){
@@ -54,7 +55,7 @@ do{
 
         case 'UE':
             //validation
-            if(empty($_GET['GalleryId']))
+            if(empty($_POST['EventId']))
             {
                 $validate = false;
                 $response = BaseClass::createResponse(0,"Invalid Request");
@@ -102,7 +103,7 @@ if($validate){
             $events->name=$_POST["EventName"];
             $events->description=$_POST["EventDesc"];
             $events->location=$_POST["EventLocation"];
-            $events->dateTime=$_POST["EventDate"].$_POST["EventTime"];
+            $events->dateTime=$_POST["EventDate"]." ".$_POST["EventTime"];
             $events->dressCode=$_POST["EventDressCode"];
 
             //Perform action
@@ -111,8 +112,11 @@ if($validate){
 
         case 'GE':
             //Perform action
-            $response=$events->getEvents();
+            $response=$events->getEvent();
             break;
+
+        case 'LI':
+            $response = BaseClass::isLoggedIn();
     }
 }
 
