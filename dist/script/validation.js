@@ -137,6 +137,130 @@ var pageValidation = {
                 }
             }
         });
+        formElement.find('textarea').each(function(){
+
+            elemValue = $(this).val().trim();
+            if($(this).prop('required')){
+
+                //Validation for Email
+                if($(this).is(".email")){
+
+                    if(elemValue == ""){
+                        pageValidation.addError(this,"Required");
+                        console.log("Email Required");
+                        isValid = false;
+                    }
+                    else{
+                        regEx = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+                        if(regEx.test(elemValue)){
+                            pageValidation.addError(this,"Invalid Email");
+                            console.log("Email Invalid");
+                            isValid = false;
+                        }
+                    }
+                }
+
+                //Number Validation
+                else if($(this).is(".number")){
+
+                    if(elemValue == ""){
+                        pageValidation.addError(this,"Required");
+                        console.log("Number Required");
+                        isValid = false;
+                    }
+                    else{
+                        regEx = /^[0-9]+$/g;
+                        if(regEx.test(elemValue)){
+                            pageValidation.addError(this,"Invalid Number");
+                            console.log("Number Invalid");
+                            isValid = false;
+                        }
+                    }
+                }
+
+                //Alphaber Validation
+                else if($(this).is(".alphabet")){
+
+                    if(elemValue == ""){
+                        pageValidation.addError(this,"Required");
+                        isValid = false;
+                    }
+                    else{
+                        regEx = /^[a-zA-Z. ]*$/g;
+                        if(!regEx.test(elemValue)){
+                            pageValidation.addError(this,"Only Alphabets");
+                            isValid = false;
+                        }
+                    }
+                }
+
+                //Not Special Char Validation
+                else if($(this).is(".noSpecialChar")){
+
+                    if(elemValue == ""){
+                        pageValidation.addError(this,"Required");
+                        isValid = false;
+                    }
+                    else{
+                        regEx = /^[a-zA-Z0-9'. ]*$/g;
+                        if(!regEx.test(elemValue)){
+                            pageValidation.addError(this,"No Special Characters Allowed");
+                            isValid = false;
+                        }
+                    }
+                }
+
+                //Validation for any other required field
+                else if($(this).val().trim() === "")
+                {
+                    pageValidation.addError(this,"Required");
+                    isValid = false;
+                    console.log(isValid);
+
+                }
+
+            }
+
+            else{
+                //Validation for Email
+                if($(this).is(".email")){
+                    regEx = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+                    if(regEx.test(elemValue)){
+                        pageValidation.addError(this,"Invalid Email");
+                        console.log("Email Invalid");
+                        isValid = false;
+                    }
+                }
+
+                //Number Validation
+                else if($(this).is(".number")){
+                    regEx = /^[0-9]+$/g;
+                    if(regEx.test(elemValue)){
+                        pageValidation.addError(this,"Invalid Number");
+                        console.log("Number Invalid");
+                        isValid = false;
+                    }
+                }
+
+                //Alphaber Validation
+                else if($(this).is(".alphabet")){
+                    regEx = /^[a-zA-Z. ]*$/g;
+                    if(!regEx.test(elemValue)){
+                        pageValidation.addError(this,"Only Alphabets");
+                        isValid = false;
+                    }
+                }
+
+                //Not Special Char Validation
+                else if($(this).is(".noSpecialChar")){
+                    regEx = /^[a-zA-Z0-9'. ]*$/g;
+                    if(!regEx.test(elemValue)){
+                        pageValidation.addError(this,"No Special Characters Allowed");
+                        isValid = false;
+                    }
+                }
+            }
+        });
         return isValid;
     },
     validateField : function(elem){

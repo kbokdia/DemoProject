@@ -8,8 +8,8 @@
 
 namespace Project\events;
 
-
 use Project\base\BaseClass;
+use Project\upload\ImageUpload;
 
 class Events extends BaseClass
 {
@@ -31,7 +31,8 @@ class Events extends BaseClass
     function getEvent()
     {
         //Do Select query (Only the Name and EventId Columns) and throw the response
-        $sql = "Select Name,EventId from Events";
+        /*$sql = "Select Name,EventId from Events";*/
+        $sql = "Select * from Events";
         $result = $this->mysqli->query($sql);
         if ($result) {
             $i = 0;
@@ -86,7 +87,8 @@ class Events extends BaseClass
     function addEvent(){
         //Create insert query and save it
         $eventId = $this->generateEventId();
-        $sql="Insert into Events(RegId, EventId, Name, Description, Location, DateTime, DressCode,ImagePath) VALUES ('$this->regId',$eventId,'$this->name','$this->description','$this->location','$this->dateTime','$this->dressCode','$this->imagePath')";
+        $regId = $this->generateRegId();
+        $sql="Insert into Events(RegId, EventId, Name, Description, Location, DateTime, DressCode,ImagePath) VALUES ($regId,$eventId,'$this->name','$this->description','$this->location','$this->dateTime','$this->dressCode','$this->imagePath')";
         if($result = $this->mysqli->query($sql))
         {
             $response = BaseClass::createResponse(1,"Event added..");
@@ -101,12 +103,23 @@ class Events extends BaseClass
     //generate event ID
     function generateEventId(){
         $eventCode = 1001;
-        $sql = "SELECT MAX(EventId) AS 'eventCode' FROM test.Events";
+        $sql = "SELECT MAX(EventId) AS 'eventCode' FROM Events";
         if($result = $this->mysqli->query($sql)){
             $eventCode = intval($result->fetch_assoc()['eventCode']);
             $eventCode = (($eventCode == 0) ? 1001 : $eventCode + 1);
         }
 
         return $eventCode;
+    }
+
+    function generateRegId(){
+        $regCode = 10001;
+        $sql = "SELECT MAX(RegId) AS 'regCode' FROM Events";
+        if($result = $this->mysqli->query($sql)){
+            $regCode = intval($result->fetch_assoc()['regCode']);
+            $regCode = (($regCode == 0) ? 10001 : $regCode + 1);
+        }
+
+        return $regCode;
     }
 }

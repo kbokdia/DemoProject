@@ -46,7 +46,7 @@
     </div>
     <div class="row text-right">
         <div class="col-xs-12">
-            <button type="button" class="btn btn-success-outline add-event-btn" onclick="pageEvents.openEventModal()"><i
+            <button type="button" class="btn btn-success-outline add-event-btn" onclick="pageEvents.openAddEventModal()"><i
                     class="fa fa-plus"></i>&nbsp;Add Event
             </button>
         </div>
@@ -121,6 +121,14 @@
                         </div>
                     </fieldset>
                     <fieldset class="form-group row">
+                        <label for="eventName" class="col-sm-3 form-control-label">Location *</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="EventLocation" id="eventLocation" placeholder="Enter Event Location" required>
+                        </div>
+
+                        <div class="error"></div>
+                    </fieldset>
+                    <fieldset class="form-group row">
                         <label for="eventDate" class="col-sm-3 form-control-label">Date *</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control date" name="EventDate" id="eventDate" placeholder="Enter Event Date" required>
@@ -131,14 +139,6 @@
                         <label for="eventDate" class="col-sm-3 form-control-label">Time *</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control date" name="EventTime" id="eventTime" placeholder="Enter Event Time" required>
-                        </div>
-
-                        <div class="error"></div>
-                    </fieldset>
-                    <fieldset class="form-group row">
-                        <label for="eventName" class="col-sm-3 form-control-label">Location *</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="EventLocation" id="eventLocation" placeholder="Enter Event Location" required>
                         </div>
 
                         <div class="error"></div>

@@ -43,3 +43,8 @@ td{
     color: #fff !important;
     text-shadow: 0 !important;
 }
+
+.error{
+    text-align: right;
+    padding-right: 20px;
+}
