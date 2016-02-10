@@ -78,10 +78,8 @@
         <div class="clearfix"></div>
     </div>
 
-    <div class="my-gallery">
-        <div class="row-top-margin" id="albumImagesDiv">
+    <div class="my-gallery row-top-margin" id="albumImagesDiv">
 
-        </div>
     </div>
 </div>
 
@@ -104,7 +102,7 @@
                         <button type="button" id="coverImageBtn" class="btn btn-primary"
                                 onclick="pageAlbum.openFileInput(imageFileInput)">Choose Images *
                         </button>
-                        <div class="error"></div>
+                        <div class="error" style="padding-top: 10px"></div>
                         <input type="hidden" name="GalleryId" id="GalleryId"/>
                         <input type="file" id="imageFileInput" name="fileToUpload[]" value="" class="hidden" multiple required>
                     </fieldset>

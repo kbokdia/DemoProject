@@ -30,3 +30,6 @@ a {
 .btn-padding-top{
     padding-top: 30px;
 }
+.photoswipe-img-size{
+    max-height: 200px;
+}

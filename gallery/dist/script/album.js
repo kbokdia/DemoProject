@@ -8,15 +8,18 @@ var pageAlbum = {
     loginStatus : false,
 
     showSuccessNotification : function(boldMsg,msg){
-        $("#alertOuterDiv").html("<div class='alert alert-success alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong> " + boldMsg + " </strong>" + msg + "</div>")
+        $("#alertOuterDiv").html("<div class='alert alert-success' role='alert'></button><strong> " + boldMsg + " </strong>" + msg + "</div>").fadeOut(5000);
+        $(".alert").fadeOut(5000);
     },
 
     showWarningNotification : function(boldMsg,msg){
-        $("#alertOuterDiv").html("<div class='alert alert-warning alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong> " + boldMsg + " </strong>" + msg + "</div>")
+        $("#alertOuterDiv").html("<div class='alert alert-warning' role='alert'><strong> " + boldMsg + " </strong>" + msg + "</div>").fadeOut(5000);
+        $(".alert").fadeOut(5000);
     },
 
     showfailureNotification : function(boldMsg,msg){
-        $("#alertOuterDiv").html("<div class='alert alert-danger alert-dismissible' id='alertMsgDiv' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong> " + boldMsg + " </strong>" + msg + "</div>")
+        $("#alertOuterDiv").html("<div class='alert alert-danger' id='alertMsgDiv' role='alert'><strong> " + boldMsg + " </strong>" + msg + "</div>");
+        $(".alert").fadeOut(5000);
     },
 
     //Get gallery images
@@ -39,16 +42,20 @@ var pageAlbum = {
                     imagesStr += "<h3 class='text-center'>No Images Available!</h3>"
                 }
                 else{
-                    imagesStr += "<div class='row'>";
                     for (var i = 0; i < data.result.length; i++) {
-                        if(i % 3 == 0 && i > 0)
-                        {
-                            imagesStr += "</div><div class='row'>";
-                        }
-                        imagesStr += "<div class='col-xs-4'><div><figure><a href='" + data.result[i].ImagePath + "' itemprop='contentUrl' data-size='" + data.result[i].ImageWidth + "x" + data.result[i].ImageHeight + "'><img src='" + data.result[i].ThumbsPath + "' class='img-responsive img-rounded' itemprop='thumbnail'/></a></figure></div><div class='text-right delete-btn hidden'><a href='#' onclick='pageAlbum.deleteImage(" + data.result[i].GalleryId + ","+ data.result[i].Id + ")'><i class='fa fa-lg fa-trash-o fa-red'></i></a></div></div>";
+                        imagesStr +=
+                            "<figure class='col-sm-3 col-xs-6'>" +
+                                "<a href='" + data.result[i].ImagePath + "' itemprop='contentUrl' data-size='" + data.result[i].ImageWidth + "x" + data.result[i].ImageHeight + "'>" +
+                                    "<img src='" + data.result[i].ThumbsPath + "' class='img-responsive img-rounded' itemprop='thumbnail'/>" +
+                                "</a>" +
+                                "<div class='text-right delete-btn hidden'>" +
+                                    "<a href='#' onclick='pageAlbum.deleteImage(" + data.result[i].GalleryId + ","+ data.result[i].Id + ")'>" +
+                                        "<i class='fa fa-lg fa-trash-o fa-red'></i>" +
+                                    "</a>" +
+                                "</div>" +
+                            "</figure>";
                     }
                 }
-                imagesStr += "</div>";
             }
             $("#albumImagesDiv").html(imagesStr);
             if(pageAlbum.loginStatus == true)
@@ -57,6 +64,8 @@ var pageAlbum = {
                 $(".add-album-btn").removeClass("hidden");
             }
             $("#loading").addClass("hidden");
+
+            initPhotoSwipeFromDOM('.my-gallery');
         });
     },
 
@@ -189,7 +198,20 @@ $(document).ready(function (){
             }
             else{
                 console.log(count);
-                $(this).closest(".form-group").find(".error").html("").html(count + " Images Selected");
+                for(var i = 0; i < count; i++)
+                {
+                    console.log(count);
+                    if((this.files[i].size) > (5 * 1024 * 1024))
+                    {
+                        console.log(this.files[0].size);
+                        $(this).val("");
+                        $(this).closest(".form-group").find(".error").html("").html("One or more images have size greater than 5 MB, please remove them and try again!");
+                        break;
+                    }
+                    else{
+                        $(this).closest(".form-group").find(".error").html("").html(count + " Images Selected");
+                    }
+                }
             }
         }
     });

@@ -33,10 +33,10 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 
 
 
-            if(figureEl.children.length > 1) {
+            /*if(figureEl.children.length > 1) {
                 // <figcaption> content
                 item.title = figureEl.children[1].innerHTML;
-            }
+            }*/
 
             if(linkEl.children.length > 0) {
                 // <img> thumbnail element, retrieving thumbnail url
@@ -202,4 +202,3 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 };
 
 // execute above function
-initPhotoSwipeFromDOM('.my-gallery');
