@@ -32,6 +32,7 @@ do{
      * DG => Delete Gallery
      * AI => Add Image
      * DI => Delete Image
+     * DM => Delete Multiple Image
      * GG => Get Galleries
      * GI => Get Gallery Info
      * LI => Logged in state
@@ -63,6 +64,19 @@ do{
             if(empty($_POST['GalleryId']) || empty($_POST['ImageId']) ){
                 $validate = false;
                 $response = BaseClass::createResponse(0,"Invalid Request");
+            }
+            break;
+
+        case 'DM':
+            if(empty($_POST['GalleryId']) || empty($_POST['ImageId']) ){
+                $validate = false;
+                $response = BaseClass::createResponse(0,"Invalid Request");
+            }
+            else{
+                if(!is_array($_POST['ImageId'])){
+                    $validate = false;
+                    $response = BaseClass::createResponse(0,"Invalid Request");
+                }
             }
             break;
 
@@ -122,6 +136,12 @@ if($validate){
             $galleryId = intval($_POST['GalleryId']);
             $imageId = $_POST['ImageId'];
             $response = $gallery->deleteGalleryImage($galleryId,$imageId);
+            break;
+
+        case 'DM':
+            $galleryId = intval($_POST['GalleryId']);
+            $imageIds = $_POST['ImageId'];
+            $response = $gallery->deleteMultipleImages($galleryId,$imageIds);
             break;
 
         case 'GG':
