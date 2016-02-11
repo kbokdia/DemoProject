@@ -194,6 +194,12 @@ class Gallery extends BaseClass
 
     }
 
+    //delete multiple images
+    function deleteMultipleImages($galleryId,$imgIds){
+        //$imgIds is array || Eg: $imgIds = array(1001,1003,1002);
+        //for loop $imgIds so that you will get single id and then call $this->deleteGalleryImage($galleryId,$imgId) inside the for loop
+    }
+
     //generate image ID
     function generateImageId(){
         $imageCode = 1001;

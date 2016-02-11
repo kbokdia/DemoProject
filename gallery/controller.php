@@ -134,7 +134,7 @@ if($validate){
             break;
 
         case 'LI':
-            $response = BaseClass::isLoggedIn();
+            $response = BaseClass::isAdmin();
 
     }
 }

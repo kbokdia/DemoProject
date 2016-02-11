@@ -53,7 +53,7 @@ class BaseClass
         rmdir($dirPath);
     }
 
-    public static function isLoggedIn(){
+    public static function isAdmin(){
         if(isset($_SESSION["s_id"])){
             if(!($_SESSION["s_username"] == "admin" || $_SESSION["s_username"] == "incorelabs")){
                 return false;
@@ -63,7 +63,7 @@ class BaseClass
             }
         }
         else{
-            return true;
+            return false;
         }
         
     }
