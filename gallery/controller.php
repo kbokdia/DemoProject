@@ -40,35 +40,35 @@ do{
 
     switch($type){
         case 'AG':
-            if(empty($_POST['GalleryName']) || empty($_POST['GalleryDescription']) || !isset($_FILES['fileToUpload'])){
+            if(empty($_POST['GalleryName']) || empty($_POST['GalleryDescription']) || !isset($_FILES['fileToUpload']) || !BaseClass::isAdmin()){
                 $validate = false;
                 $response = BaseClass::createResponse(0,"Invalid Request");
             }
             break;
 
         case 'DG':
-            if(empty($_POST['GalleryId']) ){
+            if(empty($_POST['GalleryId']) || !BaseClass::isAdmin()){
                 $validate = false;
                 $response = BaseClass::createResponse(0,"Invalid Request");
             }
             break;
 
         case 'AI':
-            if(empty($_POST['GalleryId']) || !isset($_FILES['fileToUpload'])){
+            if(empty($_POST['GalleryId']) || !isset($_FILES['fileToUpload']) || !BaseClass::isAdmin()){
                 $validate = false;
                 $response = BaseClass::createResponse(0,"Invalid Request");
             }
             break;
 
         case 'DI':
-            if(empty($_POST['GalleryId']) || empty($_POST['ImageId']) ){
+            if(empty($_POST['GalleryId']) || empty($_POST['ImageId']) || !BaseClass::isAdmin() ){
                 $validate = false;
                 $response = BaseClass::createResponse(0,"Invalid Request");
             }
             break;
 
         case 'DM':
-            if(empty($_POST['GalleryId']) || empty($_POST['ImageId']) ){
+            if(empty($_POST['GalleryId']) || empty($_POST['ImageId']) || !BaseClass::isAdmin()){
                 $validate = false;
                 $response = BaseClass::createResponse(0,"Invalid Request");
             }
