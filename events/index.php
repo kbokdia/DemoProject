@@ -12,7 +12,7 @@
     <!-- Bootstrap & font-awesome min CSS -->
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">-->
     <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../dist/css/font-awesome.min.css">
 
     <!-- Local CSS -->
     <link rel="stylesheet" href="dist/css/style.css">
@@ -53,51 +53,14 @@
         <div class="clearfix"></div>
     </div>
     <div class="row row-top-margin" id="eventsDiv">
-        <div class="col-xs-12">
-            <table class="table table-hover" id="eventTable">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Title</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Event 1</td>
-                    <td>12/12/2016</td>
-                    <td>6.00 pm</td>
-                    <td>
-                        <span class="span-margin-20">
-                            <a href="#" onclick="pageEvents.openRSVPModal()">
-                                <i class="fa fa-lg fa fa-list-ol fa-blue"></i>
-                            </a>
-                        </span>
-                        <span class="span-margin-20">
-                            <a href="#" onclick="">
-                                <i class="fa fa-lg fa-pencil fa-green"></i>
-                            </a>
-                        </span>
-                        <span class="span-margin-20">
-                            <a href="#" onclick="">
-                                <i class="fa fa-lg fa-trash-o fa-red"></i>
-                            </a>
-                        </span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+
     </div>
 </div>
 
 <!-- Add Event Modal -->
 <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form id="eventModalForm" action="controller.php?type=AE" method="post" novalidate>
+        <form id="eventModalForm" method="post" novalidate>
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -151,6 +114,7 @@
 
                         <div class="error"></div>
                     </fieldset>
+                    <input type="hidden" id="eventID" name="EventId">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

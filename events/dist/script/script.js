@@ -11,6 +11,7 @@ var pageEvents = {
         $("#alertOuterDiv").html("<div class='alert alert-danger alert-dismissible' id='alertMsgDiv' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong> " + boldMsg + " </strong>" + msg + "</div>")
     },
     openAddEventModal : function(){
+        $("#eventModalForm").prop('action','controller.php?type=AE');
         $('#eventModal').find('input').each(function(){
             $(this).val("").removeClass("form-control-danger").closest(".form-group").removeClass("has-danger").find(".error").html("");
         });
@@ -23,11 +24,10 @@ var pageEvents = {
         $("#AEHeader").html("Add Event");
         $("#eventModal").modal("show");
     },
-    openRSVPModal : function(){
-        $("#rsvpModal").modal("show");
-    },
     openEditEventModal : function (eventId) {
+        $("#eventModalForm").prop('action','controller.php?type=UE');
         var editEventId = eventId;
+        console.log(editEventId);
         $('#eventModal').find('input').each(function(){
             $(this).val("").removeClass("form-control-danger").closest(".form-group").removeClass("has-danger").find(".error").html("");
         });
@@ -37,6 +37,7 @@ var pageEvents = {
         $('#eventModal').find('textarea').each(function(){
             $(this).val("").removeClass("form-control-danger").closest(".form-group").removeClass("has-danger").find(".error").html("");
         });
+        $("#eventID").val(eventId);
         $("#AEHeader").html("Edit Event");
 
         console.log(pageEvents.data.status);
@@ -50,8 +51,8 @@ var pageEvents = {
                     $("#eventName").val(pageEvents.data.result[i].Name);
                     $("#eventDescription").val(pageEvents.data.result[i].Description);
                     $("#eventLocation").val(pageEvents.data.result[i].Location);
-                    $("#eventDate").val(pageEvents.data.result[i].DateTime);
-                    $("#eventTime").val(pageEvents.data.result[i].DateTime);
+                    $("#eventDate").val(pageEvents.data.result[i].Date);
+                    $("#eventTime").val(pageEvents.data.result[i].Time);
                     $("#eventDressCode").val(pageEvents.data.result[i].DressCode);
                 }
             }
@@ -59,31 +60,80 @@ var pageEvents = {
 
         $("#eventModal").modal("show");
     },
+    openRSVPModal : function(){
+        $("#rsvpModal").modal("show");
+    },
     getData : function(){
+        var r = $.Deferred();
         $.getJSON(pageEvents.baseURL,{
             type:'GE'
         },
             function(data){
                 pageEvents.data = data;
                 console.log(pageEvents.data);
+                r.resolve(data);
             });
+        return r;
     },
-    //Ajax requests to the api for fetching event data
-    //Get event
     getEvent : function(){
         console.log(pageEvents.data.result.length);
+        var date = new Date(),
+            eventDate = "",
+            eventTimeStamp = "",
+            parts = "";
+
         if(pageEvents.data.status == 1) {
             var str = "";
             if (pageEvents.data.result.length == 0) {
                 $("#eventsDiv").html("<h3 class='text-center'>No Events Available</h3>");
             }
             else {
-                str += ("<div class='col-xs-12'><table class='table table-hover' id='eventTable'><thead><tr><th>#</th><th>Title</th><th>Date & Time</th><th>Actions</th></tr></thead><tbody>");
+                str += ("<div class='col-xs-12'><table class='table table-hover' id='eventTable'><thead><tr><th>#</th><th>Title</th><th>Date & Time</th><th>Actions</th><th>Status</th></tr></thead><tbody>");
                 for (var i = 0; i < pageEvents.data.result.length; i++) {
-                    str += ("<tr><th scope='row'>" + (i + 1) + "</th><td>" + pageEvents.data.result[i].Name + "</td><td> " + pageEvents.data.result[i].DateTime + " </td><td><span class='span-margin-20'><a href='#' onclick='pageEvents.openRSVPModal()'><i class='fa fa-lg fa fa-list-ol fa-blue'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.openEditEventModal(" + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-pencil fa-green'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.deleteEvent( " + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-trash-o fa-red'></i></a></span></td></tr>");
+
+                    eventDate = pageEvents.data.result[i].Date;
+                    eventTimeStamp = pageEvents.data.result[i].Timestamp;
+
+                    parts = eventDate.split("/");
+                    eventDate = new Date(parseInt(parts[2], 10),
+                        parseInt(parts[1], 10) - 1,
+                        parseInt(parts[0], 10));
+
+                    eventTimeStamp = new Date(eventTimeStamp);
+
+                    /*console.log(date);
+                    console.log(eventDate);
+                    console.log(eventTimeStamp);*/
+
+                    var timeStampDiff = eventTimeStamp.getTime() - date.getTime();
+                    var timeDiffDays = Math.ceil(timeStampDiff / (1000 * 3600 * 24));
+                    console.log("Event Added to current date diff : " + timeDiffDays);
+
+                    var eventTimeDiff = eventDate.getTime() - date.getTime();
+                    var eventDiffDays = Math.ceil(eventTimeDiff / (1000 * 3600 * 24));
+                    console.log("Event to current date diff : " + eventDiffDays);
+
+                    //Check if date has exceeded 1 day of adding
+                    if((timeDiffDays == 0 || timeDiffDays == 1) && eventDiffDays > 0)
+                    {
+                        str += ("<tr class='table-success'><td scope='row'>" + (i + 1) + "</td><td>" + pageEvents.data.result[i].Name + "</td><td> " + pageEvents.data.result[i].Date + "&nbsp" + pageEvents.data.result[i].Time +" </td><td><span class='span-margin-20'><a href='#' onclick='pageEvents.openRSVPModal()'><i class='fa fa-lg fa fa-list-ol fa-blue'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.openEditEventModal(" + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-pencil fa-green'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.deleteEvent( " + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-trash-o fa-red'></i></a></span></td><td>New Event</td></tr>");
+                    }
+                    else if(eventDiffDays > 0 && eventDiffDays != 1){
+                        str += ("<tr class='table-info'><td scope='row'>" + (i + 1) + "</td><td>" + pageEvents.data.result[i].Name + "</td><td> " + pageEvents.data.result[i].Date + "&nbsp" + pageEvents.data.result[i].Time +" </td><td><span class='span-margin-20'><a href='#' onclick='pageEvents.openRSVPModal()'><i class='fa fa-lg fa fa-list-ol fa-blue'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.openEditEventModal(" + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-pencil fa-green'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.deleteEvent( " + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-trash-o fa-red'></i></a></span></td><td>Upcoming Event</td></tr>");
+                    }
+                    else if(eventDiffDays == 1){
+                        str += ("<tr class='table-warning'><td scope='row'>" + (i + 1) + "</td><td>" + pageEvents.data.result[i].Name + "</td><td> " + pageEvents.data.result[i].Date + "&nbsp" + pageEvents.data.result[i].Time +" </td><td><span class='span-margin-20'><a href='#' onclick='pageEvents.openRSVPModal()'><i class='fa fa-lg fa fa-list-ol fa-blue'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.openEditEventModal(" + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-pencil fa-green'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.deleteEvent( " + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-trash-o fa-red'></i></a></span></td><td>Today is the Tomorrow</td></tr>");
+                    }
+                    else if(eventDiffDays == 0){
+                        str += ("<tr class='table-warning'><td scope='row'>" + (i + 1) + "</td><td>" + pageEvents.data.result[i].Name + "</td><td> " + pageEvents.data.result[i].Date + "&nbsp" + pageEvents.data.result[i].Time +" </td><td><span class='span-margin-20'><a href='#' onclick='pageEvents.openRSVPModal()'><i class='fa fa-lg fa fa-list-ol fa-blue'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.openEditEventModal(" + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-pencil fa-green'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.deleteEvent( " + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-trash-o fa-red'></i></a></span></td><td>Today is the Event</td></tr>");
+                    }
+                    else if(eventDiffDays < 0)
+                    {
+                        str += ("<tr class='table-danger'><td scope='row'>" + (i + 1) + "</td><td>" + pageEvents.data.result[i].Name + "</td><td> " + pageEvents.data.result[i].Date + "&nbsp" + pageEvents.data.result[i].Time +" </td><td><span class='span-margin-20'><a href='#' onclick='pageEvents.openRSVPModal()'><i class='fa fa-lg fa fa-list-ol fa-blue'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.openEditEventModal(" + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-pencil fa-green'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.deleteEvent( " + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-trash-o fa-red'></i></a></span></td><td>Event Completed</td></tr>");
+                    }
                 }
                 str += ("</tbody></table></div>");
-                $("#eventsDiv").html("").html(str);
+                $("#eventsDiv").html(str);
             }
             if (pageEvents.loginStatus == true) {
                 $(".delete-btn").removeClass("hidden");
@@ -91,8 +141,6 @@ var pageEvents = {
             }
         }
     },
-
-    //Delete Event
     deleteEvent : function(eventId){
         var conf = confirm("Are your sure ?");
         if(conf){
@@ -121,23 +169,21 @@ var pageEvents = {
 };
 
 $(document).ready(function () {
-    pageEvents.getData();
+        pageEvents.getData().done(function () {
+            pageEvents.getEvent();
+        });
+
     $('#eventDate').datepicker({
-        format: "dd-mm-yyyy",
+        format: "dd/mm/yyyy",
         startDate: "today",
-        todayBtn: true,
         autoclose: true,
-        todayHighlight: true
+        todayHighlight: true,
     });
 
     $("#eventTime").clockpicker({
-        autoclose: true
+        autoclose: true,
+        format: "hh:mm"
     });
-
-    pageEvents.getLoginStatus().done(function(){
-        pageEvents.getEvent();
-    });
-
 
     $("#eventModalForm").ajaxForm({
         beforeSubmit: function(){
@@ -156,7 +202,9 @@ $(document).ready(function () {
                 pageEvents.showfailureNotification("Error! ",response.message);
             }
             $('#eventModal').modal('hide');
-            pageEvents.getEvent();
+            pageEvents.getData().done(function () {
+                pageEvents.getEvent();
+            });
             $("#loading").addClass("hidden");
         },
         error : function(){
