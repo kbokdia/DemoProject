@@ -35,6 +35,7 @@ do{
      * DM => Delete Multiple Image
      * GG => Get Galleries
      * GI => Get Gallery Info
+     * GD => Get Gallery Details
      * LI => Logged in state
      * EXAMPLE : T => test*/
 
@@ -87,6 +88,14 @@ do{
                 $response = BaseClass::createResponse(0,"Invalid Request");
             }
         break;
+
+        case 'GD':
+            if(empty($_GET['GalleryId']))
+            {
+                $validate = false;
+                $response = BaseClass::createResponse(0,"Invalid Request");
+            }
+            break;
     }
 
 }while(0);
@@ -151,6 +160,11 @@ if($validate){
         case 'GI':
             $galleryId = intval($_GET['GalleryId']);
             $response = $gallery->getGalleryInfo($galleryId);
+            break;
+
+        case 'GD':
+            $galleryId = intval($_GET['GalleryId']);
+            $response = $gallery->getGalleryDetails($galleryId);
             break;
 
         case 'LI':

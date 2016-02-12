@@ -287,6 +287,24 @@ class Gallery extends BaseClass
 
     }
 
+    function getGalleryDetails($galleryId){
+        $sql="SELECT * FROM Gallery where Id=$galleryId";
+        if($result = $this->mysqli->query($sql))
+        {
+            $response = BaseClass::createResponse(1,"Success");
+            $response['result'] = array();
+            while($row = $result->fetch_assoc())
+            {
+                $response['result'] = $row;
+            }
+        }
+        else
+        {
+            $response = BaseClass::createResponse(0,$this->mysqli->error);
+        }
+        return $response;
+    }
+
     //Run multiple sql queries
     function runMultipleQuery($sql){
         if ($this->mysqli->multi_query($sql) === TRUE) {
