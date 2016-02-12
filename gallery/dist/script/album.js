@@ -81,8 +81,11 @@ var pageAlbum = {
             type: 'GD',
             GalleryId: pageAlbum.galleryId
         }, function (data) {
-            //console.log(data);
-            $("#eventTitle").html(data.result.GalleryName);
+            console.log(data);
+            if(data.status == 1)
+            {
+                $("#eventTitle").html(data.result.GalleryName);
+            }
         });
     },
 
