@@ -59,7 +59,7 @@
 </div>
 
 <nav class="navbar navbar-fixed-top navbar-light bg-faded">
-    <a class="navbar-brand position-fixed" href="#" onclick="window.history.back()"><i class="fa fa-chevron-left fa-lg"></i>&nbsp;Back</a>
+    <!--<a class="navbar-brand position-fixed" href="#" onclick="window.history.back()"><i class="fa fa-chevron-left fa-lg"></i>&nbsp;Back</a>-->
     <h4 class="text-center navbar-heading" id="headingText">Gallery</h4>
 </nav>
 <div class="container container-top-padding">
