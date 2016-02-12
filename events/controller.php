@@ -78,8 +78,10 @@ if($validate){
             $events->name=$_POST["EventName"];
             $events->description=$_POST["EventDesc"];
             $events->location=$_POST["EventLocation"];
-            $events->dateTime=$_POST["EventDate"].$_POST["EventTime"];
+            $events->date=$_POST["EventDate"];
+            $events->time = $_POST["EventTime"];
             $events->dressCode=$_POST["EventDressCode"];
+            $events->imagePath = "NULL";
 
             //Perform action
             $response = $events->addEvent();
@@ -88,7 +90,7 @@ if($validate){
 
         case 'DE':
             //set variables
-            $eventId=$_POST["EventId"];
+            $eventId=intval($_POST["EventId"]);
 
             //Perform action
             $response=$events->deleteEvent($eventId);
@@ -103,8 +105,10 @@ if($validate){
             $events->name=$_POST["EventName"];
             $events->description=$_POST["EventDesc"];
             $events->location=$_POST["EventLocation"];
-            $events->dateTime=$_POST["EventDate"]." ".$_POST["EventTime"];
+            $events->date=$_POST["EventDate"];
+            $events->time = $_POST["EventTime"];
             $events->dressCode=$_POST["EventDressCode"];
+            $events->imagePath = "NULL";
 
             //Perform action
             $response=$events->updateEvent($eventId);
@@ -116,7 +120,7 @@ if($validate){
             break;
 
         case 'LI':
-            $response = BaseClass::isLoggedIn();
+            $response = BaseClass::isAdmin();
     }
 }
 

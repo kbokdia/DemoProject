@@ -6,6 +6,7 @@
  * Time: 6:17 PM
  */
 
+session_start();
 
 define('PROJECT_NAME','Project');
 

@@ -14,9 +14,11 @@ use Project\db\Connection;
 class BaseClass
 {
     var $mysqli;
+    var $regId;
 
     function __construct(){
         $this->mysqli = Connection::get();
+        $this->regId = 10001;
     }
 
     public static function createResponse($status,$message){

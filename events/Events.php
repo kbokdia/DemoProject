@@ -13,12 +13,12 @@ use Project\upload\ImageUpload;
 
 class Events extends BaseClass
 {
-    var $regId;
     var $eventId;
     var $name;
     var $description;
     var $location;
-    var $dateTime;
+    var $date;
+    var $time;
     var $dressCode;
     var $imagePath;
 
@@ -32,7 +32,7 @@ class Events extends BaseClass
     {
         //Do Select query (Only the Name and EventId Columns) and throw the response
         /*$sql = "Select Name,EventId from Events";*/
-        $sql = "Select * from Events";
+        $sql = "SELECT * FROM Events WHERE Events.RegId = $this->regId";
         $result = $this->mysqli->query($sql);
         if ($result) {
             $i = 0;
@@ -51,7 +51,7 @@ class Events extends BaseClass
 
     function deleteEvent($eventId){
         //Delete query the Events table based on eventId
-        $sql="Select * from Events where EventId=$eventId";
+        $sql="SELECT * FROM Events WHERE RegId = $this->regId AND EventId=$eventId";
         if($result = $this->mysqli->query($sql))
         {
             $sql = "DELETE FROM Events WHERE EventId = $eventId";
@@ -71,7 +71,7 @@ class Events extends BaseClass
 
     function updateEvent($eventId){
         //Update query the Events table based on eventId (Update all the columns except ImagePath)
-        $sql = "Update Events set Name='$this->name', Description='$this->description', Location='$this->location' , DateTime='$this->dateTime',DressCode='$this->dressCode' where EventId=$eventId";
+        $sql = "UPDATE Events SET Events.Name='$this->name', Events.Description='$this->description', Location='$this->location' , Events.Date='$this->date', Events.Time = '$this->time',DressCode='$this->dressCode' WHERE RegId = $this->regId AND Events.EventId=$eventId";
         if($result = $this->mysqli->query($sql))
         {
             $response = BaseClass::createResponse(1,"Event updated..");
@@ -87,8 +87,7 @@ class Events extends BaseClass
     function addEvent(){
         //Create insert query and save it
         $eventId = $this->generateEventId();
-        $regId = $this->generateRegId();
-        $sql="Insert into Events(RegId, EventId, Name, Description, Location, DateTime, DressCode,ImagePath) VALUES ($regId,$eventId,'$this->name','$this->description','$this->location','$this->dateTime','$this->dressCode','$this->imagePath')";
+        $sql="INSERT INTO Events(RegId, EventId, Name, Description, Location, Date, Time, DressCode,ImagePath) VALUES ($this->regId,$eventId,'$this->name','$this->description','$this->location','$this->date','$this->time','$this->dressCode','$this->imagePath')";
         if($result = $this->mysqli->query($sql))
         {
             $response = BaseClass::createResponse(1,"Event added..");
@@ -110,16 +109,5 @@ class Events extends BaseClass
         }
 
         return $eventCode;
-    }
-
-    function generateRegId(){
-        $regCode = 10001;
-        $sql = "SELECT MAX(RegId) AS 'regCode' FROM Events";
-        if($result = $this->mysqli->query($sql)){
-            $regCode = intval($result->fetch_assoc()['regCode']);
-            $regCode = (($regCode == 0) ? 10001 : $regCode + 1);
-        }
-
-        return $regCode;
     }
 }
