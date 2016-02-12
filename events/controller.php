@@ -9,6 +9,7 @@
 namespace Project\events;
 
 use Project\base\BaseClass;
+use Project\base\Date;
 
 define("ROOT", "../");
 require ROOT."autoload.php";
@@ -78,7 +79,7 @@ if($validate){
             $events->name=$_POST["EventName"];
             $events->description=$_POST["EventDesc"];
             $events->location=$_POST["EventLocation"];
-            $events->date=$_POST["EventDate"];
+            $events->date=Date::dbFormat($_POST["EventDate"]);
             $events->time = $_POST["EventTime"];
             $events->dressCode=$_POST["EventDressCode"];
             $events->imagePath = "NULL";
@@ -105,7 +106,7 @@ if($validate){
             $events->name=$_POST["EventName"];
             $events->description=$_POST["EventDesc"];
             $events->location=$_POST["EventLocation"];
-            $events->date=$_POST["EventDate"];
+            $events->date=Date::dbFormat($_POST["EventDate"]);
             $events->time = $_POST["EventTime"];
             $events->dressCode=$_POST["EventDressCode"];
             $events->imagePath = "NULL";
