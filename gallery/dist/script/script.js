@@ -136,6 +136,7 @@ $(document).ready(function () {
         },
         error : function(){
             //Code in case of an error
+            $("#loading").addClass("hidden");
             pageGallery.showfailureNotification("Error! ","An error has occured, please try again!");
         }
     });

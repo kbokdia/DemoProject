@@ -6,6 +6,7 @@ var pageAlbum = {
     baseURL : "controller.php",
     galleryId: window.location.search.split("=").pop(),
     loginStatus : false,
+    imageData : "",
 
     showSuccessNotification : function(boldMsg,msg){
         $("#alertOuterDiv").html("<div class='alert alert-success' role='alert'></button><strong> " + boldMsg + " </strong>" + msg + "</div>").fadeOut(5000);
@@ -26,10 +27,12 @@ var pageAlbum = {
     getImages: function(){
         //POST Request Type : GI
         //GalleryId => pageAlbum.galleryCode
+        var r = $.Deferred();
         $.getJSON(pageAlbum.baseURL, {
             type: 'GI',
             GalleryId: pageAlbum.galleryId
         }, function (data) {
+            pageAlbum.imageData = data;
             console.log(data);
             console.log(data.result.length);
             pageAlbum.imageCount = data.result.length;
@@ -43,17 +46,7 @@ var pageAlbum = {
                 }
                 else{
                     for (var i = 0; i < data.result.length; i++) {
-                        imagesStr +=
-                            "<figure class='col-sm-3 col-xs-6'>" +
-                                "<a href='" + data.result[i].ImagePath + "' itemprop='contentUrl' data-size='" + data.result[i].ImageWidth + "x" + data.result[i].ImageHeight + "'>" +
-                                    "<img src='" + data.result[i].ThumbsPath + "' class='img-responsive img-rounded' itemprop='thumbnail'/>" +
-                                "</a>" +
-                                "<div class='text-right delete-btn hidden'>" +
-                                    "<a href='#' onclick='pageAlbum.deleteImage(" + data.result[i].GalleryId + ","+ data.result[i].Id + ")'>" +
-                                        "<i class='fa fa-lg fa-trash-o fa-red'></i>" +
-                                    "</a>" +
-                                "</div>" +
-                            "</figure>";
+                        imagesStr += "<figure class='col-sm-3 col-xs-6'><a href='" + data.result[i].ImagePath + "' itemprop='contentUrl' data-size='" + data.result[i].ImageWidth + "x" + data.result[i].ImageHeight + "'><img src='" + data.result[i].ThumbsPath + "' class='photoswipe-img-size img-responsive img-rounded' itemprop='thumbnail'/></a></figure>";
                     }
                 }
             }
@@ -66,7 +59,9 @@ var pageAlbum = {
             $("#loading").addClass("hidden");
 
             initPhotoSwipeFromDOM('.my-gallery');
+            r.resolve();
         });
+        return r;
     },
 
     //Implement delete image functionality
@@ -119,6 +114,38 @@ var pageAlbum = {
         }
 
         $("#addImagesModal").modal('show');
+    },
+
+    openDeleteImageModal : function(){
+        console.log(pageAlbum.imageData);
+        var imgStr = "";
+        $("#galleryId").val(pageAlbum.galleryId);
+
+        if(pageAlbum.imageData.status == 1)
+        {
+            if(pageAlbum.imageData.result.length == 0)
+            {
+                $("#selectImageDiv").html("");
+                console.log("inside 0");
+                imgStr += "<h3 class='text-center'>No Images Available!</h3>";
+            }
+            else{
+                $("#selectImageDiv").html("Select images to delete");
+                imgStr += "<div class='row'>";
+                for(var i = 0; i < pageAlbum.imageData.result.length ; i++)
+                {
+                    if(i % 3 == 0 && i > 1)
+                    {
+                        imgStr += "</div><div class='row'>";
+                    }
+                    imgStr += "<li class='col-lg-4 col-xs-6'><input type='checkbox' id=' " + pageAlbum.imageData.result[i].Id + " ' name='ImageId[]' value='" + pageAlbum.imageData.result[i].Id + "'/><label for=' " + pageAlbum.imageData.result[i].Id + " '><img src=' " + pageAlbum.imageData.result[i].ThumbsPath + " ' /></label></li>";
+                }
+                imgStr += "</div>";
+            }
+            $("#imageDeleteBodyDiv").html(imgStr);
+        }
+
+        $("#deleteImagesModal").modal('show');
     },
 
     openFileInput : function(id){
@@ -179,6 +206,35 @@ $(document).ready(function (){
         },
         error : function(){
             //Code in case of an error
+            pageAlbum.showfailureNotification("Error! ","An error has occured, please try again!");
+        }
+    });
+
+    //Delete Images
+    $("#deleteImagesModalForm").ajaxForm({
+        beforeSubmit: function(formData){
+            console.log(formData);
+            //Code to check validation & stop submit if validation fails
+            if(!pageValidation.validateForm("#deleteAlbumModalForm"))
+                return pageValidation.validateForm("#deleteAlbumModalForm");
+
+            $("#loading").removeClass("hidden");
+        },
+        success : function(response, statusText, xhr, $form){
+            //Code to perform after the success of form submit
+            console.log(response);
+            if(response.status == 0)
+            {
+                pageAlbum.showfailureNotification("Error! ", response.message);
+            }
+            $('#deleteImagesModal').modal('hide');
+            pageAlbum.getImages().done(function () {
+                $("#loading").addClass("hidden");
+            });
+        },
+        error : function(){
+            //Code in case of an error
+            $("#loading").addClass("hidden");
             pageAlbum.showfailureNotification("Error! ","An error has occured, please try again!");
         }
     });

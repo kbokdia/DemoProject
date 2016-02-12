@@ -31,9 +31,6 @@
             width: 100%;
             height: auto;
         }
-        .my-gallery figcaption {
-            display: none;
-        }
         figure {
             margin: 1rem 0 0;
         }
@@ -73,6 +70,9 @@
         <div class="col-xs-12">
             <button type="button" class="btn btn-success-outline add-album-btn hidden" onclick="pageAlbum.openAddImageModal()"><i
                     class="fa fa-plus"></i>&nbsp;Add Images
+            </button>
+            <button type="button" class="btn btn-danger-outline add-album-btn hidden" onclick="pageAlbum.openDeleteImageModal()"><i
+                    class="fa fa-trash-o"></i>&nbsp;Delete Images
             </button>
         </div>
         <div class="clearfix"></div>
@@ -118,6 +118,37 @@
                 </div>
                 <div class="hidden" id="progressOuterDiv">
                     <progress id="progressbar" class="progress progress-striped progress-success" value="0" max="100">0%</progress>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteImagesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form id="deleteImagesModalForm" action="controller.php?type=DM" method="post" novalidate>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title text-center" id="DIHeader">Delete Images</h4>
+                </div>
+                <div class="modal-body">
+                    <strong class="error">
+                        <div class="text-center" id="selectImageDiv">Select images to delete</div>
+                    </strong>
+                    <div class="row">
+                        <ul class="col-xs-12" id="imageDeleteBodyDiv">
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer" id="modal-footer">
+                    <input type="hidden" id="galleryId" name="GalleryId"/>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger" id="submitImageBtn">Delete</button>
                 </div>
             </div>
         </form>
