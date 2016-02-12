@@ -32,7 +32,7 @@ class Rsvp extends BaseClass
     //Add new RSVP for an event.
     function addRsvp($eventId)
     {
-        $sql = "INSERT into Rsvp(RegId,EventId,MemberId,Self,Spouse,Children,Guest,Timestamp) values($this->regId,$eventId,$this->memberId,$this->self,$this->spouse,$this->children,$this->guest,$this->timeStamp)";
+        $sql = "INSERT into Rsvp(RegId,EventId,MemberId,Self,Spouse,Children,Guest,Timestamp) values($this->regId,$eventId,$this->memberId,$this->self,$this->spouse,$this->children,$this->guest,'$this->timeStamp')";
         if($result = $this->mysqli->query($sql))
         {
             $response = BaseClass::createResponse(1,"RSVP added..");
@@ -86,7 +86,7 @@ class Rsvp extends BaseClass
     //Editing a RSVP.
     function updateRsvp($eventId)
     {
-        $sql = "UPDATE Rsvp SET Rsvp.MemberId=$this->memberId, Self=$this->self , Rsvp.Spouse=$this->spouse, Rsvp.Children = $this->children, Rsvp.Guest=$this->guest WHERE Rsvp.EventId=$eventId";
+        $sql = "UPDATE Rsvp SET Rsvp.MemberId=$this->memberId, Self=$this->self , Rsvp.Spouse=$this->spouse, Rsvp.Children = $this->children, Rsvp.Guest=$this->guest, Rsvp.Timestamp='$this->timeStamp' WHERE Rsvp.EventId=$eventId";
         if($result = $this->mysqli->query($sql))
         {
             $response = BaseClass::createResponse(1,"Rsvp updated..");
