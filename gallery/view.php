@@ -78,7 +78,7 @@
         <div class="clearfix"></div>
     </div>
 
-    <div class="my-gallery row-top-margin" id="albumImagesDiv">
+    <div class="row my-gallery row-top-margin" id="albumImagesDiv">
 
     </div>
 </div>

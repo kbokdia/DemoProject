@@ -45,8 +45,17 @@ var pageAlbum = {
                     imagesStr += "<h3 class='text-center'>No Images Available!</h3>"
                 }
                 else{
+                    var preCount = 0;
                     for (var i = 0; i < data.result.length; i++) {
-                        imagesStr += "<figure class='col-sm-3 col-xs-6'><a href='" + data.result[i].ImagePath + "' itemprop='contentUrl' data-size='" + data.result[i].ImageWidth + "x" + data.result[i].ImageHeight + "'><img src='" + data.result[i].ThumbsPath + "' class='photoswipe-img-size img-responsive img-rounded' itemprop='thumbnail'/></a></figure>";
+                        if( i - preCount == 3 || i == 2)
+                        {
+                            imagesStr += "<figure class='row'><a class='col-xs-4' href='" + data.result[i].ImagePath + "' itemprop='contentUrl' data-size='" + data.result[i].ImageWidth + "x" + data.result[i].ImageHeight + "'><img src='" + data.result[i].ThumbsPath + "' class='photoswipe-img-size img-responsive img-rounded' itemprop='thumbnail'/></a></figure>";
+                            preCount = i;
+                        }
+                        else
+                        {
+                            imagesStr += "<figure><a class='col-xs-4' href='" + data.result[i].ImagePath + "' itemprop='contentUrl' data-size='" + data.result[i].ImageWidth + "x" + data.result[i].ImageHeight + "'><img src='" + data.result[i].ThumbsPath + "' class='photoswipe-img-size img-responsive img-rounded' itemprop='thumbnail'/></a></figure>";
+                        }
                     }
                 }
             }
