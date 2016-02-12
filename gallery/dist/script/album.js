@@ -81,7 +81,7 @@ var pageAlbum = {
             type: 'GD',
             GalleryId: pageAlbum.galleryId
         }, function (data) {
-            console.log(data);
+            //console.log(data);
             if(data.status == 1)
             {
                 $("#eventTitle").html(data.result.GalleryName);
@@ -173,10 +173,6 @@ var pageAlbum = {
 
     openFileInput : function(id){
         $(id).click();
-    },
-
-    backBtn : function(){
-        window.location.href = "index.php";
     },
 
     getLoginStatus : function(){
