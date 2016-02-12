@@ -15,8 +15,8 @@ var pageGallery = {
         $.getJSON(pageGallery.baseURL,{
             type:'GG'
         }, function (data) {
-            console.log(data);
-            console.log(data.result.length);
+            //console.log(data);
+            //console.log(data.result.length);
             if(data.status == 1)
             {
                 var str = "";
@@ -46,8 +46,8 @@ var pageGallery = {
             $.post(pageGallery.baseURL + "?type=DG", {
                 GalleryId: galleryId
             }, function(data){
-                console.log(data);
-                console.log(data.status);
+                //console.log(data);
+                //console.log(data.status);
                 if(data.status == 1){
                     pageGallery.getGalleries();
                 }
@@ -71,7 +71,7 @@ var pageGallery = {
         $.getJSON(pageGallery.baseURL,{
             type:'LI'
         }, function (data) {
-            console.log(data);
+            //console.log(data);
             pageGallery.loginStatus = data;
             r.resolve(data);
         });
@@ -89,7 +89,7 @@ $(document).ready(function () {
         loadImage.parseMetaData(
             e.target.files[0],
             function(data){
-                console.log(data);
+                //console.log(data);
                 var orientation = false;
                 if(data.exif){
                     orientation = data.exif.get('Orientation');
@@ -97,7 +97,7 @@ $(document).ready(function () {
                 loadImage(
                     e.target.files[0],
                     function (img) {
-                        console.log(img);
+                        //console.log(img);
                         $("#image-view").html(img);
                     },
                     {
@@ -125,7 +125,7 @@ $(document).ready(function () {
         },
         success : function(response, statusText, xhr, $form){
             //Code to perform after the success of form submit
-            console.log(response);
+            //console.log(response);
             if(response.status == 0)
             {
                 pageGallery.showfailureNotification("Error! ","Album with the same name already exists!");

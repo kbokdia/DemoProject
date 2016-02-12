@@ -66,7 +66,11 @@
     <div class="alertDiv" id="alertOuterDiv">
 
     </div>
-    <div class="row text-right">
+    <div class="row">
+    <div class="text-center">
+        <h5 id="eventTitle"></h5>
+    </div>
+    <div class="text-right">
         <div class="col-xs-12">
             <button type="button" class="btn btn-success-outline add-album-btn hidden" onclick="pageAlbum.openAddImageModal()"><i
                     class="fa fa-plus"></i>&nbsp;Add Images
@@ -76,6 +80,7 @@
             </button>
         </div>
         <div class="clearfix"></div>
+    </div>
     </div>
 
     <div class="row my-gallery row-top-margin" id="albumImagesDiv">

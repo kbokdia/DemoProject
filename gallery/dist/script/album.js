@@ -33,15 +33,15 @@ var pageAlbum = {
             GalleryId: pageAlbum.galleryId
         }, function (data) {
             pageAlbum.imageData = data;
-            console.log(data);
-            console.log(data.result.length);
+            //console.log(data);
+            //console.log(data.result.length);
             pageAlbum.imageCount = data.result.length;
 
             var imagesStr = "";
             if(data.status == 1) {
                 if(data.result.length == 0)
                 {
-                    console.log("inside 0");
+                    //console.log("inside 0");
                     imagesStr += "<h3 class='text-center'>No Images Available!</h3>"
                 }
                 else{
@@ -73,6 +73,19 @@ var pageAlbum = {
         return r;
     },
 
+    getGalleryDetails: function(){
+        //POST Request Type : GI
+        //GalleryId => pageAlbum.galleryCode
+        var r = $.Deferred();
+        $.getJSON(pageAlbum.baseURL, {
+            type: 'GD',
+            GalleryId: pageAlbum.galleryId
+        }, function (data) {
+            //console.log(data);
+            $("#eventTitle").html(data.result.GalleryName);
+        });
+    },
+
     //Implement delete image functionality
     deleteImage : function(galleryId, imageId){
         //POST Request TYPE : DI
@@ -83,8 +96,6 @@ var pageAlbum = {
                 GalleryId: galleryId,
                 ImageId : imageId
             }, function(data){
-                console.log(data);
-                console.log(data.status);
                 if(data.status == 1){
                     pageAlbum.getImages();
                 }
@@ -126,7 +137,7 @@ var pageAlbum = {
     },
 
     openDeleteImageModal : function(){
-        console.log(pageAlbum.imageData);
+        //console.log(pageAlbum.imageData);
         var imgStr = "";
         $("#galleryId").val(pageAlbum.galleryId);
 
@@ -135,7 +146,7 @@ var pageAlbum = {
             if(pageAlbum.imageData.result.length == 0)
             {
                 $("#selectImageDiv").html("");
-                console.log("inside 0");
+                //console.log("inside 0");
                 imgStr += "<h3 class='text-center'>No Images Available!</h3>";
             }
             else{
@@ -170,7 +181,7 @@ var pageAlbum = {
         $.getJSON(pageAlbum.baseURL,{
             type:'LI'
         }, function (data) {
-            console.log(data);
+            //console.log(data);
             pageAlbum.loginStatus = data;
             r.resolve(data);
         });
@@ -182,15 +193,16 @@ $(document).ready(function (){
     //Make api requests
     pageAlbum.getLoginStatus().done(function () {
         pageAlbum.getImages();
+        pageAlbum.getGalleryDetails();
     });
 
-    console.log($("#GalleryId").val());
+    //console.log($("#GalleryId").val());
 
     //Add Images
     $("#addImagesModalForm").ajaxForm({
         beforeSubmit: function(formData){
             //Code to check validation & stop submit if validation fails
-            console.log(formData);
+            //console.log(formData);
             if(!pageValidation.validateForm("#addImagesModalForm"))
                 return pageValidation.validateForm("#addImagesModalForm");
 
@@ -202,7 +214,7 @@ $(document).ready(function (){
         },
         success : function(response, statusText, xhr, $form){
             //Code to perform after the success of form submit
-            console.log(response);
+            //console.log(response);
             if(response.status == 0)
             {
                 pageAlbum.showfailureNotification("Error! ","An Error has occured!");
@@ -222,7 +234,7 @@ $(document).ready(function (){
     //Delete Images
     $("#deleteImagesModalForm").ajaxForm({
         beforeSubmit: function(formData){
-            console.log(formData);
+            //console.log(formData);
             //Code to check validation & stop submit if validation fails
             if(!pageValidation.validateForm("#deleteAlbumModalForm"))
                 return pageValidation.validateForm("#deleteAlbumModalForm");
@@ -231,7 +243,7 @@ $(document).ready(function (){
         },
         success : function(response, statusText, xhr, $form){
             //Code to perform after the success of form submit
-            console.log(response);
+            //console.log(response);
             if(response.status == 0)
             {
                 pageAlbum.showfailureNotification("Error! ", response.message);
@@ -257,18 +269,18 @@ $(document).ready(function (){
 
             if(parseInt(count) > imageLimit)
             {
-                console.log(count);
+                //console.log(count);
                 $(this).val("");
                 $(this).closest(".form-group").find(".error").html("").html("More than 20 Images Selected");
             }
             else{
-                console.log(count);
+                //console.log(count);
                 for(var i = 0; i < count; i++)
                 {
-                    console.log(count);
+                    //console.log(count);
                     if((this.files[i].size) > (5 * 1024 * 1024))
                     {
-                        console.log(this.files[0].size);
+                        //console.log(this.files[0].size);
                         $(this).val("");
                         $(this).closest(".form-group").find(".error").html("").html("One or more images have size greater than 5 MB, please remove them and try again!");
                         break;
@@ -286,5 +298,5 @@ $(document).ready(function (){
 });
 
 $(window).load(function() {
-    console.log(pageAlbum.loginStatus);
+    //console.log(pageAlbum.loginStatus);
 });
