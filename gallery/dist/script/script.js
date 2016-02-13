@@ -128,7 +128,7 @@ $(document).ready(function () {
             //console.log(response);
             if(response.status == 0)
             {
-                pageGallery.showfailureNotification("Error! ","Album with the same name already exists!");
+                pageGallery.showfailureNotification("Error! ",response.message);
             }
             $('#addGalleryModal').modal('hide');
             pageGallery.getGalleries();
