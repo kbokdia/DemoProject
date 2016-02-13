@@ -6,7 +6,7 @@
  * Time: 7:02 PM
  */
 
-namespace Project\Rsvp\rsvp;
+namespace Project\events\rsvp;
 
 
 use Project\base\BaseClass;
