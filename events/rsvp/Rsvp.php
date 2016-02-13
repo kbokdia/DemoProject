@@ -71,8 +71,8 @@ class Rsvp extends BaseClass
     }
 
     //Editing a RSVP.
-    function updateRsvp($eventId, $memberId){
-        $sql = "UPDATE Rsvp SET Self=$this->self , Rsvp.Spouse=$this->spouse, Rsvp.Children = $this->children, Rsvp.Guest=$this->guest WHERE Rsvp.RegId = $this->regId AND Rsvp.EventId=$eventId AND Rsvp.MemberId=$memberId";
+    function updateRsvp($regId, $eventId, $memberId){
+        $sql = "UPDATE Rsvp SET Self=$this->self , Rsvp.Spouse=$this->spouse, Rsvp.Children = $this->children, Rsvp.Guest=$this->guest WHERE Rsvp.RegId = $regId AND Rsvp.EventId=$eventId AND Rsvp.MemberId=$memberId";
 
         if($result = $this->mysqli->query($sql)) {
             $response = BaseClass::createResponse(1,"Rsvp updated..");

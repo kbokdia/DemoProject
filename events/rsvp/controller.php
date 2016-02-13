@@ -24,14 +24,14 @@ do{
 
      /*
       * Types (Whenever new types are defined update this comment too)
-      * AR => Add RSVP.
-      * GR => Get RSVP.
-      * UR => Update RSVP.
-      * DR => Delete RSVP.
+      * ARP => Add RSVP.
+      * GRP => Get RSVP.
+      * URP => Update RSVP.
+      * DRP => Delete RSVP.
       */
     switch($type)
     {
-        case 'AR':
+        case 'ARP':
             if(empty($_POST['Self']) || empty($_POST['Spouse']) || empty($_POST['Children']) || empty($_POST['Guest']))
             {
                 $validate = false;
@@ -39,7 +39,7 @@ do{
             }
             break;
 
-        case 'UR':
+        case 'URP':
             if(empty($_POST['RegId']) || empty($_POST['EventId']) || empty($_POST['MemberId']))
             {
                 $validate = false;
@@ -47,7 +47,7 @@ do{
             }
             break;
 
-        case 'DR':
+        case 'DRP':
             if(empty($_POST['RegId']) || empty($_POST['EventId']) || empty($_POST['MemberId']))
             {
                 $validate = false;
@@ -62,28 +62,56 @@ if($validate) {
     $rsvp = new Rsvp();
 
     switch($type){
-        case 'AR':
+        //Add RSVP.
+        case 'ARP':
             $_POST = $rsvp->escapeData($_POST);
+
+            $regId=intval($_POST['regId']);
+            $eventId=intval($_POST['eventId']);
+            $memberId=intval($_POST['memberId']);
 
             $rsvp->self=intval($_POST['Self']);
             $rsvp->spouse=intval($_POST['Spouse']);
             $rsvp->children=intval($_POST['Children']);
             $rsvp->guest=intval($_POST['Guest']);
-            $response = $rsvp->addRsvp();
+            $response = $rsvp->addRsvp($regId,$eventId,$memberId);
 
             break;
 
-        case 'UR':
+        //Update RSVP.
+        case 'URP':
             $_POST = $rsvp->escapeData($_POST);
+
+            $regId=intval($_POST['regId']);
+            $eventId=intval($_POST['eventId']);
+            $memberId=intval($_POST['memberId']);
 
             $rsvp->self=intval($_POST['Self']);
             $rsvp->spouse=intval($_POST['Spouse']);
             $rsvp->children=intval($_POST['Children']);
             $rsvp->guest=intval($_POST['Guest']);
-            $response = $rsvp->updateRsvp();
+            $response = $rsvp->updateRsvp($regId,$eventId,$memberId);
+
+            break;
+
+        //Delete RSVP.
+        case 'DRP':
+            $_POST = $rsvp->escapeData($_POST);
+
+            $eventId=intval($_POST['eventId']);
+            $memberId=intval($_POST['memberId']);
+
+            $response = $rsvp->deleteMemberRsvp($eventId,$memberId);
+
+            break;
+
+        //Get RSVP.
+        case 'GRP':
+            $eventId=intval($_POST['eventId']);
+            $response = $rsvp->getRsvp($eventId);
+
+            break;
     }
-
-
-
-
 }
+header('Content-Type: application/json');
+echo json_encode($response);
