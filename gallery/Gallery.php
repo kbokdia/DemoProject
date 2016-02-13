@@ -30,49 +30,36 @@ class Gallery extends BaseClass
             To upload file use ImageUpload class
             create insert query and save to db and on success return true else false
         */
-
-        //Ambuj
         $response = array();
 
-        //Check if gallery exists.
-        $sql="select GalleryName from Gallery where GalleryName = '$this->galleryName'";
-        $result = $this->mysqli->query($sql);
-        if($result){
-            //Get an id for the new gallery.
-            $gallID=$this->generateGalleryId();
+        //Get an id for the new gallery.
+        $gallID=$this->generateGalleryId();
 
-            $path = "albums/".$gallID."/";
-            if($result->num_rows == 0){
-                //If not,then create directory and move image.
-                if(!file_exists($path)){
-                    mkdir($path);
-                    mkdir($path."/SD");
-                    mkdir($path."/Thumbs");
-                }
-                $imageUpload = new ImageUpload($this->coverImage);
-                $imageUpload->dstPath = $path;
-                $imageUpload->dstName = 'cover';
+        $path = "albums/".$gallID."/";
 
-                //if image uploaded then save the record to the db.
-                if($imageUpload->save()){
-                    //ImageUpload class by default saves all the image to jpg
-                    $imagePath = $path."cover.jpg";
-                    $sql="INSERT INTO Gallery(Id, GalleryName, GalleryDescription, ImageCount, CoverImagePath) VALUES ($gallID,'$this->galleryName', '$this->galleryDescription',0,'$imagePath')";
-                    if($result = $this->mysqli->query($sql)){
-                        $response = BaseClass::createResponse(1,"Gallery created..");
-                    }
-                }
-                else{
-                    return $imageUpload->response;
-                }
-            }
-            else{
-                $response = BaseClass::createResponse(0,"Gallery already exists..");
+        //If not,then create directory and move image.
+        if(!file_exists($path)){
+            mkdir($path);
+            mkdir($path."SD/");
+            mkdir($path."Thumbs/");
+        }
+        $imageUpload = new ImageUpload($this->coverImage);
+        $imageUpload->dstPath = $path;
+        $imageUpload->dstName = 'cover';
+
+        //if image uploaded then save the record to the db.
+        if($imageUpload->save()){
+            //ImageUpload class by default saves all the image to jpg
+            $imagePath = $path."cover.jpg";
+            $sql="INSERT INTO Gallery(Id, GalleryName, GalleryDescription, ImageCount, CoverImagePath) VALUES ($gallID,'$this->galleryName', '$this->galleryDescription',0,'$imagePath')";
+            if($result = $this->mysqli->query($sql)){
+                $response = BaseClass::createResponse(1,"Gallery created..");
             }
         }
         else{
-            $response = BaseClass::createResponse(0,$this->mysqli->error);
+            return $imageUpload->response;
         }
+
         //End
         return $response;
     }
