@@ -39,7 +39,7 @@
 <nav class="navbar navbar-fixed-top navbar-light bg-faded">
     <h4 class="text-center navbar-heading">Gallery</h4>
 </nav>
-<div class="container container-top-padding">
+<div class="container container-top-padding" style="padding-bottom: 50px">
     <div class="alertDiv" id="alertOuterDiv">
 
     </div>
