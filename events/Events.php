@@ -119,6 +119,24 @@ class Events extends BaseClass
         //Save image using ImageUpload class
         //Image name = "cover.jpg"
         //Update the image path in database.
+        BaseClass::createDir($path);
+        $imageUpload = new ImageUpload($this->image);
+        $imageUpload->dstPath=$path;
+        $imageUpload->dstName="cover.jpg";
 
+        if($imageUpload->save()){
+            //ImageUpload class by default saves all the image to jpg
+            $imagePath = $path."cover.jpg";
+            $sql="INSERT INTO Events(ImagePath) VALUES ('$imagePath')";
+            if($result = $this->mysqli->query($sql)){
+                $response = BaseClass::createResponse(1,"Gallery created..");
+            }
+        }
+        else{
+            return $imageUpload->response;
+        }
+
+        //End
+        return $response;
     }
 }

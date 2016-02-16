@@ -20,6 +20,7 @@ class Rsvp extends BaseClass
     var $spouse;
     var $children;
     var $guest;
+    var $active;
 
     function __construct(){
         parent::__construct();
@@ -56,8 +57,23 @@ class Rsvp extends BaseClass
     }
 
     //Get member RSVP
-    function getMemberRSVP(){
+    function getMemberRSVP($memberId){
         //get particular members RSVP
+        $sql = "SELECT * FROM Rsvp WHERE Rsvp.MemberId=$memberId";
+        $result = $this->mysqli->query($sql);
+        if ($result) {
+        $i = 0;
+        $response = BaseClass::createResponse(1,"Success");
+        $response['result'] = array();
+        while ($row = $result->fetch_assoc()) {
+            $response['result'][$i++] = $row;
+        }
+    } else {
+            $response = BaseClass::createResponse(0,$this->mysqli->error);
+        }
+        return $response;
+
+
     }
 
     //Delete a RSVP.
@@ -77,11 +93,21 @@ class Rsvp extends BaseClass
     //Delete Event RSVP
     function deleteEventRsvp($eventId){
         //Delete event based on event ID
+        $sql = "DELETE FROM Rsvp WHERE EventId = $eventId";
+
+        if($this->mysqli->query($sql)){
+            $response = BaseClass::createResponse(1,"Rsvp deleted");
+        }
+        else{
+            $response = BaseClass::createResponse(0,$this->mysqli->error);
+        }
+
+        return $response;
     }
 
     //Editing a RSVP.
     function updateRsvp($regId, $eventId, $memberId){
-        $sql = "UPDATE Rsvp SET Self=$this->self , Rsvp.Spouse=$this->spouse, Rsvp.Children = $this->children, Rsvp.Guest=$this->guest WHERE Rsvp.RegId = $regId AND Rsvp.EventId=$eventId AND Rsvp.MemberId=$memberId";
+        $sql = "UPDATE Rsvp SET Self=$this->self , Rsvp.Spouse=$this->spouse, Rsvp.Children = $this->children, Rsvp.Guest=$this->guest, Rsvp.Active=$this->active WHERE Rsvp.RegId = $regId AND Rsvp.EventId=$eventId AND Rsvp.MemberId=$memberId";
 
         if($result = $this->mysqli->query($sql)) {
             $response = BaseClass::createResponse(1,"Rsvp updated..");
@@ -96,6 +122,16 @@ class Rsvp extends BaseClass
         //for this function to work you have to add (name:"Active", type:"tinyint", NOT NULL DEFAULT 2) field into the RSVP table
         //When this function is called you have to update the active field to value 1
         //Don't forget to update the query in updateRsvp()
+        $this->active=1;
+        $sql = "UPDATE Rsvp SET Rsvp.Active=$this->active WHERE Rsvp.EventId=$eventId AND Rsvp.MemberId=$memberId";
+
+        if($result = $this->mysqli->query($sql)) {
+            $response = BaseClass::createResponse(1,"Active value updated..");
+        }
+        else {
+            $response = BaseClass::createResponse(0,"Active value not updated..");
+        }
+        return $response;
     }
 
 }
