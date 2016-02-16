@@ -21,6 +21,7 @@ class Events extends BaseClass
     var $time;
     var $dressCode;
     var $imagePath;
+    var $image;
 
 
     function __construct()
@@ -109,5 +110,15 @@ class Events extends BaseClass
         }
 
         return $eventCode;
+    }
+
+    //Add event image
+    function addImage($eventId){
+        //Create folder using BaseClass::createDir($path) function
+        $path = "images/".$eventId."/";
+        //Save image using ImageUpload class
+        //Image name = "cover.jpg"
+        //Update the image path in database.
+
     }
 }

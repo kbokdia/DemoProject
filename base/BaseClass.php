@@ -37,6 +37,12 @@ class BaseClass
         return $data;
     }
 
+    public static function createDir($dirPath){
+        if(!file_exists($dirPath)){
+            mkdir($dirPath);
+        }
+    }
+
     public static function deleteDir($dirPath) {
         if (! is_dir($dirPath)) {
             throw new \InvalidArgumentException("$dirPath must be a directory");

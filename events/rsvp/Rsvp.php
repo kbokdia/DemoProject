@@ -13,7 +13,6 @@ use Project\base\BaseClass;
 
 class Rsvp extends BaseClass
 {
-    //Todo-Ambuj: You have to implement the whole class
     //Declare the variables.
     var $eventId;
     var $memberId;
@@ -56,6 +55,11 @@ class Rsvp extends BaseClass
         return $response;
     }
 
+    //Get member RSVP
+    function getMemberRSVP(){
+        //get particular members RSVP
+    }
+
     //Delete a RSVP.
     function deleteMemberRsvp($eventId,$memberId){
         $sql = "DELETE FROM Rsvp WHERE RegId = $this->regId AND EventId = $eventId AND Rsvp.MemberId = $memberId";
@@ -70,6 +74,11 @@ class Rsvp extends BaseClass
         return $response;
     }
 
+    //Delete Event RSVP
+    function deleteEventRsvp($eventId){
+        //Delete event based on event ID
+    }
+
     //Editing a RSVP.
     function updateRsvp($regId, $eventId, $memberId){
         $sql = "UPDATE Rsvp SET Self=$this->self , Rsvp.Spouse=$this->spouse, Rsvp.Children = $this->children, Rsvp.Guest=$this->guest WHERE Rsvp.RegId = $regId AND Rsvp.EventId=$eventId AND Rsvp.MemberId=$memberId";
@@ -81,6 +90,12 @@ class Rsvp extends BaseClass
             $response = BaseClass::createResponse(0,"Rsvp not updated..");
         }
         return $response;
+    }
+
+    function ActivateRsvp($eventId, $memberId){
+        //for this function to work you have to add (name:"Active", type:"tinyint", NOT NULL DEFAULT 2) field into the RSVP table
+        //When this function is called you have to update the active field to value 1
+        //Don't forget to update the query in updateRsvp()
     }
 
 }
