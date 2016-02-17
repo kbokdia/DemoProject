@@ -56,7 +56,7 @@ class Rsvp extends BaseClass
         return $response;
     }
 
-    //Get member RSVP
+    //Get member RSVP.
     function getMemberRSVP($memberId){
         //get particular members RSVP
         $sql = "SELECT * FROM Rsvp WHERE Rsvp.MemberId=$memberId";
@@ -121,7 +121,7 @@ class Rsvp extends BaseClass
     function ActivateRsvp($eventId, $memberId){
         //for this function to work you have to add (name:"Active", type:"tinyint", NOT NULL DEFAULT 2) field into the RSVP table
         //When this function is called you have to update the active field to value 1
-        //Don't forget to update the query in updateRsvp()
+        //Don't forget to update the query in updateRsvp().
         $this->active=1;
         $sql = "UPDATE Rsvp SET Rsvp.Active=$this->active WHERE Rsvp.EventId=$eventId AND Rsvp.MemberId=$memberId";
 
