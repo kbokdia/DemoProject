@@ -17,7 +17,7 @@ class BaseClass
     var $regId;
 
     function __construct(){
-        $this->mysqli = Connection::get();
+        $this->mysqli = (new Connection)->get();
         $this->regId = 10001;
     }
 

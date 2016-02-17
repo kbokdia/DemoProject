@@ -12,7 +12,7 @@ require 'config.php';
 
 class Connection
 {
-    public static function get(){
+    public function get(){
 
         $mysqli  = new \mysqli(HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
