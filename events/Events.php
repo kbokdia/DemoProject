@@ -122,18 +122,21 @@ class Events extends BaseClass
         BaseClass::createDir($path);
         $imageUpload = new ImageUpload($this->image);
         $imageUpload->dstPath=$path;
-        $imageUpload->dstName="cover.jpg";
+        $imageUpload->dstName="cover";
 
         if($imageUpload->save()){
             //ImageUpload class by default saves all the image to jpg
             $imagePath = $path."cover.jpg";
-            $sql="INSERT INTO Events(ImagePath) VALUES ('$imagePath')";
+            $sql="UPDATE Events SET ImagePath = '$imagePath' WHERE EventId = $eventId;";
             if($result = $this->mysqli->query($sql)){
                 $response = BaseClass::createResponse(1,"Gallery created..");
             }
+            else{
+                $response = BaseClass::createResponse(0,$this->mysqli->error);
+            }
         }
         else{
-            return $imageUpload->response;
+            $response = $imageUpload->response;
         }
 
         //End
