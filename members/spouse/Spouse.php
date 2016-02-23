@@ -42,21 +42,31 @@ class Spouse extends BaseClass
     //Add a new spouse.
     function addSpouse()
     {
-
+        $this->memberId=$this->generateMemberId();
+        $sql = "INSERT INTO Members (MemberId,Name,GuardianName,DOB,Gender,Email,Email1,Mobile,Mobile1,Mobile2,BloodGroup,NativePlace,HomeAddress,HomeAreaCode,HomePincode,HomeCityCode,HomeStateCode,HomePhone,HomeCentrex,Occupation,BusinessType,OfficeAddress,OfficeAreaCode,OfficePincode,OfficeCityCode,OfficeStateCode,OfficePhone,OfficeCentrex,Food,Religion,Hobbies,Recognition,MembershipNo,MembershipType,MemberJoiningDate,HasPartner,Active) VALUES ($this->memberId,'$this->name','$this->guardianName','$this->dob',$this->gender,'$this->email','$this->email1','$this->mobile','$this->mobile2','$this->mobile2','$this->bloodGroup','$this->nativePlace','$this->homeAddress','$this->homeAreaCode','$this->homePincode','$this->homeCityCode','$this->homeStateCode','$this->homePhone','$this->homeCentrex','$this->occupation','$this->businessType','$this->officeAddress','$this->officeAreaCode','$this->officePincode','$this->officeCityCode','$this->officeStateCode','$this->officePhone','$this->officeCentrex','$this->food','$this->religion','$this->hobbies','$this->recognition','$this->membershipNo','$this->membershipType','$this->memberJoiningDate',$this->hasPartner,$this->active )";
+        if($result = $this->mysqli->query($sql))
+        {
+            $response = BaseClass::createResponse(1,"Member added..");
+        }
+        else
+        {
+            $response = BaseClass::createResponse(0,"Member not added..");
+        }
+        return $response;
     }
 
 
     //Generate spouse id.
     function generateSpouseId()
     {
-        $memberCode = 1001;
-        $sql = "SELECT MAX(MemberId) AS 'memberCode' FROM Members";
+        $spouseCode = 1001;
+        $sql = "SELECT MAX(SpouseId) AS 'spouseCode' FROM Spouse WHERE RegId=$this->regId";
         if($result = $this->mysqli->query($sql))
         {
-            $memberCode = intval($result->fetch_assoc()['memberCode']);
-            $memberCode = (($memberCode == 0) ? 1001 : $memberCode + 1);
+            $spouserCode = intval($result->fetch_assoc()['spouseCode']);
+            $spouseCode = (($spouseCode == 0) ? 1001 : $spouseCode + 1);
         }
-        return $memberCode;
+        return $spouseCode;
     }
 
 }

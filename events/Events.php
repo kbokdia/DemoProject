@@ -52,21 +52,13 @@ class Events extends BaseClass
 
     function deleteEvent($eventId){
         //Delete query the Events table based on eventId
-        $sql="SELECT * FROM Events WHERE RegId = $this->regId AND EventId=$eventId";
-        if($result = $this->mysqli->query($sql))
-        {
-            $sql = "DELETE FROM Events WHERE EventId = $eventId";
-            if($this->mysqli->query($sql)){
-                $response = BaseClass::createResponse(1,"Event deleted");
-            }
-            else{
-                $response = BaseClass::createResponse(0,$this->mysqli->error);
-            }
+        $sql = "DELETE FROM Events WHERE EventId = $eventId";
+        if($this->mysqli->query($sql)){
+            $response = BaseClass::createResponse(1,"Event deleted");
         }
         else{
-            $response = BaseClass::createResponse(0,"Invalid request");
+            $response = BaseClass::createResponse(0,$this->mysqli->error);
         }
-
         return $response;
     }
 
