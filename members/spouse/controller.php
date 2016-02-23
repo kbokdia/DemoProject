@@ -126,7 +126,7 @@ if($validate){
             $memberId = intval($_POST['MemberId']);
             $spouse->name = empty($_POST['Name']) ? 'NULL' : "'".$_POST['Name']."'";
             $spouse->dob = empty($_POST['DOB']) ? 'NULL' : "'".$_POST['DOB']."'";
-            $spouse->gender = intval($_POST['Gender']);
+            $spouse->gender = empty($_POST['Gender']) ? 0 : intval($_POST['Gender']);
             $spouse->email = empty($_POST['Email']) ? 'NULL' : "'".$_POST['Email']."'";
             $spouse->email1 = empty($_POST['Email1']) ? 'NULL' : "'".$_POST['Email1']."'";
             $spouse->mobile = empty($_POST['Mobile']) ? 'NULL' : "'".$_POST['Mobile']."'";
