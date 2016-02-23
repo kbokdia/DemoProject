@@ -4,9 +4,6 @@
 .position-fixed{
     position: fixed;
 }
-.container-top-padding{
-    padding-top: 80px;
-}
 .row-top-margin{
     margin-top: 20px;
 }
@@ -30,9 +27,6 @@ a {
 .btn-padding-top{
     padding-top: 30px;
 }
-/*.photoswipe-img-size{
-    max-height: 100px;
-}*/
 
 ul {
     list-style-type: none;
@@ -48,7 +42,7 @@ input[type="checkbox"] {
     display: none;
 }
 
-label {
+.label {
     border: 1px solid #fff;
     padding: 10px;
     display: block;
@@ -57,7 +51,7 @@ label {
     cursor: pointer;
 }
 
-label:before {
+.label:before {
     background-color: white;
     color: white;
     content: " ";
@@ -75,24 +69,24 @@ label:before {
     transform: scale(0);
 }
 
-label img {
+.label img {
     height: 100%;
     width: 100%;
     transition-duration: 0.2s;
     transform-origin: 50% 50%;
 }
 
-:checked + label {
+:checked + .label {
     border-color: #ddd;
 }
 
-:checked + label:before {
+:checked + .label:before {
     content: "✓";
     background-color: #ff3138;
     transform: scale(1);
 }
 
-:checked + label img {
+:checked + .label img {
     transform: scale(0.9);
     /* box-shadow: 0 0 5px #333; */
     z-index: -1;

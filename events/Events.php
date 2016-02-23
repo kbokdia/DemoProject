@@ -33,7 +33,7 @@ class Events extends BaseClass
     {
         //Do Select query (Only the Name and EventId Columns) and throw the response
         /*$sql = "Select Name,EventId from Events";*/
-        $sql = "SELECT Events.RegId, Events.EventId, Events.Name, Events.Description, Events.Location, DATE_FORMAT(Events.Date,'%d/%m/%Y') AS 'Date', DATE_FORMAT(Events.Time,'%H:%i') as 'Time', Events.DressCode, Events.ImagePath, Events.Timestamp FROM Events WHERE Events.RegId = $this->regId";
+        $sql = "SELECT RegId, EventId, Events.Name, Events.Description, Events.Location, DATE_FORMAT(Events.Date,'%d/%m/%Y') AS 'Date', DATE_FORMAT(Events.Time,'%H:%i') as 'Time', Events.DressCode, Events.ImagePath, Events.Timestamp FROM Events WHERE Events.RegId = $this->regId";
         $result = $this->mysqli->query($sql);
         if ($result) {
             $i = 0;

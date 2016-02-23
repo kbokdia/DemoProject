@@ -11,8 +11,8 @@
 
     <!-- Bootstrap & font-awesome min CSS -->
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">-->
-    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../dist/css/bootstrap4.css">
+    <link rel="stylesheet" href="../dist/css/font-awesome.min.css">
 
     <!-- Local CSS -->
     <link rel="stylesheet" href="dist/css/style.css">
@@ -62,7 +62,7 @@
     <!--<a class="navbar-brand position-fixed" href="#" onclick="window.history.back()"><i class="fa fa-chevron-left fa-lg"></i>&nbsp;Back</a>-->
     <h4 class="text-center navbar-heading" id="headingText">Gallery</h4>
 </nav>
-<div class="container container-top-padding">
+<div class="container container-top-padding" style="padding-bottom: 50px">
     <div class="alertDiv" id="alertOuterDiv">
 
     </div>
@@ -227,11 +227,11 @@
 </div>
 
 <!-- JQuery min JS -->
-<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script src="../dist/script/jquery-2.2.0.min.js"></script>
 
 <!-- Bootstrap min JS -->
 <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>-->
-<script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js" crossorigin="anonymous"></script>
+<script src="../dist/script/bootstrap4.js"></script>
 
 <!-- Local Script -->
 <script src="../dist/script/photoswipe.min.js"></script>

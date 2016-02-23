@@ -11,7 +11,7 @@
 
     <!-- Bootstrap & font-awesome min CSS -->
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">-->
-    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="../dist/css/bootstrap4.css" crossorigin="anonymous">
     <link rel="stylesheet" href="../dist/css/font-awesome.min.css">
 
     <!-- Local CSS -->
@@ -19,6 +19,10 @@
     <link rel="stylesheet" href="../dist/css/style.css">
     <link rel="stylesheet" href="../dist/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="../dist/css/bootstrap-clockpicker.min.css">
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.0.2/css/responsive.bootstrap.min.css">
 </head>
 <body>
 
@@ -56,6 +60,8 @@
 
     </div>
 </div>
+
+
 
 <!-- Add Event Modal -->
 <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -136,7 +142,7 @@
                 <h4 class="modal-title text-center" id="RSVPHeader">Member Confirmation</h4>
             </div>
             <div class="modal-body">
-                <table class="table">
+                <table class="table table-responsive" id="rsvpTable">
                     <thead>
                     <tr class="table-info">
                         <th>#</th>
@@ -158,6 +164,24 @@
                         <td>1</td>
                         <td>2</td>
                     </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Kamlesh Bokdia</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Ambuj</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>2</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -171,11 +195,11 @@
 <!-- Script Files -->
 
 <!-- JQuery min JS -->
-<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script src="../dist/script/jquery-2.2.0.min.js"></script>
 
 <!-- Bootstrap min JS -->
 <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>-->
-<script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js" crossorigin="anonymous"></script>
+<script src="../dist/script/bootstrap4.js"></script>
 
 <!-- Local Script -->
 <script rel="script" src="../dist/script/load-image.min.js"></script>
@@ -188,6 +212,11 @@
 <script rel="script" src="dist/script/script.js"></script>
 <script rel="script" src="../dist/script/bootstrap-datepicker.min.js"></script>
 <script rel="script" src="../dist/script/bootstrap-clockpicker.min.js"></script>
+
+<script rel="script" src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+<script rel="script" src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap4.min.js"></script>
+<script rel="script" src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js"></script>
+<script rel="script" src="https://cdn.datatables.net/responsive/2.0.2/js/responsive.bootstrap.min.js"></script>
 
 </body>
 </html>

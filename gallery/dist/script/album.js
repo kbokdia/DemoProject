@@ -161,7 +161,7 @@ var pageAlbum = {
                     {
                         imgStr += "</div><div class='row'>";
                     }
-                    imgStr += "<li class='col-lg-4 col-xs-6'><input type='checkbox' id=' " + pageAlbum.imageData.result[i].Id + " ' name='ImageId[]' value='" + pageAlbum.imageData.result[i].Id + "'/><label for=' " + pageAlbum.imageData.result[i].Id + " '><img src=' " + pageAlbum.imageData.result[i].ThumbsPath + " ' /></label></li>";
+                    imgStr += "<li class='col-lg-4 col-xs-6'><input type='checkbox' id=' " + pageAlbum.imageData.result[i].Id + " ' name='ImageId[]' value='" + pageAlbum.imageData.result[i].Id + "'/><label class='label' for=' " + pageAlbum.imageData.result[i].Id + " '><img src=' " + pageAlbum.imageData.result[i].ThumbsPath + " ' /></label></li>";
                 }
                 imgStr += "</div>";
             }

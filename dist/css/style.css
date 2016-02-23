@@ -265,6 +265,54 @@
 .fa-blue{
     color: #3E5C9A;
 }
+.fa-grey{
+    color: #5b5b5b;
+}
+
 textarea{
     resize: none;
+}
+.table-responsive {
+    display: table !important;
+    width: 100% !important;
+}
+
+.datepicker td, .datepicker th {
+    padding: 5px;
+    font-size: 14px;
+}
+.datepicker table tr td.today, .datepicker table tr td.today.disabled, .datepicker table tr td.today.disabled:hover, .datepicker table tr td.today:hover {
+    background-color: #5cb85c !important;
+    background-image: none !important;
+    background-repeat: repeat-x !important;
+    border-color: transparent !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    color: #fff;
+}
+
+
+.datepicker table tr td span.active, .datepicker table tr td span.active.disabled, .datepicker table tr td span.active.disabled:hover, .datepicker table tr td span.active:hover,.datepicker table tr td.active, .datepicker table tr td.active.disabled, .datepicker table tr td.active.disabled:hover, .datepicker table tr td.active:hover {
+    background-color: #0275d8 !important;
+    background-image: none !important;
+    background-repeat: repeat-x !important;
+    border-color: transparent !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    color: #fff !important;
+    text-shadow: 0 !important;
+}
+.container-top-padding{
+    padding-top: 70px;
+}
+
+.container-bottom-padding{
+    padding-bottom: 30px;
+}
+.navbar-heading{
+    margin-top: 4px;
+}
+
+.dropdown-right{
+    right:0;
+    left: inherit !important;
+    float: right !important;
 }

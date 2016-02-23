@@ -11,9 +11,8 @@
 
     <!-- Bootstrap & font-awesome min CSS -->
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">-->
-    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css"
-          crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../dist/css/bootstrap4.css">
+    <link rel="stylesheet" href="../dist/css/font-awesome.min.css">
 
     <!-- Local CSS -->
     <link rel="stylesheet" href="dist/css/style.css">
@@ -68,20 +67,22 @@
                     <h4 class="modal-title text-center" id="AGHeader">Add Album</h4>
                 </div>
                 <div class="modal-body">
-                    <fieldset class="form-group">
-                        <label for="albumName">Album Name *</label>
-                        <input type="text" class="form-control noSpecialChar" name="GalleryName" id="albumName"
+                    <fieldset class="form-group row">
+                        <label class="col-sm-3 form-control-label" for="albumName">Name *</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control noSpecialChar" name="GalleryName" id="albumName"
                                placeholder="Enter name of album" required>
-
+                        </div>
                         <div class="error"></div>
                     </fieldset>
-                    <fieldset class="form-group">
-                        <label for="albumDescription">Album Description *</label>
-                        <input type="text" class="form-control noSpecialChar" name="GalleryDescription" id="albumDescription"
+                    <fieldset class="form-group row">
+                        <label class="col-sm-3 form-control-label" for="albumDescription">Description *</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control noSpecialChar" name="GalleryDescription" id="albumDescription"
                                placeholder="Enter name of album" required>
-
+                        </div>
                         <div class="error"></div>
-                        <small class="text-muted">Please provide a brief description about the event.</small>
+                        <small class="text-muted" style="padding-left: 10px">Please provide a brief description about the event.</small>
                     </fieldset>
                     <fieldset class="form-group text-center">
                         <button type="button" id="coverImageBtn" class="btn btn-primary"
@@ -106,11 +107,11 @@
 <!-- Script Files -->
 
 <!-- JQuery min JS -->
-<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script src="../dist/script/jquery-2.2.0.min.js"></script>
 
 <!-- Bootstrap min JS -->
 <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>-->
-<script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js" crossorigin="anonymous"></script>
+<script src="../dist/script/bootstrap4.js" crossorigin="anonymous"></script>
 
 <!-- Local Script -->
 <script rel="script" src="../dist/script/load-image.min.js"></script>

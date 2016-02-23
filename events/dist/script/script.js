@@ -7,7 +7,7 @@ var pageEvents = {
     showWarningNotification : function(boldMsg,msg){
         $("#alertOuterDiv").html("<div class='alert alert-warning alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong> " + boldMsg + " </strong>" + msg + "</div>")
     },
-    showfailureNotification : function(boldMsg,msg){
+    showFailureNotification : function(boldMsg,msg){
         $("#alertOuterDiv").html("<div class='alert alert-danger alert-dismissible' id='alertMsgDiv' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong> " + boldMsg + " </strong>" + msg + "</div>")
     },
     openAddEventModal : function(){
@@ -88,7 +88,7 @@ var pageEvents = {
                 $("#eventsDiv").html("<h3 class='text-center'>No Events Available</h3>");
             }
             else {
-                str += ("<div class='col-xs-12'><table class='table table-hover' id='eventTable'><thead><tr><th>#</th><th>Title</th><th>Date & Time</th><th>Actions</th><th>Status</th></tr></thead><tbody>");
+                str += ("<div class='col-xs-12'><table class='table table-responsive table-hover' id='eventTable'><thead><tr><th>#</th><th>Title</th><th>Date</th><th>Time</th><th>Actions</th><th>Status</th></tr></thead><tbody>");
                 for (var i = 0; i < pageEvents.data.result.length; i++) {
 
                     eventDate = pageEvents.data.result[i].Date;
@@ -116,24 +116,37 @@ var pageEvents = {
                     //Check if date has exceeded 1 day of adding
                     if((timeDiffDays == 0 || timeDiffDays == 1) && eventDiffDays > 0)
                     {
-                        str += ("<tr class='table-success'><td scope='row'>" + (i + 1) + "</td><td>" + pageEvents.data.result[i].Name + "</td><td> " + pageEvents.data.result[i].Date + "&nbsp" + pageEvents.data.result[i].Time +" </td><td><span class='span-margin-20'><a href='#' onclick='pageEvents.openRSVPModal()'><i class='fa fa-lg fa fa-list-ol fa-blue'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.openEditEventModal(" + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-pencil fa-green'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.deleteEvent( " + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-trash-o fa-red'></i></a></span></td><td>New Event</td></tr>");
+                        str += ("<tr class='table-success'><td scope='row'>" + (i + 1) + "</td><td>" + pageEvents.data.result[i].Name + "</td><td> " + pageEvents.data.result[i].Date +" </td><td> " + pageEvents.data.result[i].Time +" </td><td><span class='span-margin-20'><a href='#' onclick='pageEvents.openRSVPModal()'><i class='fa fa-lg fa fa-list-ol fa-blue'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.openEditEventModal(" + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-pencil fa-green'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.deleteEvent( " + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-trash-o fa-red'></i></a></span></td><td>New Event</td></tr>");
                     }
                     else if(eventDiffDays > 0 && eventDiffDays != 1){
-                        str += ("<tr class='table-info'><td scope='row'>" + (i + 1) + "</td><td>" + pageEvents.data.result[i].Name + "</td><td> " + pageEvents.data.result[i].Date + "&nbsp" + pageEvents.data.result[i].Time +" </td><td><span class='span-margin-20'><a href='#' onclick='pageEvents.openRSVPModal()'><i class='fa fa-lg fa fa-list-ol fa-blue'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.openEditEventModal(" + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-pencil fa-green'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.deleteEvent( " + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-trash-o fa-red'></i></a></span></td><td>Upcoming Event</td></tr>");
-                    }
-                    else if(eventDiffDays == 1){
-                        str += ("<tr class='table-warning'><td scope='row'>" + (i + 1) + "</td><td>" + pageEvents.data.result[i].Name + "</td><td> " + pageEvents.data.result[i].Date + "&nbsp" + pageEvents.data.result[i].Time +" </td><td><span class='span-margin-20'><a href='#' onclick='pageEvents.openRSVPModal()'><i class='fa fa-lg fa fa-list-ol fa-blue'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.openEditEventModal(" + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-pencil fa-green'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.deleteEvent( " + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-trash-o fa-red'></i></a></span></td><td>Today is the Tomorrow</td></tr>");
+                        str += ("<tr class='table-info'><td scope='row'>" + (i + 1) + "</td><td>" + pageEvents.data.result[i].Name + "</td><td> " + pageEvents.data.result[i].Date +" </td><td> " + pageEvents.data.result[i].Time +" </td><td><span class='span-margin-20'><a href='#' onclick='pageEvents.openRSVPModal()'><i class='fa fa-lg fa fa-list-ol fa-blue'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.openEditEventModal(" + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-pencil fa-green'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.deleteEvent( " + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-trash-o fa-red'></i></a></span></td><td>Upcoming Event</td></tr>");
                     }
                     else if(eventDiffDays == 0){
-                        str += ("<tr class='table-warning'><td scope='row'>" + (i + 1) + "</td><td>" + pageEvents.data.result[i].Name + "</td><td> " + pageEvents.data.result[i].Date + "&nbsp" + pageEvents.data.result[i].Time +" </td><td><span class='span-margin-20'><a href='#' onclick='pageEvents.openRSVPModal()'><i class='fa fa-lg fa fa-list-ol fa-blue'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.openEditEventModal(" + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-pencil fa-green'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.deleteEvent( " + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-trash-o fa-red'></i></a></span></td><td>Today is the Event</td></tr>");
+                        str += ("<tr class='table-warning'><td scope='row'>" + (i + 1) + "</td><td>" + pageEvents.data.result[i].Name + "</td><td> " + pageEvents.data.result[i].Date +" </td><td> " + pageEvents.data.result[i].Time +" </td><td><span class='span-margin-20'><a href='#' onclick='pageEvents.openRSVPModal()'><i class='fa fa-lg fa fa-list-ol fa-blue'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.openEditEventModal(" + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-pencil fa-green'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.deleteEvent( " + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-trash-o fa-red'></i></a></span></td><td>Today is the Event</td></tr>");
                     }
                     else if(eventDiffDays < 0)
                     {
-                        str += ("<tr class='table-danger'><td scope='row'>" + (i + 1) + "</td><td>" + pageEvents.data.result[i].Name + "</td><td> " + pageEvents.data.result[i].Date + "&nbsp" + pageEvents.data.result[i].Time +" </td><td><span class='span-margin-20'><a href='#' onclick='pageEvents.openRSVPModal()'><i class='fa fa-lg fa fa-list-ol fa-blue'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.openEditEventModal(" + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-pencil fa-green'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.deleteEvent( " + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-trash-o fa-red'></i></a></span></td><td>Event Completed</td></tr>");
+                        str += ("<tr class='table-danger'><td scope='row'>" + (i + 1) + "</td><td>" + pageEvents.data.result[i].Name + "</td><td> " + pageEvents.data.result[i].Date +" </td><td> " + pageEvents.data.result[i].Time +" </td><td><span class='span-margin-20'><a href='#' onclick='pageEvents.openRSVPModal()'><i class='fa fa-lg fa fa-list-ol fa-blue'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.openEditEventModal(" + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-pencil fa-green'></i></a></span><span class='span-margin-20'><a href='#' onclick='pageEvents.deleteEvent( " + pageEvents.data.result[i].EventId + ")'><i class='fa fa-lg fa-trash-o fa-red'></i></a></span></td><td>Event Completed</td></tr>");
                     }
                 }
                 str += ("</tbody></table></div>");
                 $("#eventsDiv").html(str);
+                $('#eventTable').DataTable({
+                    responsive: true,
+                    columnDefs: [
+                        { type: 'date-uk', targets: 2, order: 'desc' }
+                    ],
+                    order: [[ 2, "desc" ]],
+                    "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                        //debugger;
+                        var index = iDisplayIndexFull + 1;
+                        $("td:first", nRow).html(index);
+                        return nRow;
+                    },
+                    "aoColumnDefs": [
+                        { 'bSortable': false, 'aTargets': [ 0,3,4,5 ] }
+                    ],
+                });
             }
             if (pageEvents.loginStatus == true) {
                 $(".delete-btn").removeClass("hidden");
@@ -169,15 +182,19 @@ var pageEvents = {
 };
 
 $(document).ready(function () {
-        pageEvents.getData().done(function () {
-            pageEvents.getEvent();
-        });
+    pageEvents.getData().done(function () {
+        pageEvents.getEvent();
+    });
+
+    $("#rsvpTable").DataTable({
+        responsive: true
+    });
 
     $('#eventDate').datepicker({
         format: "dd/mm/yyyy",
         startDate: "today",
         autoclose: true,
-        todayHighlight: true,
+        todayHighlight: true
     });
 
     $("#eventTime").clockpicker({
@@ -199,7 +216,7 @@ $(document).ready(function () {
             console.log(response);
             if(response.status == 0)
             {
-                pageEvents.showfailureNotification("Error! ",response.message);
+                pageEvents.showFailureNotification("Error! ",response.message);
             }
             $('#eventModal').modal('hide');
             pageEvents.getData().done(function () {
@@ -209,7 +226,7 @@ $(document).ready(function () {
         },
         error : function(){
             //Code in case of an error
-            pageEvents.showfailureNotification("Error! ","An error has occured, please try again!");
+            pageEvents.showFailureNotification("Error! ","An error has occured, please try again!");
         }
     });
 
@@ -218,4 +235,23 @@ $(document).ready(function () {
 
 $(window).load(function() {
     $("#loading").addClass("hidden");
+
+    jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+        "date-uk-pre": function ( a ) {
+            if (a == null || a == "") {
+                return 0;
+            }
+            var ukDatea = a.split('/');
+            return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+        },
+
+        "date-uk-asc": function ( a, b ) {
+            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+        },
+
+        "date-uk-desc": function ( a, b ) {
+            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+        }
+    } );
+
 });
