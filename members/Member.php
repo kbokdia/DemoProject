@@ -143,7 +143,6 @@ class Member extends BaseClass
     //Get members details.
     function isMember($memberId)
     {
-        $count = 0;
         $sql = "SELECT count(*) AS 'count' FROM Members WHERE RegId=$this->regId AND MemberId=$memberId";
         $result = $this->mysqli->query($sql);
         if ($result) {

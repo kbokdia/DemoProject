@@ -86,6 +86,7 @@ class Children extends BaseClass
         $sql = "DELETE FROM Children WHERE MemberId=$memberId AND KidId=$kidId";
         if($this->mysqli->query($sql)){
             $response = BaseClass::createResponse(1,"Child deleted.");
+            $this->updateHasChildrenToInactive($memberId);
         }
         else{
             $response = BaseClass::createResponse(0,$this->mysqli->error);
@@ -101,6 +102,22 @@ class Children extends BaseClass
         if($result = $this->mysqli->query($sql))
         {
             $response = BaseClass::createResponse(1,"Child details updated.");
+        }
+        else
+        {
+            $response = BaseClass::createResponse(0,$this->mysqli->error);
+        }
+        return $response;
+    }
+
+
+    //Update hasPartner.
+    function updateHasChildrenToInactive($memberId)
+    {
+        $sql="UPDATE Members Set hasChildren=2 WHERE MemberId=$memberId";
+        if($result = $this->mysqli->query($sql))
+        {
+            $response = BaseClass::createResponse(1,"Has Children field updated.");
         }
         else
         {

@@ -60,7 +60,7 @@ class Spouse extends BaseClass
         $sql = "DELETE FROM Spouse WHERE MemberId=$memberId";
         if($this->mysqli->query($sql)){
             $response = BaseClass::createResponse(1,"Spouse deleted.");
-            $this->updateHasPartner($memberId);
+            $this->updateHasPartnerToInactive($memberId);
         }
         else{
             $response = BaseClass::createResponse(0,$this->mysqli->error);
@@ -106,9 +106,9 @@ class Spouse extends BaseClass
 
 
     //Update hasPartner.
-    function updateHasPartner($memberId)
+    function updateHasPartnerToInactive($memberId)
     {
-        $sql="UPDATE Members Set Active=2 WHERE MemberId=$memberId";
+        $sql="UPDATE Members Set HasPartner=2 WHERE MemberId=$memberId";
         if($result = $this->mysqli->query($sql))
         {
             $response = BaseClass::createResponse(1,"Has Partner field updated.");
