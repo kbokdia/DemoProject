@@ -58,6 +58,7 @@ class Spouse extends BaseClass
     function deleteSpouse($memberId)
     {
         $sql = "DELETE FROM Spouse WHERE MemberId=$memberId";
+        echo $sql;
         if($this->mysqli->query($sql)){
             $response = BaseClass::createResponse(1,"Spouse deleted.");
             $this->updateHasPartnerToInactive($memberId);
@@ -73,7 +74,7 @@ class Spouse extends BaseClass
     //Update spouse details.
     function updateSpouse($regId,$memberId)
     {
-        $sql = "UPDATE Spouse SET Name='$this->name',DOB='$this->dob',Gender=$this->gender,Email='$this->email',Email1='$this->email1',Mobile='$this->mobile',Mobile1='$this->mobile1',Mobile2='$this->mobile2',BloodGroup='$this->bloodGroup',Occupation='$this->occupation',BusinessType='$this->businessType',OfficeAddress='$this->officeAddress',OfficeAreaCode='$this->officeAreaCode',OfficePincode='$this->officePincode',OfficeCityCode='$this->officeCityCode',OfficeStateCode='$this->officeStateCode',OfficePhone='$this->officePhone',OfficeCentrex='$this->officeCentrex',Hobbies='$this->hobbies',Recognition='$this->recognition' WHERE RegId=$regId AND MemberId=$memberId";
+        $sql = "UPDATE Spouse SET Name=$this->name,DOB=$this->dob,Gender=$this->gender,Email=$this->email,Email1=$this->email1,Mobile=$this->mobile,Mobile1=$this->mobile1,Mobile2=$this->mobile2,BloodGroup=$this->bloodGroup,Occupation=$this->occupation,BusinessType=$this->businessType,OfficeAddress=$this->officeAddress,OfficeAreaCode=$this->officeAreaCode,OfficePincode=$this->officePincode,OfficeCityCode=$this->officeCityCode,OfficeStateCode=$this->officeStateCode,OfficePhone=$this->officePhone,OfficeCentrex=$this->officeCentrex,Hobbies=$this->hobbies,Recognition=$this->recognition WHERE RegId=$regId AND MemberId=$memberId";
         if($result = $this->mysqli->query($sql))
         {
             $response = BaseClass::createResponse(1,"Spouse details updated.");

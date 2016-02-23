@@ -38,7 +38,7 @@ do{
     switch($type){
         case 'AM':
             //validation
-            if(empty($_POST['Name']) || empty($_POST['Gender']) || empty($_POST['Email']) || empty($_POST['Mobile']) || empty($_POST['HasPartner']) || empty($_POST['HasChildren'])) {
+            if(empty($_POST['Name']) || empty($_POST['Gender']) || empty($_POST['DOB'])  || empty($_POST['Email']) || empty($_POST['Mobile']) || empty($_POST['HasPartner']) || empty($_POST['HasChildren'])) {
                 $validate = false;
                 $response = BaseClass::createResponse(0, "Invalid Request");
             }

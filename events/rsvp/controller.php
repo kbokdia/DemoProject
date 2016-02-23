@@ -9,6 +9,9 @@ namespace Project\events\rsvp;
 
 use Project\base\BaseClass;
 
+define("ROOT", "../../");
+require ROOT."autoload.php";
+
 $response = null;
 $validate = true;
 $type = null;
