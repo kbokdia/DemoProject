@@ -6,13 +6,11 @@
  * Time: 2:58 PM
  */
 
-namespace Project\spouse\spouse;
+namespace Project\members\spouse;
 
 
 use Project\base\BaseClass;
 
-define("ROOT", "../../");
-require ROOT."autoload.php";
 
 $response = null;
 $validate = true;
@@ -144,8 +142,8 @@ if($validate){
 
         case 'GS':
             //Perform action
-            $regId = $_POST['RegId'];
-            $memberId = $_POST['MemberId'];
+            $regId = intval($_POST['RegId']);
+            $memberId = intval($_POST['MemberId']);
             $response=$spouse->getSpouse($memberId,$regId);
             break;
 

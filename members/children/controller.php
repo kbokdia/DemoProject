@@ -1,0 +1,139 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: ambujkathotiya
+ * Date: 23/02/16
+ * Time: 3:27 PM
+ */
+
+namespace Project\members\children;
+
+
+use Project\base\BaseClass;
+
+$response = null;
+$validate = true;
+$type = null;
+
+//Do validation if required
+do{
+    if(empty($_GET['type'])){
+        $validate = false;
+        $response = BaseClass::createResponse(0,"Invalid Request");
+        break;
+    }
+    $type = strtoupper($_GET['type']);
+
+    /*
+     * Types (Whenever new types are defined update this comment too)
+     * AC => Add children
+     * DC => Delete children
+     * GC => Get children
+     * UC => Update children
+     * LI => Logged in status.
+     */
+
+    switch($type){
+        case 'AS':
+            //validation
+            if(empty($_POST['Name']) || empty($_POST['DOB']) || empty($_POST['Gender']) || empty($_POST['Mobile'])) {
+                $validate = false;
+                $response = BaseClass::createResponse(0, "Invalid Request");
+            }
+            break;
+
+        case 'DS':
+            //validation
+            if(empty($_POST['MemberId']) ){
+                $validate = false;
+                $response = BaseClass::createResponse(0,"Invalid Request");
+            }
+            break;
+
+        case 'US':
+            //validation
+            if(empty($_POST['RegId']) || empty($_POST['MemberId']))
+            {
+                $validate = false;
+                $response = BaseClass::createResponse(0,"Invalid Request");
+            }
+            break;
+    }
+
+}while(0);
+
+//Business Logic
+if($validate){
+    $children = new Children();
+    switch($type){
+        case 'AS':
+            //set mysql safe data
+            $_POST = $children->escapeData($_POST);
+
+            //set variables
+            $memberId = intval($_POST['MemberId']);
+            $regId = intval($_POST['RegId']);
+            $children->name = $_POST['Name'];
+            $children->dob = $_POST['DOB'];
+            $children->gender = intval($_POST['Gender']);
+            $children->email = $_POST['Email'];
+            $children->email1 = $_POST['Email1'];
+            $children->mobile = $_POST['Mobile'];
+            $children->mobile1 = $_POST['Mobile1'];
+            $children->mobile2 = $_POST['Mobile2'];
+            $children->bloodGroup = $_POST['BloodGroup'];
+            $children->hobbies = $_POST['Hobbies'];
+
+            //Perform action
+            $response = $children->addChildren($memberId,$regId);
+
+            break;
+
+        case 'DS':
+            //set variables
+            $memberId = intval($_POST["MemberId"]);
+            $kidId = intval($_POST['KidId']);
+
+            //Perform action
+            $response=$children->deleteChildren($memberId,$kidId);
+            break;
+
+        case 'US':
+            //set mysql safe data
+            $_POST = $children->escapeData($_POST);
+
+            //set variables
+            $regId = intval($_POST['RegId']);
+            $memberId = intval($_POST['MemberId']);
+            $kidId = intval($_POST['KidId']);
+            $children->name = $_POST['Name'];
+            $children->dob = $_POST['DOB'];
+            $children->gender = intval($_POST['Gender']);
+            $children->email = $_POST['Email'];
+            $children->email1 = $_POST['Email1'];
+            $children->mobile = $_POST['Mobile'];
+            $children->mobile1 = $_POST['Mobile1'];
+            $children->mobile2 = $_POST['Mobile2'];
+            $children->bloodGroup = $_POST['BloodGroup'];
+            $children->hobbies = $_POST['Hobbies'];
+
+            //Perform action
+            $response=$children->updateChildren($regId,$memberId,$kidId);
+            break;
+
+        case 'GS':
+            //Perform action
+            $regId = intval($_POST['RegId']);
+            $memberId = intval($_POST['MemberId']);
+            $kidId = intval($_POST['KidId']);
+            $response=$children->getChildren($memberId,$regId,$kidId);
+            break;
+
+        case 'LI':
+            $response = BaseClass::isAdmin();
+    }
+}
+
+header('Content-Type: application/json');
+echo json_encode($response);
+
