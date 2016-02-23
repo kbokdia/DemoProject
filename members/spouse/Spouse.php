@@ -63,7 +63,7 @@ class Spouse extends BaseClass
         $sql = "SELECT MAX(SpouseId) AS 'spouseCode' FROM Spouse WHERE RegId=$this->regId";
         if($result = $this->mysqli->query($sql))
         {
-            $spouserCode = intval($result->fetch_assoc()['spouseCode']);
+            $spouseCode = intval($result->fetch_assoc()['spouseCode']);
             $spouseCode = (($spouseCode == 0) ? 1001 : $spouseCode + 1);
         }
         return $spouseCode;
