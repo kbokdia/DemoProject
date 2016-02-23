@@ -58,7 +58,6 @@ class Spouse extends BaseClass
     function deleteSpouse($memberId)
     {
         $sql = "DELETE FROM Spouse WHERE MemberId=$memberId";
-        echo $sql;
         if($this->mysqli->query($sql)){
             $response = BaseClass::createResponse(1,"Spouse deleted.");
             $this->updateHasPartnerToInactive($memberId);
