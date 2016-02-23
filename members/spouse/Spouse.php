@@ -40,33 +40,65 @@ class Spouse extends BaseClass
     }
 
     //Add a new spouse.
-    function addSpouse()
+    function addSpouse($memberId)
     {
-        $this->memberId=$this->generateMemberId();
-        $sql = "INSERT INTO Members (MemberId,Name,GuardianName,DOB,Gender,Email,Email1,Mobile,Mobile1,Mobile2,BloodGroup,NativePlace,HomeAddress,HomeAreaCode,HomePincode,HomeCityCode,HomeStateCode,HomePhone,HomeCentrex,Occupation,BusinessType,OfficeAddress,OfficeAreaCode,OfficePincode,OfficeCityCode,OfficeStateCode,OfficePhone,OfficeCentrex,Food,Religion,Hobbies,Recognition,MembershipNo,MembershipType,MemberJoiningDate,HasPartner,Active) VALUES ($this->memberId,'$this->name','$this->guardianName','$this->dob',$this->gender,'$this->email','$this->email1','$this->mobile','$this->mobile2','$this->mobile2','$this->bloodGroup','$this->nativePlace','$this->homeAddress','$this->homeAreaCode','$this->homePincode','$this->homeCityCode','$this->homeStateCode','$this->homePhone','$this->homeCentrex','$this->occupation','$this->businessType','$this->officeAddress','$this->officeAreaCode','$this->officePincode','$this->officeCityCode','$this->officeStateCode','$this->officePhone','$this->officeCentrex','$this->food','$this->religion','$this->hobbies','$this->recognition','$this->membershipNo','$this->membershipType','$this->memberJoiningDate',$this->hasPartner,$this->active )";
+        $sql = "INSERT INTO Spouse (MemberId,Name,DOB,Gender,Email,Email1,Mobile,Mobile1,Mobile2,BloodGroup,Occupation,BusinessType,OfficeAddress,OfficeAreaCode,OfficePincode,OfficeCityCode,OfficeStateCode,OfficePhone,OfficeCentrex,Hobbies,Recognition) VALUES ($memberId,'$this->name','$this->dob',$this->gender,'$this->email','$this->email1','$this->mobile','$this->mobile1','$this->mobile2','$this->bloodGroup','$this->occupation','$this->businessType','$this->officeAddress','$this->officeAreaCode','$this->officePincode','$this->officeCityCode','$this->officeStateCode','$this->officePhone','$this->officeCentrex','$this->hobbies','$this->recognition')";
         if($result = $this->mysqli->query($sql))
         {
-            $response = BaseClass::createResponse(1,"Member added..");
+            $response = BaseClass::createResponse(1,"Spouse added..");
         }
         else
         {
-            $response = BaseClass::createResponse(0,"Member not added..");
+            $response = BaseClass::createResponse(0,$this->mysqli->error);
+        }
+        return $response;
+    }
+
+    //Delete spouse.
+    function deleteSpouse($memberId)
+    {
+        $sql = "DELETE FROM Spouse WHERE MemberId=$memberId";
+        if($this->mysqli->query($sql)){
+            $response = BaseClass::createResponse(1,"Spouse deleted");
+        }
+        else{
+            $response = BaseClass::createResponse(0,$this->mysqli->error);
         }
         return $response;
     }
 
 
-    //Generate spouse id.
-    function generateSpouseId()
+    //Update spuse details.
+    function updateSpouse($regId,$memberId)
     {
-        $spouseCode = 1001;
-        $sql = "SELECT MAX(SpouseId) AS 'spouseCode' FROM Spouse WHERE RegId=$this->regId";
+        $sql = "UPDATE Spouse SET Name='$this->name',DOB='$this->dob',Gender=$this->gender,Email='$this->email',Email1='$this->email1',Mobile='$this->mobile',Mobile1='$this->mobile1',Mobile2='$this->mobile2',BloodGroup='$this->bloodGroup',Occupation='$this->occupation',BusinessType='$this->businessType',OfficeAddress='$this->officeAddress',OfficeAreaCode='$this->officeAreaCode',OfficePincode='$this->officePincode',OfficeCityCode='$this->officeCityCode',OfficeStateCode='$this->officeStateCode',OfficePhone='$this->officePhone',OfficeCentrex='$this->officeCentrex',Hobbies='$this->hobbies',Recognition='$this->recognition' WHERE RegId=$regId AND MemberId=$memberId";
         if($result = $this->mysqli->query($sql))
         {
-            $spouseCode = intval($result->fetch_assoc()['spouseCode']);
-            $spouseCode = (($spouseCode == 0) ? 1001 : $spouseCode + 1);
+            $response = BaseClass::createResponse(1,"Spouse details updated..");
         }
-        return $spouseCode;
+        else
+        {
+            $response = BaseClass::createResponse(0,"Member details not updated..");
+        }
+        return $response;
     }
 
+
+    //Get spouse details.
+    function getSpouse($memberId,$regId)
+    {
+        $sql = "SELECT * FROM Spouse WHERE RegId=$regId AND MemberId=$memberId";
+        $result = $this->mysqli->query($sql);
+        if ($result) {
+            $i = 0;
+            $response = BaseClass::createResponse(1,"Success");
+            $response['result'] = array();
+            while ($row = $result->fetch_assoc()) {
+                $response['result'][$i++] = $row;
+            }
+        } else {
+            $response = BaseClass::createResponse(0,$this->mysqli->error);
+        }
+        return $response;
+    }
 }
