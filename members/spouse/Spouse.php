@@ -54,7 +54,7 @@ class Spouse extends BaseClass
         return $response;
     }
 
-    //Delete spouse.
+    //Delete a spouse.
     function deleteSpouse($memberId)
     {
         $sql = "DELETE FROM Spouse WHERE MemberId=$memberId";
