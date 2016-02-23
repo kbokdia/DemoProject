@@ -10,7 +10,6 @@ namespace Project\members;
 
 
 use Project\base\BaseClass;
-use Project\members\spouse\Spouse;
 
 class Member extends BaseClass
 {

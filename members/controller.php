@@ -9,7 +9,6 @@
 namespace Project\members;
 
 use Project\base\BaseClass;
-use Project\base\Date;
 
 define("ROOT", "../");
 require ROOT."autoload.php";
@@ -39,7 +38,7 @@ do{
     switch($type){
         case 'AM':
             //validation
-            if(empty($_POST['Name']) || empty($_POST['GuardianName']) || empty($_POST['DOB']) || empty($_POST['Gender']) || empty($_POST['Email']) || empty($_POST['Email1']) || empty($_POST['Mobile']) || empty($_POST['Mobile1']) || empty($_POST['Mobile2']) || empty($_POST['BloodGroup']) || empty($_POST['NativePlace']) || empty($_POST['HomeAddress']) || empty($_POST['HomeAreaCode']) || empty($_POST['HomePincode']) || empty($_POST['HomeCityCode']) || empty($_POST['HomeStateCode']) || empty($_POST['HomePhone']) || empty($_POST['HomeCentrex']) || empty($_POST['Occupation']) || empty($_POST['BusinessType']) || empty($_POST['OfficeAddress']) || empty($_POST['OfficeAreaCode']) || empty($_POST['OfficePincode']) || empty($_POST['OfficeCityCode']) || empty($_POST['OfficeStateCode']) || empty($_POST['OfficePhone']) || empty($_POST['OfficeCentrex']) || empty($_POST['Food']) || empty($_POST['Religion']) || empty($_POST['Hobbies']) || empty($_POST['Recognition']) || empty($_POST['MembershipNo']) || empty($_POST['MembershipType']) || empty($_POST['MemberJoiningDate']) || empty($_POST['HasPartner']) || empty($_POST['HasChildren'])) {
+            if(empty($_POST['Name']) || empty($_POST['Gender']) || empty($_POST['Mobile']) || empty($_POST['HasPartner']) || empty($_POST['HasChildren'])) {
                 $validate = false;
                 $response = BaseClass::createResponse(0, "Invalid Request");
             }
