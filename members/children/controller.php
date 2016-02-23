@@ -34,7 +34,7 @@ do{
      */
 
     switch($type){
-        case 'AS':
+        case 'AC':
             //validation
             if(empty($_POST['Name']) || empty($_POST['DOB']) || empty($_POST['Gender']) || empty($_POST['Mobile'])) {
                 $validate = false;
@@ -42,7 +42,7 @@ do{
             }
             break;
 
-        case 'DS':
+        case 'DC':
             //validation
             if(empty($_POST['MemberId']) ){
                 $validate = false;
@@ -50,7 +50,7 @@ do{
             }
             break;
 
-        case 'US':
+        case 'UC':
             //validation
             if(empty($_POST['RegId']) || empty($_POST['MemberId']))
             {
@@ -66,7 +66,7 @@ do{
 if($validate){
     $children = new Children();
     switch($type){
-        case 'AS':
+        case 'AC':
             //set mysql safe data
             $_POST = $children->escapeData($_POST);
 
@@ -89,7 +89,7 @@ if($validate){
 
             break;
 
-        case 'DS':
+        case 'DC':
             //set variables
             $memberId = intval($_POST["MemberId"]);
             $kidId = intval($_POST['KidId']);
@@ -98,7 +98,7 @@ if($validate){
             $response=$children->deleteChildren($memberId,$kidId);
             break;
 
-        case 'US':
+        case 'UC':
             //set mysql safe data
             $_POST = $children->escapeData($_POST);
 
@@ -121,7 +121,7 @@ if($validate){
             $response=$children->updateChildren($regId,$memberId,$kidId);
             break;
 
-        case 'GS':
+        case 'GC':
             //Perform action
             $regId = intval($_POST['RegId']);
             $memberId = intval($_POST['MemberId']);
