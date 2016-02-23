@@ -84,6 +84,12 @@ $(document).ready(function () {
     pageGallery.getLoginStatus().done(function(){
         pageGallery.getGalleries();
     });
+});
+
+$(window).load(function() {
+
+    $("#loading").addClass("hidden");
+
     //Load Local Cover Image on Change
     $("#coverImageFile").change(function(e){
         loadImage.parseMetaData(
@@ -114,6 +120,7 @@ $(document).ready(function () {
             $("#image-view").html("<img src='albums/cover-image.jpg' alt='Cover Image' class='img-rounded coverImage'/>");
         }
     });
+
     $("#addAlbumModalForm").ajaxForm({
         beforeSubmit: function(){
             //Code to check validation & stop submit if validation fails
@@ -147,9 +154,4 @@ $(document).ready(function () {
     $("#albumDescription").on('input propertychange focusout', function () {
         pageValidation.validateField(this);
     });
-});
-
-$(window).load(function() {
-
-    $("#loading").addClass("hidden");
 });
