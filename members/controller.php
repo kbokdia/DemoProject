@@ -33,7 +33,7 @@ do{
      * DM => Delete member
      * GM => Get members
      * UM => Update member
-     * LI => Logged in status
+     * LI => Logged in status.
      */
 
     switch($type){
