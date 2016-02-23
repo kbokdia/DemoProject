@@ -140,6 +140,24 @@ class Member extends BaseClass
         return $memberCode;
     }
 
+    //Get members details.
+    function isMember($memberId)
+    {
+        $count = 0;
+        $sql = "SELECT count(*) AS 'count' FROM Members WHERE RegId=$this->regId AND MemberId=$memberId";
+        $result = $this->mysqli->query($sql);
+        if ($result) {
+            $count = intval($result->fetch_assoc()['count']);
+        } else {
+            throw new \Exception($this->mysqli->error);
+        }
 
+        if($count == 0){
+            return false;
+        }
+        else{
+            return $count;
+        }
+    }
 
 }

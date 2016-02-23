@@ -10,6 +10,7 @@ namespace Project\members\spouse;
 
 
 use Project\base\BaseClass;
+use Project\members\Member;
 
 
 $response = null;
@@ -37,9 +38,15 @@ do{
     switch($type){
         case 'AS':
             //validation
-            if(empty($_POST['Name']) || empty($_POST['DOB']) || empty($_POST['Gender']) || empty($_POST['Mobile'])) {
+            if(empty($_POST['MemberId']) || empty($_POST['Name']) || empty($_POST['DOB']) || empty($_POST['Gender']) || empty($_POST['Mobile'])) {
                 $validate = false;
                 $response = BaseClass::createResponse(0, "Invalid Request");
+                break;
+            }
+            $member = new Member();
+            if(!$member->isMember($_POST['MemberId']))
+            {
+                $response = BaseClass::createResponse(0, "Member ID does not exist.");
             }
             break;
 
