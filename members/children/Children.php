@@ -34,7 +34,7 @@ class Children extends BaseClass
     function generateChildrenId($regId,$memberId)
     {
         $childrenCode = 1001;
-        $sql = "SELECT MAX(ChildrenId) AS 'childrenCode' FROM Children WHERE RegId=$regId AND MemberId=$memberId";
+        $sql = "SELECT MAX(KidId) AS 'childrenCode' FROM Children WHERE RegId=$regId AND MemberId=$memberId";
         if($result = $this->mysqli->query($sql))
         {
             $childrenCode = intval($result->fetch_assoc()['childrenCode']);
