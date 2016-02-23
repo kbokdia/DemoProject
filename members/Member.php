@@ -11,7 +11,7 @@ namespace Project\members;
 
 use Project\base\BaseClass;
 
-class Members extends BaseClass
+class Member extends BaseClass
 {
     //Declare the variables.
     var $memberId;
@@ -67,7 +67,7 @@ class Members extends BaseClass
         }
         else
         {
-            $response = BaseClass::createResponse(0,"Member not added..");
+            $response = BaseClass::createResponse(0,$this->mysqli->error);
         }
         return $response;
 
@@ -96,14 +96,14 @@ class Members extends BaseClass
     //Edit the member details.
     function updateMember($regId,$memberId)
     {
-        $sql = "UPDATE Members SET Name='$this->name',GuardianName='$this->guardianName',DOB='$this->dob',Gender=$this->gender,Email='$this->email',Email1='$this->email1',Mobile='$this->mobile',Mobile1='$this->mobile1',Mobile2='$this->mobile2',BloodGroup='$this->bloodGroup',NativePlace='$this->nativeplace',HomeAddress='$this->homeAddress',HomeAreaCode='$this->homeAreaCode',HomePincode='$this->homePincode',HomeCityCode'$this->homeCityCode',HomeStateCode='$this->homeStateCode',HomePhone='$this->homePhone',HomeCentrex='$this->homeCentrex',Occupation='$this->occupation',BusinessType='$this->businesType',OfficeAddress='$this->officeAddress',OfficeAreaCode='$this->officeAreaCode',OfficePincode='$this->officePincode',OfficeCityCode='$this->officeCityCode',OfficeStateCode='$this->officeStateCode',OfficePhone='$this->officePhone',OfficeCentrex='$this->officeCentrex',Food='$this->food',Religion='$this->religion',Hobbies='$this->hobbies',Recognition='$this->recognition',MembershipNo='$this->membershipNo',MembershipType='$this->membershipType',MemberJoiningDate='$this->memberJoiningDate',HasPartner=$this->hasPartner,Active=$this->active WHERE RegId=$regId AND MemberId=$memberId";
+        $sql = "UPDATE Members SET Name='$this->name',GuardianName='$this->guardianName',DOB='$this->dob',Gender=$this->gender,Email='$this->email',Email1='$this->email1',Mobile='$this->mobile',Mobile1='$this->mobile1',Mobile2='$this->mobile2',BloodGroup='$this->bloodGroup',NativePlace='$this->nativePlace',HomeAddress='$this->homeAddress',HomeAreaCode='$this->homeAreaCode',HomePincode='$this->homePincode',HomeCityCode'$this->homeCityCode',HomeStateCode='$this->homeStateCode',HomePhone='$this->homePhone',HomeCentrex='$this->homeCentrex',Occupation='$this->occupation',BusinessType='$this->businessType',OfficeAddress='$this->officeAddress',OfficeAreaCode='$this->officeAreaCode',OfficePincode='$this->officePincode',OfficeCityCode='$this->officeCityCode',OfficeStateCode='$this->officeStateCode',OfficePhone='$this->officePhone',OfficeCentrex='$this->officeCentrex',Food='$this->food',Religion='$this->religion',Hobbies='$this->hobbies',Recognition='$this->recognition',MembershipNo='$this->membershipNo',MembershipType='$this->membershipType',MemberJoiningDate='$this->memberJoiningDate',HasPartner=$this->hasPartner, Active=$this->active WHERE RegId=$regId AND MemberId=$memberId";
         if($result = $this->mysqli->query($sql))
         {
             $response = BaseClass::createResponse(1,"Member details updated..");
         }
         else
         {
-            $response = BaseClass::createResponse(0,"Member details not updated..");
+            $response = BaseClass::createResponse(0,$this->mysqli->error);
         }
         return $response;
 
@@ -113,19 +113,12 @@ class Members extends BaseClass
     //Delete the member.
     function deleteMember($memberId)
     {
-        $sql = "SELECT * FROM Members WHERE MemberId=$memberId";
-        if($result = $this->mysqli->query($sql))
-        {
-            $sql = "DELETE FROM Members WHERE MemberId=$memberId";
-            if($this->mysqli->query($sql)){
-                $response = BaseClass::createResponse(1,"Member deleted");
-            }
-            else{
-                $response = BaseClass::createResponse(0,$this->mysqli->error);
-            }
+        $sql = "DELETE FROM Members WHERE RegId = $this->regId AND MemberId=$memberId";
+        if($this->mysqli->query($sql)){
+            $response = BaseClass::createResponse(1,"Member deleted");
         }
         else{
-            $response = BaseClass::createResponse(0,"Invalid request");
+            $response = BaseClass::createResponse(0,$this->mysqli->error);
         }
 
         return $response;
@@ -137,7 +130,7 @@ class Members extends BaseClass
     function generateMemberId()
     {
         $memberCode = 1001;
-        $sql = "SELECT MAX(MemberId) AS 'memberCode' FROM Members";
+        $sql = "SELECT MAX(MemberId) AS 'memberCode' FROM Members WHERE RegId = $this->regId";
         if($result = $this->mysqli->query($sql))
         {
             $memberCode = intval($result->fetch_assoc()['memberCode']);
