@@ -10,6 +10,7 @@ namespace Project\members;
 
 
 use Project\base\BaseClass;
+use Project\members\spouse\Spouse;
 
 class Member extends BaseClass
 {
@@ -50,6 +51,7 @@ class Member extends BaseClass
     var $membershipType;
     var $memberJoiningDate;
     var $hasPartner;
+    var $hasChildren;
     var $active;
 
     function __construct(){
