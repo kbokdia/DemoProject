@@ -59,7 +59,7 @@ do{
 
         case 'UC':
             //validation
-            if(empty($_POST['RegId']) || empty($_POST['MemberId']) || empty($_POST['KidId']) || empty($_POST['MemberId']) || empty($_POST['RegId']) || empty($_POST['Name']) || empty($_POST['DOB']) || empty($_POST['Gender']))
+            if(empty($_POST['RegId']) || empty($_POST['MemberId']) || empty($_POST['KidId']) || empty($_POST['Name']) || empty($_POST['DOB']) || empty($_POST['Gender']))
             {
                 $validate = false;
                 $response = BaseClass::createResponse(0,"Invalid Request");
