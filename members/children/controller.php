@@ -80,16 +80,16 @@ if($validate){
             //set variables
             $memberId = intval($_POST['MemberId']);
             $regId = intval($_POST['RegId']);
-            $children->name = $_POST['Name'];
-            $children->dob = $_POST['DOB'];
+            $children->name = "'".$_POST['Name']."'";
+            $children->dob =  "'".$_POST['DOB']."'";
             $children->gender = intval($_POST['Gender']);
-            $children->email = $_POST['Email'];
-            $children->email1 = $_POST['Email1'];
-            $children->mobile = $_POST['Mobile'];
-            $children->mobile1 = $_POST['Mobile1'];
-            $children->mobile2 = $_POST['Mobile2'];
-            $children->bloodGroup = $_POST['BloodGroup'];
-            $children->hobbies = $_POST['Hobbies'];
+            $children->email =  empty($_POST['Email']) ? 'NULL' : "'".$_POST['Email']."'";
+            $children->email1 =  empty($_POST['Email1']) ? 'NULL' : "'".$_POST['Email1']."'";
+            $children->mobile =  empty($_POST['Mobile']) ? 'NULL' : "'".$_POST['Mobile']."'";
+            $children->mobile1 =  empty($_POST['Mobile1']) ? 'NULL' : "'".$_POST['Mobile1']."'";
+            $children->mobile2 =  empty($_POST['Mobile2']) ? 'NULL' : "'".$_POST['Mobile2']."'";
+            $children->bloodGroup =  empty($_POST['BloodGroup']) ? 'NULL' : "'".$_POST['BloodGroup']."'";
+            $children->hobbies =  empty($_POST['Hobbies']) ? 'NULL' : "'".$_POST['Hobbies']."'";
 
             //Perform action
             $response = $children->addChildren($memberId,$regId);
@@ -113,16 +113,16 @@ if($validate){
             $regId = intval($_POST['RegId']);
             $memberId = intval($_POST['MemberId']);
             $kidId = intval($_POST['KidId']);
-            $children->name = $_POST['Name'];
-            $children->dob = $_POST['DOB'];
-            $children->gender = intval($_POST['Gender']);
-            $children->email = $_POST['Email'];
-            $children->email1 = $_POST['Email1'];
-            $children->mobile = $_POST['Mobile'];
-            $children->mobile1 = $_POST['Mobile1'];
-            $children->mobile2 = $_POST['Mobile2'];
-            $children->bloodGroup = $_POST['BloodGroup'];
-            $children->hobbies = $_POST['Hobbies'];
+            $children->name = empty($_POST['Name']) ? 'NULL' : "'".$_POST['Name']."'";
+            $children->dob =  empty($_POST['DOB']) ? 'NULL' : "'".$_POST['DOB']."'";
+            $children->gender = empty($_POST['Gender']) ? 0 : intval($_POST['Gender']);
+            $children->email =  empty($_POST['Email']) ? 'NULL' : "'".$_POST['Email']."'";
+            $children->email1 =  empty($_POST['Email1']) ? 'NULL' : "'".$_POST['Email1']."'";
+            $children->mobile =  empty($_POST['Mobile']) ? 'NULL' : "'".$_POST['Mobile']."'";
+            $children->mobile1 =  empty($_POST['Mobile1']) ? 'NULL' : "'".$_POST['Mobile1']."'";
+            $children->mobile2 =  empty($_POST['Mobile2']) ? 'NULL' : "'".$_POST['Mobile2']."'";
+            $children->bloodGroup =  empty($_POST['BloodGroup']) ? 'NULL' : "'".$_POST['BloodGroup']."'";
+            $children->hobbies =  empty($_POST['Hobbies']) ? 'NULL' : "'".$_POST['Hobbies']."'";
 
             //Perform action
             $response=$children->updateChildren($regId,$memberId,$kidId);

@@ -82,26 +82,26 @@ if($validate){
 
             //set variables
             $memberId = intval($_POST['MemberId']);
-            $spouse->name = $_POST['Name'];
-            $spouse->dob = $_POST['DOB'];
+            $spouse->name = "'".$_POST['Name']."'";
+            $spouse->dob = "'".$_POST['DOB']."'";
             $spouse->gender = intval($_POST['Gender']);
-            $spouse->email = $_POST['Email'];
-            $spouse->email1 = $_POST['Email1'];
-            $spouse->mobile = $_POST['Mobile'];
-            $spouse->mobile1 = $_POST['Mobile1'];
-            $spouse->mobile2 = $_POST['Mobile2'];
-            $spouse->bloodGroup = $_POST['BloodGroup'];
-            $spouse->occupation = $_POST['Occupation'];
-            $spouse->businessType = $_POST['BusinessType'];
-            $spouse->officeAddress = $_POST['OfficeAddress'];
-            $spouse->officeAreaCode = $_POST['OfficeAreaCode'];
-            $spouse->officePincode = $_POST['OfficePincode'];
-            $spouse->officeCityCode = $_POST['OfficeCityCode'];
-            $spouse->officeStateCode = $_POST['OfficeStateCode'];
-            $spouse->officePhone = $_POST['OfficePhone'];
-            $spouse->officeCentrex = $_POST['OfficeCentrex'];
-            $spouse->hobbies = $_POST['Hobbies'];
-            $spouse->recognition = $_POST['Recognition'];
+            $spouse->email = "'".$_POST['Email']."'";
+            $spouse->email1 = empty($_POST['Email1']) ? 'NULL' : "'".$_POST['Email1']."'";
+            $spouse->mobile = "'".$_POST['Mobile']."'";
+            $spouse->mobile1 = empty($_POST['Mobile1']) ? 'NULL' : "'".$_POST['Mobile1']."'";
+            $spouse->mobile2 = empty($_POST['Mobile2']) ? 'NULL' : "'".$_POST['Mobile2']."'";
+            $spouse->bloodGroup = empty($_POST['BloodGroup']) ? 'NULL' : "'".$_POST['BloodGroup']."'";
+            $spouse->occupation = empty($_POST['Occupation']) ? 'NULL' : "'".$_POST['Occupation']."'";
+            $spouse->businessType = empty($_POST['BusinessType']) ? 'NULL' : "'".$_POST['BusinessType']."'";
+            $spouse->officeAddress = empty($_POST['OfficeAddress']) ? 'NULL' : "'".$_POST['OfficeAddress']."'";
+            $spouse->officeAreaCode = empty($_POST['OfficeAreaCode']) ? 'NULL' : "'".$_POST['OfficeAreaCode']."'";
+            $spouse->officePincode = empty($_POST['OfficePincode']) ? 'NULL' : "'".$_POST['OfficePincode']."'";
+            $spouse->officeCityCode = empty($_POST['OfficeCityCode']) ? 'NULL' : "'".$_POST['OfficeCityCode']."'";
+            $spouse->officeStateCode = empty($_POST['OfficeStateCode']) ? 'NULL' : "'".$_POST['OfficeStateCode']."'";
+            $spouse->officePhone = empty($_POST['OfficePhone']) ? 'NULL' : "'".$_POST['OfficePhone']."'";
+            $spouse->officeCentrex = empty($_POST['OfficeCentrex']) ? 'NULL' : "'".$_POST['OfficeCentrex']."'";
+            $spouse->hobbies = empty($_POST['Hobbies']) ? 'NULL' : "'".$_POST['Hobbies']."'";
+            $spouse->recognition = empty($_POST['Recognition']) ? 'NULL' : "'".$_POST['Recognition']."'";
 
 
             //Perform action

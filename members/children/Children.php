@@ -48,7 +48,7 @@ class Children extends BaseClass
     function addChildren($memberId,$regId)
     {
         $this->kidId=$this->generateChildrenId($regId,$memberId);
-        $sql = "INSERT INTO Children (MemberId,KidId,Name,DOB,Gender,Email,Email1,Mobile,Mobile1,Mobile2,BloodGroup,Hobbies) VALUES ($memberId,$this->kidId,'$this->name','$this->dob',$this->gender,'$this->email','$this->email1','$this->mobile','$this->mobile1','$this->mobile2','$this->bloodGroup','$this->hobbies')";
+        $sql = "INSERT INTO Children (MemberId,KidId,Name,DOB,Gender,Email,Email1,Mobile,Mobile1,Mobile2,BloodGroup,Hobbies) VALUES ($memberId,$this->kidId,$this->name,$this->dob,$this->gender,$this->email,$this->email1,$this->mobile,$this->mobile1,$this->mobile2,$this->bloodGroup,$this->hobbies)";
         if($result = $this->mysqli->query($sql))
         {
             $response = BaseClass::createResponse(1,"Child added.");
@@ -98,7 +98,7 @@ class Children extends BaseClass
     //Edit child details.
     function updateChildren($regId,$memberId,$kidId)
     {
-        $sql = "UPDATE Children SET Name='$this->name',DOB='$this->dob',Gender=$this->gender,Email='$this->email',Email1='$this->email1',Mobile='$this->mobile',Mobile1='$this->mobile1',Mobile2='$this->mobile2',BloodGroup='$this->bloodGroup',Hobbies='$this->hobbies' WHERE RegId=$regId AND MemberId=$memberId AND KidId=$kidId";
+        $sql = "UPDATE Children SET Name=$this->name,DOB=$this->dob,Gender=$this->gender,Email=$this->email,Email1=$this->email1,Mobile=$this->mobile,Mobile1=$this->mobile1,Mobile2=$this->mobile2,BloodGroup=$this->bloodGroup,Hobbies=$this->hobbies WHERE RegId=$regId AND MemberId=$memberId AND KidId=$kidId";
         if($result = $this->mysqli->query($sql))
         {
             $response = BaseClass::createResponse(1,"Child details updated.");

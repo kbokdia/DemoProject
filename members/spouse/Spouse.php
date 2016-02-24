@@ -42,7 +42,7 @@ class Spouse extends BaseClass
     //Add a new spouse.
     function addSpouse($memberId)
     {
-        $sql = "INSERT INTO Spouse (MemberId,Name,DOB,Gender,Email,Email1,Mobile,Mobile1,Mobile2,BloodGroup,Occupation,BusinessType,OfficeAddress,OfficeAreaCode,OfficePincode,OfficeCityCode,OfficeStateCode,OfficePhone,OfficeCentrex,Hobbies,Recognition) VALUES ($memberId,'$this->name','$this->dob',$this->gender,'$this->email','$this->email1','$this->mobile','$this->mobile1','$this->mobile2','$this->bloodGroup','$this->occupation','$this->businessType','$this->officeAddress','$this->officeAreaCode','$this->officePincode','$this->officeCityCode','$this->officeStateCode','$this->officePhone','$this->officeCentrex','$this->hobbies','$this->recognition')";
+        $sql = "INSERT INTO Spouse (MemberId,Name,DOB,Gender,Email,Email1,Mobile,Mobile1,Mobile2,BloodGroup,Occupation,BusinessType,OfficeAddress,OfficeAreaCode,OfficePincode,OfficeCityCode,OfficeStateCode,OfficePhone,OfficeCentrex,Hobbies,Recognition) VALUES ($memberId,$this->name,$this->dob,$this->gender,$this->email,$this->email1,$this->mobile,$this->mobile1,$this->mobile2,$this->bloodGroup,$this->occupation,$this->businessType,$this->officeAddress,$this->officeAreaCode,$this->officePincode,$this->officeCityCode,$this->officeStateCode,$this->officePhone,$this->officeCentrex,$this->hobbies,$this->recognition)";
         if($result = $this->mysqli->query($sql))
         {
             $response = BaseClass::createResponse(1,"Spouse added.");
