@@ -54,7 +54,7 @@ do{
 
         case 'UM':
             //validation
-            if(empty($_POST['RegId']) || empty($_POST['MemberId']))
+            if(empty($_POST['RegId']) || empty($_POST['MemberId']) || empty($_POST['Name']) || empty($_POST['Gender']) || empty($_POST['DOB'])  || empty($_POST['Email']) || empty($_POST['Mobile']) || empty($_POST['HasPartner']) || empty($_POST['HasChildren']))
             {
                 $validate = false;
                 $response = BaseClass::createResponse(0,"Invalid Request");

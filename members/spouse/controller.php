@@ -62,7 +62,7 @@ do{
 
         case 'US':
             //validation
-            if(empty($_POST['RegId']) || empty($_POST['MemberId']))
+            if(empty($_POST['RegId']) || empty($_POST['MemberId']) || empty($_POST['MemberId']) || empty($_POST['Name']) || empty($_POST['DOB']) || empty($_POST['Gender']) || empty($_POST['Mobile']) || empty($_POST['Email']))
             {
                 $validate = false;
                 $response = BaseClass::createResponse(0,"Invalid Request");
