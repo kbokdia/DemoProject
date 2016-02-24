@@ -37,7 +37,7 @@ do{
     switch($type){
         case 'AC':
             //validation
-            if(empty($_POST['MemberId']) || empty($_POST['RegId']) || empty($_POST['Name']) || empty($_POST['DOB']) || empty($_POST['Gender']) || empty($_POST['Mobile'])) {
+            if(empty($_POST['MemberId']) || empty($_POST['RegId']) || empty($_POST['Name']) || empty($_POST['DOB']) || empty($_POST['Gender'])) {
                 $validate = false;
                 $response = BaseClass::createResponse(0, "Invalid Request");
                 break;
