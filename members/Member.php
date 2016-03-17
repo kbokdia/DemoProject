@@ -52,6 +52,7 @@ class Member extends BaseClass
     var $hasPartner;
     var $hasChildren;
     var $active=1;
+    var $regId;
 
     function __construct(){
         parent::__construct();
