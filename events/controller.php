@@ -10,22 +10,41 @@ namespace Project\events;
 
 use Project\base\BaseClass;
 use Project\base\Date;
+use Zend\Http\PhpEnvironment\Request;
+use Acme\Response;
+use User\Models;
+use Project\mediator;
 
 define("ROOT", "../");
 require ROOT."autoload.php";
 
-$response = null;
+$request = new Request();
+$requestMethod = null;
 $validate = true;
-$type = null;
+$response = null;
+$authHeader = null;
+$acmeRequest = null;
+$configPath = "../db/Connection.php";
+$data = [];
 
 //Do validation if required
 do{
-    if(empty($_GET['type'])){
+    $authHeader = $request->getHeader('authorization');
+    if(!$authHeader){
         $validate = false;
-        $response = BaseClass::createResponse(0,"Invalid Request");
+        $response = Response::createMessage("01");
         break;
     }
-    $type = strtoupper($_GET['type']);
+
+    $acmeRequest = new \Project\mediator\Request($configPath);
+    $acmeRequest->authorize($authHeader);
+    if(!$acmeRequest->isAuthorized){
+        $validate = false;
+        $response = $acmeRequest->getResponse();
+        break;
+    }
+
+    $requestMethod = $request->getMethod();
 
     /*
      * Types (Whenever new types are defined update this comment too)
@@ -36,30 +55,74 @@ do{
      * LI => Logged in status
      */
 
-    switch($type){
+    switch(strtoupper($requestMethod)){
         case 'AE':
             //validation
             //Todo-Ambuj Perform validation like check for name
-            if(empty($_POST['EventName']) || empty($_POST['EventDesc']) || empty($_POST['EventDate']) || empty($_POST['EventTime']) || empty($_POST['EventLocation']) || empty($_POST['EventDressCode'])) {
+            //if(empty($_POST['EventName']) || empty($_POST['EventDesc']) || empty($_POST['EventDate']) || empty($_POST['EventTime']) || empty($_POST['EventLocation']) || empty($_POST['EventDressCode'])) {
+            $body = $request->getContent();
+            if(!$body){
                 $validate = false;
-                $response = BaseClass::createResponse(0, "Invalid Request");
+                $response = Response::createMessage("01");
+                break;
+            }
+
+            $data = json_decode($body,true);
+            if(!$data){
+                $validate = false;
+                $response = Response::createMessage("04");
+                break;
+            }
+            if(empty($data["EventName"]) && empty($data["EventDesc"]) && empty($data["EventDate"]) && empty($data["EventTime"]) && empty($data["EventLocation"]) && empty($data["EventDressCode"])){
+                $validate = false;
+                $response = Response::createMessage("01");
+                break;
             }
             break;
-
         case 'DE':
             //validation
-            if(empty($_POST['EventId']) ){
+            //if(empty($_POST['EventId']) ){
+            $body = $request->getContent();
+            if(!$body){
                 $validate = false;
-                $response = BaseClass::createResponse(0,"Invalid Request");
+                $response = Response::createMessage("01");
+                break;
+            }
+
+            $data = json_decode($body,true);
+            if(!$data){
+                $validate = false;
+                $response = Response::createMessage("04");
+                break;
+            }
+
+            if(empty($data["EventId"])){
+                $validate = false;
+                $response = Response::createMessage("01");
+                break;
             }
             break;
 
         case 'UE':
             //validation
-            if(empty($_POST['EventId']))
-            {
+            $body = $request->getContent();
+            if(!$body){
                 $validate = false;
-                $response = BaseClass::createResponse(0,"Invalid Request");
+                $response = Response::createMessage("01");
+                break;
+            }
+
+            $data = json_decode($body,true);
+            if(!$data){
+                $validate = false;
+                $response = Response::createMessage("04");
+                break;
+            }
+
+            if(empty($data["EventId"])){
+                $validate = false;
+                $response = Response::createMessage("01");
+                break;
             }
             break;
     }
@@ -68,56 +131,48 @@ do{
 
 //Business Logic
 if($validate){
-    $events = new Events();
 
-    switch($type){
+
+    switch($requestMethod){
         case 'AE':
             //set mysql safe data
-            $_POST = $events->escapeData($_POST);
+            $token = $acmeRequest->getToken();
 
             //set variables
-            $events->name=$_POST["EventName"];
-            $events->description=$_POST["EventDesc"];
-            $events->location=$_POST["EventLocation"];
-            $events->date=Date::dbFormat($_POST["EventDate"]);
-            $events->time = $_POST["EventTime"];
-            $events->dressCode=$_POST["EventDressCode"];
-            $events->imagePath = "NULL";
-
+            $user = new Models\User($token->data->regId,$token->data->userId,$token->data->userName);
+            $controller = new Events($configPath,$user,$requestMethod,$data);
             //Perform action
-            $response = $events->addEvent();
+            $response = $controller->addEvent();
 
             break;
 
         case 'DE':
+            $token = $acmeRequest->getToken();
             //set variables
-            $eventId=intval($_POST["EventId"]);
+            $user = new Models\User($token->data->regId,$token->data->userId,$token->data->userName);
+            $controller = new Events($configPath,$user,$requestMethod,$data);
 
             //Perform action
-            $response=$events->deleteEvent($eventId);
+            $response = $controller->deleteEvent($data['eventId']);
             break;
 
         case 'UE':
             //set mysql safe data
-            $_POST = $events->escapeData($_POST);
+            $token = $acmeRequest->getToken();
 
             //set variables
-            $eventId=$_POST["EventId"];
-            $events->name=$_POST["EventName"];
-            $events->description=$_POST["EventDesc"];
-            $events->location=$_POST["EventLocation"];
-            $events->date=Date::dbFormat($_POST["EventDate"]);
-            $events->time = $_POST["EventTime"];
-            $events->dressCode=$_POST["EventDressCode"];
-            $events->imagePath = "NULL";
+            $user = new Models\User($token->data->regId,$token->data->userId,$token->data->userName);
+            $controller = new Events($configPath,$user,$requestMethod,$data);
 
             //Perform action
-            $response=$events->updateEvent($eventId);
+            $response = $controller->updateEvent($data['eventId']);
             break;
 
         case 'GE':
+            $user = new Models\User($token->data->regId,$token->data->userId,$token->data->userName);
+            $controller = new Events($configPath,$user,$requestMethod,$data);
             //Perform action
-            $response=$events->getEvent();
+            $response = $controller->getEvent();
             break;
 
         case 'LI':
