@@ -61,7 +61,7 @@ class Member extends BaseClass
     function addMember()
     {
         $this->memberId=$this->generateMemberId();
-        $sql = "INSERT INTO Members (MemberId,Name,GuardianName,DOB,Gender,Email,Email1,Mobile,Mobile1,Mobile2,BloodGroup,NativePlace,HomeAddress,HomeAreaCode,HomePincode,HomeCityCode,HomeStateCode,HomePhone,HomeCentrex,Occupation,BusinessType,OfficeAddress,OfficeAreaCode,OfficePincode,OfficeCityCode,OfficeStateCode,OfficePhone,OfficeCentrex,Food,Religion,Hobbies,Recognition,MembershipNo,MembershipType,MemberJoiningDate,HasPartner,HasChildren,Active) VALUES ($this->memberId,$this->name,$this->guardianName,$this->dob,$this->gender,$this->email,$this->email1,$this->mobile,$this->mobile2,$this->mobile2,$this->bloodGroup,$this->nativePlace,$this->homeAddress,$this->homeAreaCode,$this->homePincode,$this->homeCityCode,$this->homeStateCode,$this->homePhone,$this->homeCentrex,$this->occupation,$this->businessType,$this->officeAddress,$this->officeAreaCode,$this->officePincode,$this->officeCityCode,$this->officeStateCode,$this->officePhone,$this->officeCentrex,$this->food,$this->religion,$this->hobbies,$this->recognition,$this->membershipNo,$this->membershipType,$this->memberJoiningDate,$this->hasPartner,$this->hasChildren,$this->active )";
+        $sql = "INSERT INTO Members (MemberId,Name,GuardianName,DOB,Gender,Email,Email1,Mobile,Mobile1,Mobile2,BloodGroup,Occupation,BusinessType,OfficeAddress,OfficeAreaCode,OfficePincode,OfficeCityCode,OfficeStateCode,OfficePhone,OfficeCentrex,,Hobbies,Recognition,HasPartner,HasChildren,Active) VALUES ($this->memberId,$this->name,$this->guardianName,$this->dob,$this->gender,$this->email,$this->email1,$this->mobile,$this->mobile2,$this->mobile2,$this->bloodGroup,$this->occupation,$this->businessType,$this->officeAddress,$this->officeAreaCode,$this->officePincode,$this->officeCityCode,$this->officeStateCode,$this->officePhone,$this->officeCentrex,$this->hobbies,$this->recognition,$this->hasPartner,$this->hasChildren,$this->active )";
         if($result = $this->mysqli->query($sql))
         {
             $response = BaseClass::createResponse(1,"Member added.");
@@ -72,6 +72,22 @@ class Member extends BaseClass
         }
         return $response;
 
+    }
+
+    //Add specific member.
+    function addMemberSpecific()
+    {
+        $this->memberId=$this->generateMemberId();
+        $sql = "INSERT INTO Members (MemberId,Name,GuardianName,DOB,Gender,Email,Email1,Mobile,Mobile1,Mobile2,BloodGroup,NativePlace,HomeAddress,HomeAreaCode,HomePincode,HomeCityCode,HomeStateCode,HomePhone,HomeCentrex,Occupation,BusinessType,OfficeAddress,OfficeAreaCode,OfficePincode,OfficeCityCode,OfficeStateCode,OfficePhone,OfficeCentrex,Food,Religion,Hobbies,Recognition,MembershipNo,MembershipType,MemberJoiningDate,HasPartner,HasChildren,Active) VALUES ($this->memberId,$this->name,$this->guardianName,$this->dob,$this->gender,$this->email,$this->email1,$this->mobile,$this->mobile2,$this->mobile2,$this->bloodGroup,$this->nativePlace,$this->homeAddress,$this->homeAreaCode,$this->homePincode,$this->homeCityCode,$this->homeStateCode,$this->homePhone,$this->homeCentrex,$this->occupation,$this->businessType,$this->officeAddress,$this->officeAreaCode,$this->officePincode,$this->officeCityCode,$this->officeStateCode,$this->officePhone,$this->officeCentrex,$this->food,$this->religion,$this->hobbies,$this->recognition,$this->membershipNo,$this->membershipType,$this->memberJoiningDate,$this->hasPartner,$this->hasChildren,$this->active )";
+        if($result = $this->mysqli->query($sql))
+        {
+            $response = BaseClass::createResponse(1,"Member added.");
+        }
+        else
+        {
+            $response = BaseClass::createResponse(0,$this->mysqli->error);
+        }
+        return $response;
     }
 
 
@@ -98,6 +114,38 @@ class Member extends BaseClass
     function updateMember($regId,$memberId)
     {
         $sql = "UPDATE Members SET Name=$this->name,GuardianName=$this->guardianName,DOB=$this->dob,Gender=$this->gender,Email=$this->email ,Email1=$this->email1 ,Mobile=$this->mobile ,Mobile1=$this->mobile1 ,Mobile2=$this->mobile2 ,BloodGroup=$this->bloodGroup,NativePlace=$this->nativePlace ,HomeAddress=$this->homeAddress ,HomeAreaCode= $this->homeAreaCode ,HomePincode=$this->homePincode ,HomeCityCode= $this->homeCityCode ,HomeStateCode= $this->homeStateCode ,HomePhone= $this->homePhone ,HomeCentrex= $this->homeCentrex ,Occupation= $this->occupation ,BusinessType= $this->businessType ,OfficeAddress= $this->officeAddress ,OfficeAreaCode= $this->officeAreaCode ,OfficePincode= $this->officePincode ,OfficeCityCode= $this->officeCityCode ,OfficeStateCode= $this->officeStateCode ,OfficePhone= $this->officePhone ,OfficeCentrex= $this->officeCentrex ,Food= $this->food ,Religion= $this->religion ,Hobbies= $this->hobbies ,Recognition= $this->recognition ,MembershipNo= $this->membershipNo ,MembershipType= $this->membershipType ,MemberJoiningDate= $this->memberJoiningDate ,HasPartner=$this->hasPartner, HasChildren=$this->hasChildren , Active=$this->active WHERE RegId=$regId AND MemberId=$memberId";
+        if($result = $this->mysqli->query($sql))
+        {
+            $response = BaseClass::createResponse(1,"Member details updated.");
+        }
+        else
+        {
+            $response = BaseClass::createResponse(0,$this->mysqli->error);
+        }
+        return $response;
+
+    }
+
+    //Edit the member residence.
+    function updateMemberResidence($regId,$memberId)
+    {
+        $sql = "UPDATE Members SET HomeAddress=$this->homeAddress ,HomeAreaCode= $this->homeAreaCode ,HomePincode=$this->homePincode ,HomeCityCode= $this->homeCityCode ,HomeStateCode= $this->homeStateCode WHERE RegId=$regId AND MemberId=$memberId";
+        if($result = $this->mysqli->query($sql))
+        {
+            $response = BaseClass::createResponse(1,"Member details updated.");
+        }
+        else
+        {
+            $response = BaseClass::createResponse(0,$this->mysqli->error);
+        }
+        return $response;
+
+    }
+
+    //Edit the member club details.
+    function updateMemberClubDetails($regId,$memberId)
+    {
+        $sql = "UPDATE Members SET MembershipNo= $this->membershipNo ,MembershipType= $this->membershipType ,MemberJoiningDate= $this->memberJoiningDate WHERE RegId=$regId AND MemberId=$memberId";
         if($result = $this->mysqli->query($sql))
         {
             $response = BaseClass::createResponse(1,"Member details updated.");
