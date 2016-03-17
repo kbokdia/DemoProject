@@ -54,7 +54,7 @@ var pageValidation = {
                     }
                 }
 
-                //Alphaber Validation
+                //Alphabet Validation
                 else if($(this).is(".alphabet")){
 
                     if(elemValue == ""){

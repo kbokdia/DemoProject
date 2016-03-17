@@ -102,6 +102,8 @@
                 <div class="modal-body" id="imageUploadBodyDiv">
                     <div class="text-center error">
                         <strong id="ImageAddCountLimit">*You can select a maximum of 20 Photos*</strong>
+                        <br>
+                        <strong><small>*Please select only maximum of 5 images at a time!!!*</small></strong>
                     </div>
                     <fieldset class="form-group text-center btn-padding-top">
                         <button type="button" id="coverImageBtn" class="btn btn-primary"

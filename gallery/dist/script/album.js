@@ -216,7 +216,7 @@ $(document).ready(function (){
             //console.log(response);
             if(response.status == 0)
             {
-                pageAlbum.showfailureNotification("Error! ","An Error has occured!");
+                pageAlbum.showfailureNotification("Error! ","An Error has occurred!");
             }
 
             pageAlbum.showSuccessNotification("Success! ","Images have been uploaded!");
@@ -262,30 +262,37 @@ $(document).ready(function (){
     $('#imageFileInput').change(function () {
         var count = $(this)[0].files.length,
             imageLimit = 0;
-        if(pageAlbum.imageCount < 20)
+        if(count > 5)
         {
-            imageLimit = 20 - pageAlbum.imageCount;
-
-            if(parseInt(count) > imageLimit)
+            pageAlbum.showfailureNotification("Error!","Please select maximum of 5 images at a time!");
+            $(this).val("");
+        }
+        else{
+            if(pageAlbum.imageCount < 20)
             {
-                //console.log(count);
-                $(this).val("");
-                $(this).closest(".form-group").find(".error").html("").html("More than 20 Images Selected");
-            }
-            else{
-                //console.log(count);
-                for(var i = 0; i < count; i++)
+                imageLimit = 20 - pageAlbum.imageCount;
+
+                if(parseInt(count) > imageLimit)
                 {
                     //console.log(count);
-                    if((this.files[i].size) > (5 * 1024 * 1024))
+                    $(this).val("");
+                    $(this).closest(".form-group").find(".error").html("").html("More than 20 Images Selected");
+                }
+                else{
+                    //console.log(count);
+                    for(var i = 0; i < count; i++)
                     {
-                        //console.log(this.files[0].size);
-                        $(this).val("");
-                        $(this).closest(".form-group").find(".error").html("").html("One or more images have size greater than 5 MB, please remove them and try again!");
-                        break;
-                    }
-                    else{
-                        $(this).closest(".form-group").find(".error").html("").html(count + " Images Selected");
+                        //console.log(count);
+                        if((this.files[i].size) > (5 * 1024 * 1024))
+                        {
+                            //console.log(this.files[0].size);
+                            $(this).val("");
+                            $(this).closest(".form-group").find(".error").html("").html("One or more images have size greater than 5 MB, please remove them and try again!");
+                            break;
+                        }
+                        else{
+                            $(this).closest(".form-group").find(".error").html("").html(count + " Images Selected");
+                        }
                     }
                 }
             }

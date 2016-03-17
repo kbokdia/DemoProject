@@ -25,3 +25,11 @@
     margin-top: 0;
     margin-bottom: 0.5rem;
 }
+.padding-top-50{
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+a{
+    cursor: pointer;
+}

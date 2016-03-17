@@ -1,4 +1,5 @@
-var pageMainScript = {};
+var pageMainScript = {
+};
 
 $(window).load(function() {
 

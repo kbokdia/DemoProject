@@ -5,6 +5,37 @@ var pageMembers = {
     },
     openLoginDetailsModal : function(){
         $("#loginModal").modal("show");
+    },
+    openAddMemberModal : function(){
+        $("#memberForm").find('input').each(function(){
+            $(this).val("").removeClass("form-control-danger").closest(".form-group").removeClass("has-danger").find(".error").html("");
+        });
+        $("#memberForm").find('select').each(function(){
+            $(this).val('1').removeClass("form-control-danger").closest(".form-group").removeClass("has-danger").find(".error").html("");
+        });
+        $("#dateOfMarriage").addClass("hidden-xs-up");
+
+        $("#memberModal").modal('show');
+    },
+    maritalStatusDivChange : function(elem){
+
+        var maritalStatus = $(elem).val();
+
+        switch (maritalStatus)
+        {
+            case "1" : {
+                $("#dateOfMarriage").addClass("hidden-xs-up");
+                break;
+            }
+            case "2" : {
+                $("#dateOfMarriage").removeClass("hidden-xs-up");
+                break;
+            }
+            case "3" : {
+                $("#dateOfMarriage").removeClass("hidden-xs-up");
+                break;
+            }
+        }
     }
 };
 
@@ -36,4 +67,22 @@ $(window).load(function () {
         if(inputType == "password") { elem.prop("type","text"); }
         else{ elem.prop("type","password"); }
     });
+
+    $('#memberDOB').datepicker({
+        format: "dd/mm/yyyy",
+        weekStart: 0,
+        startDate: "01/01/1900",
+        endDate: "today",
+        startView: 2,
+        autoclose: true
+    });
+
+    $('#memberDOM').datepicker({
+        format: "dd/mm/yyyy",
+        weekStart: 0,
+        startDate: "01/01/1900",
+        startView: 2,
+        autoclose: true
+    });
+
 });
